@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management System</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'custom-teal': '#108C89',
+                        'neutral-black': '#09101D'
+                    },
+                    gridTemplateColumns: {
+                        'auto-fit-cards': 'repeat(auto-fit, minmax(200px, 1fr))',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS for line clamping and animations -->
+    <style>
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .scale-200 {
+            transform: scale(2);
+            transform-origin: center;
+        }
+        
+        /* Modal animations */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95) translateY(16px);
+        }
+        
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            transition: all 300ms ease-out;
+        }
+        
+        .modal-exit {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        
+        .modal-exit-active {
+            opacity: 0;
+            transform: scale(0.95) translateY(16px);
+            transition: all 300ms ease-out;
+        }
+        
+        /* Loading skeleton animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        /* Hide scrollbar but keep functionality */
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 w-full h-[61px] bg-[#f8f5ef] z-20">
+        <div class="flex items-center justify-between px-4 sm:px-5 h-full">
+            <!-- Logo -->
+            <img class="h-4 sm:h-6 w-auto object-contain" alt="Logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjMwIiB2aWV3Qm94PSIwIDAgMTAwIDMwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjMwIiBmaWxsPSIjMTA4Qzg5Ii8+Cjx0ZXh0IHg9IjUwIiB5PSIyMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TG9nbzwvdGV4dD4KPHN2Zz4=" />
+
+            <!-- Main Navigation - Hidden on mobile, shown on tablet+ -->
+            <div class="hidden md:flex items-center gap-4 lg:gap-6 h-full">
+                <div class="flex flex-col w-16 lg:w-[88px] h-full items-center justify-end gap-2">
+                    <span class="font-normal text-[#343434] text-sm lg:text-base">BIPs</span>
+                    <div class="w-full h-[3px]"></div>
+                </div>
+                <div class="flex flex-col w-16 lg:w-[88px] h-full items-center justify-end gap-2">
+                    <span class="font-normal text-[#343434] text-sm lg:text-base">Resources</span>
+                    <div class="w-full h-[3px] bg-[#343434]"></div>
+                </div>
+                <div class="flex flex-col w-16 lg:w-[88px] h-full items-center justify-end gap-2">
+                    <span class="font-normal text-[#343434] text-sm lg:text-base">Strategies</span>
+                    <div class="w-full h-[3px]"></div>
+                </div>
+            </div>
+
+            <!-- Admin Button -->
+            <button id="adminBtn" class="bg-white border border-[#343434] rounded h-8 sm:h-10 px-2 sm:px-3 text-xs sm:text-base hover:bg-gray-50 transition-colors duration-200">
+                <span class="font-semibold text-[#343434]">Admin Login</span>
+                <svg class="w-2 sm:w-3 h-3 sm:h-4 ml-1 sm:ml-2 inline" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="w-full h-px bg-[#d9d9d9]"></div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="fixed top-[61px] left-0 right-0 bottom-0 flex flex-col lg:flex-row">
+        <!-- Sidebar -->
+        <aside class="fixed top-[61px] left-0 w-full lg:w-72 h-[calc(100vh-61px)] bg-white lg:bg-transparent border-b lg:border-b-0 border-gray-200 z-10 lg:relative lg:top-0">
+            <nav class="p-4 lg:p-6 lg:pt-[72px] h-full overflow-y-auto">
+                <ul class="space-y-2 lg:space-y-4" id="navigationList">
+                    <li>
+                        <button class="nav-link w-full text-left py-3 px-4 text-sm rounded-lg transition-all duration-200 hover:bg-[#f0f0f1] hover:shadow-sm active:scale-[0.98] min-h-[48px] flex items-center box-border bg-[#f8f8f9] text-[#343434] shadow-sm border border-gray-100 font-medium" data-label="">
+                            <span>Show All</span>
+                        </button>
+                    </li>
+                    <!-- Navigation items will be populated by JavaScript -->
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col lg:ml-0 mt-[calc(100vh-61px)] lg:mt-0">
+            <!-- Sub Navigation -->
+            <div class="fixed top-[61px] lg:top-[61px] left-0 lg:left-72 right-0 flex items-center py-4 bg-white lg:bg-transparent z-10 border-b lg:border-b-0 border-gray-200 gap-4 px-4">
+                <button id="coursesTab" class="tab-button px-4 py-2 text-sm rounded-lg transition-colors duration-200 min-h-[40px] flex items-center box-border text-gray-600 hover:text-[#343434] hover:bg-gray-50 border border-transparent">
+                    Courses
+                </button>
+                <button id="resourcesTab" class="tab-button px-4 py-2 text-sm rounded-lg transition-colors duration-200 min-h-[40px] flex items-center box-border bg-[#f8f8f9] text-[#343434] shadow-sm">
+                    Resources
+                </button>
+            </div>
+
+            <!-- Card Grid Container -->
+            <main class="fixed top-[113px] lg:top-[113px] left-0 lg:left-72 right-0 bottom-0 overflow-y-auto p-4 lg:px-6 lg:pt-6 lg:pb-6 bg-[#F8F5EF] rounded-tl-[16px] mt-4">
+                <div class="min-h-full">
+                    <!-- Loading State -->
+                    <div id="loadingState" class="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-items-start hidden">
+                        <!-- Loading skeletons will be generated by JavaScript -->
+                    </div>
+                    
+                    <!-- Error State -->
+                    <div id="errorState" class="col-span-full flex flex-col items-center justify-center py-12 px-4 hidden">
+                        <div class="text-center max-w-md">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
+                                <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Something went wrong</h3>
+                            <p id="errorMessage" class="text-gray-600 mb-4">An error occurred</p>
+                            <button id="retryBtn" class="px-4 py-2 bg-[#108C89] text-white rounded-lg hover:bg-[#0e7a77] transition-colors duration-200">
+                                Try Again
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Card Grid -->
+                    <div id="cardGrid" class="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-items-start">
+                        <!-- Cards will be populated by JavaScript -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Course Modal -->
+    <div id="courseModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300 opacity-0 invisible" role="dialog" aria-modal="true">
+        <!-- Semi-transparent blurry overlay -->
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"></div>
+        
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden transform transition-all duration-300 scale-95 translate-y-4">
+            <!-- Header with close button -->
+            <div class="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
+                <h2 id="modalTitle" class="text-xl font-semibold text-gray-900">Start new course</h2>
+                <button id="closeModalBtn" class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#108C89]">
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Scrollable content -->
+            <div class="overflow-y-auto max-h-[calc(90vh-180px)]">
+                <div class="p-4 sm:p-6">
+                    <!-- Course image -->
+                    <div class="mb-4 sm:mb-6">
+                        <div class="w-full h-64 rounded-lg flex items-center justify-center bg-[#F7F7F7]">
+                            <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg" />
+                        </div>
+                    </div>
+
+                    <!-- Course title -->
+                    <h3 id="modalCourseTitle" class="text-2xl font-bold text-gray-900 mb-4"></h3>
+
+                    <!-- Course description -->
+                    <div class="space-y-4 text-gray-700 mb-4">
+                        <p id="modalDescription" class="leading-relaxed"></p>
+
+                        <div class="bg-gray-50 p-3 sm:p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-900 mb-3">Perfect for:</h4>
+                            <ul id="modalPerfectFor" class="space-y-2 text-sm">
+                                <!-- Perfect for items will be populated by JavaScript -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with action button -->
+            <div class="border-t border-gray-200 p-4 sm:p-6 flex-shrink-0">
+                <button id="startCourseBtn" class="w-full bg-[#108C89] text-white py-3 px-4 rounded-lg hover:bg-[#0e7a77] transition-colors duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-[#108C89] focus:ring-offset-2 min-h-[48px]">
+                    Start Course
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Course View -->
+    <div id="fullscreenCourse" class="fixed inset-0 z-50 bg-white flex-col hidden">
+        <!-- Header -->
+        <div class="sticky top-0 z-10 flex items-center justify-between p-4 border-b border-gray-200 shadow-sm" style="background-color: #F8F5EF;">
+            <button id="exitCourseBtn" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                Exit Course
+            </button>
+            
+            <h1 id="fullscreenTitle" class="text-lg font-semibold text-gray-900 text-center flex-1 px-4">
+                Course Title
+            </h1>
+            
+            <button id="takeTestBtn" class="px-4 py-2 border-2 bg-white rounded hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#108C89]" style="border-color: #108C89; color: #108C89;">
+                Take the test
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto">
+            <div class="p-6">
+                <!-- Video Section -->
+                <div class="mb-8">
+                    <div class="relative w-full max-w-4xl mx-auto">
+                        <div class="aspect-video bg-black rounded-lg overflow-hidden">
+                            <video id="courseVideo" class="w-full h-full" controls preload="metadata">
+                                <source src="" type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supporting Materials Section -->
+                <div class="max-w-6xl mx-auto">
+                    <div class="bg-[#F8F5EF] p-6 rounded-lg">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-6">Supporting Materials</h2>
+                        
+                        <div id="supportingMaterials" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            <!-- Supporting materials will be populated by JavaScript -->
+                        </div>
+                        
+                        <div id="noMaterials" class="text-center py-8 hidden">
+                            <p class="text-gray-500">No resources have been assigned to this course</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>

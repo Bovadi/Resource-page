@@ -1,0 +1,227 @@
+/* Fixed 256px Card System - Pure CSS */
+/* No React dependencies - only Tailwind CSS and custom styles */
+
+/* ===== CORE CARD SYSTEM ===== */
+
+/* Fixed 256px Card Container */
+.fixed-256-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem; /* 20px gap */
+    justify-content: flex-start; /* Left-aligned */
+    width: 100%;
+}
+
+/* Individual Card - Fixed 256px Width */
+.card-256 {
+    width: 256px;
+    flex-shrink: 0; /* Prevents cards from getting smaller */
+    flex-grow: 0;   /* Prevents cards from getting larger */
+    flex-basis: 256px; /* Explicit basis for consistency */
+}
+
+/* ===== RESPONSIVE BEHAVIOR ===== */
+
+/* Cards automatically stack based on available space */
+/* No media queries needed - flexbox handles everything */
+
+/* Small screens (320px+): 1 card per row */
+/* Medium screens (640px+): 2-3 cards per row */
+/* Large screens (1024px+): 4-5 cards per row */
+/* Extra large screens (1536px+): 6+ cards per row */
+
+/* Ensure consistent spacing on all screen sizes */
+@media (min-width: 320px) {
+    .fixed-256-cards {
+        gap: 1.25rem;
+        padding: 0;
+    }
+}
+
+@media (min-width: 640px) {
+    .fixed-256-cards {
+        gap: 1.25rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .fixed-256-cards {
+        gap: 1.25rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .fixed-256-cards {
+        gap: 1.25rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .fixed-256-cards {
+        gap: 1.25rem;
+    }
+}
+
+@media (min-width: 1536px) {
+    .fixed-256-cards {
+        gap: 1.25rem;
+    }
+}
+
+/* ===== CARD STYLING ===== */
+
+/* Card aspect ratio - maintains 256:262 proportions */
+.card-aspect-ratio {
+    aspect-ratio: 256/262;
+    width: 100%;
+}
+
+/* Text truncation utility */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    max-height: calc(1.4em * 2); /* Fallback for non-webkit browsers */
+}
+
+/* ===== HOVER EFFECTS ===== */
+
+/* Card hover animation */
+.card-hover {
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.card-hover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Download indicator overlay */
+.download-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem; /* rounded-md */
+}
+
+.card-256:hover .download-overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.download-icon {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background-color: white;
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-256:hover .download-icon {
+    opacity: 1;
+}
+
+/* ===== LOADING ANIMATIONS ===== */
+
+/* Loading skeleton animation */
+@keyframes pulse {
+    0%, 100% { 
+        opacity: 1; 
+    }
+    50% { 
+        opacity: 0.5; 
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Loading skeleton specific styles */
+.loading-skeleton {
+    background-color: #f3f4f6; /* gray-100 */
+    border-radius: 0.375rem; /* rounded-md */
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+/* Prevent text selection on cards */
+.card-256 {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Smooth focus transitions */
+.card-256:focus-within {
+    outline: 2px solid #108C89;
+    outline-offset: 2px;
+}
+
+/* ===== ACCESSIBILITY ===== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .card-256 {
+        border: 2px solid #000;
+    }
+    
+    .card-hover:hover {
+        border-color: #108C89;
+        border-width: 3px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .card-hover {
+        transition: none;
+    }
+    
+    .card-hover:hover {
+        transform: none;
+    }
+    
+    .download-overlay,
+    .download-icon {
+        transition: none;
+    }
+    
+    .animate-pulse {
+        animation: none;
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+
+@media print {
+    .fixed-256-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 256px);
+        gap: 1rem;
+        page-break-inside: avoid;
+    }
+    
+    .card-256 {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    .download-overlay,
+    .card-hover:hover {
+        display: none;
+        transform: none;
+        box-shadow: none;
+    }
+}

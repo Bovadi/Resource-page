@@ -1,0 +1,43 @@
+/* Fixed 256px Card System */
+.fixed-256-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: center;
+}
+
+.card-256 {
+  width: 256px;
+  flex-shrink: 0;
+}
+
+/* Ensure consistent spacing on all screen sizes */
+@media (min-width: 640px) {
+  .fixed-256-cards {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .fixed-256-cards {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fixed-256-cards {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .fixed-256-cards {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .fixed-256-cards {
+    gap: 1.25rem;
+  }
+}
