@@ -6,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        '3xl': '1920px',
+        '4xl': '2560px',
+      },
       gridTemplateColumns: {
         'auto-fit-cards': 'repeat(auto-fit, minmax(200px, 1fr))',
       },

@@ -158,7 +158,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
   }
 
   return (
-    <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-items-start">
+    <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-7 4xl:grid-cols-8 justify-items-start">
       {loading ? (
         // Show loading skeletons
         Array(8).fill(null).map((_, index) => (
@@ -167,9 +167,9 @@ export const CardGrid: React.FC<CardGridProps> = ({
       ) : (
         // Show actual cards
         cards.map((card) => (
-          <CardItem 
-            key={card.id} 
-            card={card} 
+          <CardItem
+            key={card.id}
+            card={card}
             onClick={onCardClick}
             activeTab={activeTab}
           />
