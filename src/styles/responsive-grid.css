@@ -1,43 +1,44 @@
-/* Fixed 256px Card System */
-.fixed-256-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
-  justify-content: center;
+/* Responsive Grid System for Cards */
+.auto-fit-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
 }
 
-.card-256 {
-  width: 256px;
-  flex-shrink: 0;
-}
-
-/* Ensure consistent spacing on all screen sizes */
+/* Mobile First Approach */
 @media (min-width: 640px) {
-  .fixed-256-cards {
+  .auto-fit-cards {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.25rem;
   }
 }
 
 @media (min-width: 768px) {
-  .fixed-256-cards {
-    gap: 1.25rem;
+  .auto-fit-cards {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .fixed-256-cards {
-    gap: 1.25rem;
+  .auto-fit-cards {
+    grid-template-columns: repeat(auto-fit, minmax(246px, 1fr));
+    gap: 1.5rem;
   }
 }
 
 @media (min-width: 1280px) {
-  .fixed-256-cards {
-    gap: 1.25rem;
+  .auto-fit-cards {
+    grid-template-columns: repeat(auto-fit, minmax(246px, 280px));
+    gap: 1.5rem;
   }
 }
 
+/* Ensure cards don't get too wide on very large screens */
 @media (min-width: 1536px) {
-  .fixed-256-cards {
-    gap: 1.25rem;
+  .auto-fit-cards {
+    grid-template-columns: repeat(auto-fill, 280px);
+    justify-content: center;
+    gap: 2rem;
   }
 }

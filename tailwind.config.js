@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        'auto-fit-256': 'repeat(auto-fit, 256px)',
+        'auto-fit-cards': 'repeat(auto-fit, minmax(200px, 1fr))',
       },
       colors: {
         "neutral-black": "var(--neutral-black)",

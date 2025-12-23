@@ -64,132 +64,12 @@ const PLACEHOLDER_COURSES = [
       'Advanced certification requirements',
       'Complex case management'
     ]
-  },
-  {
-    id: '3',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRkZGMEY4Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZ1bmN0aW9uYWwgQW5hbHlzaXM8L3RleHQ+CjxzdmcNCg==',
-    title: 'Functional Behavior Assessment Fundamentals',
-    type: 'course' as const,
-    description: 'Master the basics of functional behavior assessment',
-    description_long: 'Learn the essential skills needed to conduct thorough functional behavior assessments and develop effective intervention strategies.',
-    video_url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-    test_url: 'https://example.com/test',
-    perfect_for: [
-      'New behavior analysts',
-      'School psychologists',
-      'Special education teachers'
-    ]
-  },
-  {
-    id: '4',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjBGRkY4Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkRhdGEgQ29sbGVjdGlvbjwvdGV4dD4KPHN2Zz4=',
-    title: 'Data Collection and Analysis Methods',
-    type: 'course' as const,
-    description: 'Learn effective data collection strategies',
-    description_long: 'Comprehensive training on various data collection methods and analysis techniques for behavior intervention programs.',
-    video_url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-    test_url: 'https://example.com/test',
-    perfect_for: [
-      'Data collection training',
-      'Research methodology',
-      'Evidence-based practice'
-    ]
-  },
-  {
-    id: '5',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjhGMEZGIi8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNyaXNpcyBNYW5hZ2VtZW50PC90ZXh0Pgo8c3ZnPg==',
-    title: 'Crisis Prevention and Management',
-    type: 'course' as const,
-    description: 'Essential crisis intervention techniques',
-    description_long: 'Learn evidence-based strategies for preventing and managing behavioral crises in various settings.',
-    video_url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-    test_url: 'https://example.com/test',
-    perfect_for: [
-      'Crisis intervention teams',
-      'Emergency response training',
-      'Safety protocol development'
-    ]
-  },
-  {
-    id: '6',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjBGOUZGIi8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkF1dGlzbSBTdXBwb3J0PC90ZXh0Pgo8c3ZnPg==',
-    title: 'Autism Spectrum Support Strategies',
-    type: 'course' as const,
-    description: 'Specialized support for autism spectrum individuals',
-    description_long: 'Comprehensive course covering evidence-based interventions and support strategies for individuals on the autism spectrum.',
-    video_url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-    test_url: 'https://example.com/test',
-    perfect_for: [
-      'Autism specialists',
-      'Family support services',
-      'Educational teams'
-    ]
-  },
-  {
-    id: '7',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRkZGMEY4Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNvbW11bmljYXRpb248L3RleHQ+CjxzdmcNCg==',
-    title: 'Communication and Social Skills Training',
-    type: 'course' as const,
-    description: 'Develop communication and social skills',
-    description_long: 'Learn effective methods for teaching communication and social skills to individuals with developmental disabilities.',
-    video_url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-    test_url: 'https://example.com/test',
-    perfect_for: [
-      'Speech therapists',
-      'Social skills groups',
-      'Communication training'
-    ]
-  },
-  {
-    id: '8',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjBGRkY4Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlRyYW5zaXRpb24gUGxhbm5pbmc8L3RleHQ+CjxzdmcNCg==',
-    title: 'Transition Planning and Life Skills',
-    type: 'course' as const,
-    description: 'Prepare for life transitions and independence',
-    description_long: 'Comprehensive training on transition planning and life skills development for individuals with disabilities.',
-    video_url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-    test_url: 'https://example.com/test',
-    perfect_for: [
-      'Transition coordinators',
-      'Life skills training',
-      'Independence planning'
-    ]
-  },
-  {
-    id: '9',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjhGMEZGIi8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkV0aGljcyBUcmFpbmluZzwvdGV4dD4KPHN2Zz4=',
-    title: 'Professional Ethics and Standards',
-    type: 'course' as const,
-    description: 'Essential ethics training for professionals',
-    description_long: 'Comprehensive coverage of professional ethics, standards, and best practices in behavior analysis and support services.',
-    video_url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-    test_url: 'https://example.com/test',
-    perfect_for: [
-      'Professional development',
-      'Ethics certification',
-      'Standards compliance'
-    ]
-  },
-  {
-    id: '10',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjBGOUZGIi8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZhbWlseSBTdXBwb3J0PC90ZXh0Pgo8c3ZnPg==',
-    title: 'Family-Centered Support Approaches',
-    type: 'course' as const,
-    description: 'Effective family support strategies',
-    description_long: 'Learn how to implement family-centered approaches that empower families and build sustainable support systems.',
-    video_url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-    test_url: 'https://example.com/test',
-    perfect_for: [
-      'Family support coordinators',
-      'Parent training programs',
-      'Community support services'
-    ]
   }
 ];
 
 const PLACEHOLDER_RESOURCES = [
   {
-    id: '11',
+    id: '3',
     image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjBGRkY4Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNhbG0gUG9zdGVyPC90ZXh0Pgo8c3ZnPg==',
     title: '5-4-3-2-1 Calm Visual Poster',
     type: 'resource' as const,
@@ -203,7 +83,7 @@ const PLACEHOLDER_RESOURCES = [
     ]
   },
   {
-    id: '12',
+    id: '4',
     image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRkZGMEY4Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlNlbGYtQWR2b2NhY3k8L3RleHQ+CjxzdmcNCg==',
     title: 'Self-Advocacy Visual: I need help',
     type: 'resource' as const,
@@ -217,7 +97,7 @@ const PLACEHOLDER_RESOURCES = [
     ]
   },
   {
-    id: '13',
+    id: '5',
     image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjhGMEZGIi8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZlZWRpbmcgR3VpZGU8L3RleHQ+CjxzdmcNCg==',
     title: 'Feeding with Care: A Practical Guide',
     type: 'resource' as const,
@@ -231,7 +111,7 @@ const PLACEHOLDER_RESOURCES = [
     ]
   },
   {
-    id: '14',
+    id: '6',
     image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjBGRkY4Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNvbXBhc3Npb24gR3VpZGU8L3RleHQ+CjxzdmcNCg==',
     title: 'Supporting with Compassion & Understanding',
     type: 'resource' as const,
@@ -242,90 +122,6 @@ const PLACEHOLDER_RESOURCES = [
       'Parent education',
       'Teacher training',
       'Building empathy skills'
-    ]
-  },
-  {
-    id: '15',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjBGOUZGIi8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkJlaGF2aW9yIENoYXJ0PC90ZXh0Pgo8c3ZnPg==',
-    title: 'Behavior Tracking Chart Template',
-    type: 'resource' as const,
-    description: 'Customizable behavior tracking charts',
-    description_long: 'Professional behavior tracking chart templates that can be customized for individual needs and various behavioral goals.',
-    download_url: 'https://example.com/download/behavior-chart.pdf',
-    perfect_for: [
-      'Behavior tracking',
-      'Progress monitoring',
-      'Data collection'
-    ]
-  },
-  {
-    id: '16',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRkZGMEY4Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlNvY2lhbCBTdG9yaWVzPC90ZXh0Pgo8c3ZnPg==',
-    title: 'Social Stories Template Collection',
-    type: 'resource' as const,
-    description: 'Ready-to-use social stories templates',
-    description_long: 'A comprehensive collection of social stories templates covering common situations and social skills development.',
-    download_url: 'https://example.com/download/social-stories.pdf',
-    perfect_for: [
-      'Social skills teaching',
-      'Autism support',
-      'Classroom resources'
-    ]
-  },
-  {
-    id: '17',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjhGMEZGIi8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNvbW11bmljYXRpb24gQm9hcmQ8L3RleHQ+CjxzdmcNCg==',
-    title: 'Visual Communication Board',
-    type: 'resource' as const,
-    description: 'Printable communication boards',
-    description_long: 'Customizable visual communication boards with symbols and pictures to support non-verbal communication.',
-    download_url: 'https://example.com/download/communication-board.pdf',
-    perfect_for: [
-      'Non-verbal communication',
-      'AAC support',
-      'Language development'
-    ]
-  },
-  {
-    id: '18',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjBGRkY4Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlNlbnNvcnkgQnJlYWs8L3RleHQ+CjxzdmcNCg==',
-    title: 'Sensory Break Activity Cards',
-    type: 'resource' as const,
-    description: 'Sensory regulation activity cards',
-    description_long: 'A set of activity cards designed to help individuals regulate their sensory needs and take effective breaks.',
-    download_url: 'https://example.com/download/sensory-break-cards.pdf',
-    perfect_for: [
-      'Sensory regulation',
-      'Classroom breaks',
-      'Self-regulation tools'
-    ]
-  },
-  {
-    id: '19',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRkZGMEY4Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVtb3Rpb24gUmVndWxhdGlvbjwvdGV4dD4KPHN2Zz4=',
-    title: 'Emotion Regulation Toolkit',
-    type: 'resource' as const,
-    description: 'Comprehensive emotion regulation resources',
-    description_long: 'A complete toolkit with strategies, worksheets, and visual aids for teaching and practicing emotion regulation skills.',
-    download_url: 'https://example.com/download/emotion-regulation-toolkit.pdf',
-    perfect_for: [
-      'Emotional support',
-      'Coping strategies',
-      'Mental health resources'
-    ]
-  },
-  {
-    id: '20',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjhGMEZGIi8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkRhaWx5IFNjaGVkdWxlPC90ZXh0Pgo8c3ZnPg==',
-    title: 'Visual Daily Schedule Template',
-    type: 'resource' as const,
-    description: 'Customizable daily schedule visuals',
-    description_long: 'Professional visual schedule templates that can be customized for individual daily routines and activities.',
-    download_url: 'https://example.com/download/daily-schedule.pdf',
-    perfect_for: [
-      'Daily routine support',
-      'Transition planning',
-      'Structure and predictability'
     ]
   }
 ];

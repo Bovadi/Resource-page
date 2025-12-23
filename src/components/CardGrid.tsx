@@ -13,13 +13,13 @@ interface CardGridProps {
 }
 
 const LoadingSkeleton: React.FC = () => (
-  <div className="w-[256px] cursor-pointer group animate-pulse flex-shrink-0">
-    <Card className="bg-white border border-gray-200 shadow-sm mb-3 w-[256px]">
+  <div className="w-full max-w-[280px] cursor-pointer group animate-pulse">
+    <Card className="bg-white border border-gray-200 shadow-sm mb-3">
       <CardContent className="p-1">
-        <div className="relative w-full aspect-[256/262] bg-gray-200 rounded-sm"></div>
+        <div className="relative w-full aspect-[246/252] bg-gray-200 rounded-sm"></div>
       </CardContent>
     </Card>
-    <div className="h-4 bg-gray-200 rounded w-3/4 w-[256px]"></div>
+    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
   </div>
 );
 
@@ -48,8 +48,8 @@ const CardItem: React.FC<{
   onClick?: (card: CardType, contentType?: 'course' | 'resource') => void;
   activeTab: 'courses' | 'resources';
 }> = ({ card, onClick, activeTab }) => {
-  // Fixed 256px width with consistent aspect ratio
-  const aspectRatio = 'aspect-[256/262]';
+  // Use consistent aspect ratio for all cards - resource dimensions (246x252px)
+  const aspectRatio = 'aspect-[246/252]';
   
   const handleCardClick = async () => {
     // Handle course cards and resource cards - open modal
@@ -96,9 +96,9 @@ const CardItem: React.FC<{
     }
   };
   return (
-    <div className="w-[256px] flex flex-col flex-shrink-0">
+    <div className="w-full max-w-[560px] flex flex-col">
       <div 
-        className={`group ${
+        className={`group scale-200 ${
           ((activeTab === 'courses' && card.type === 'course') || 
            (activeTab === 'resources' && card.type === 'resource'))
             ? 'cursor-pointer' 
@@ -106,7 +106,7 @@ const CardItem: React.FC<{
         }`}
         onClick={handleCardClick}
       >
-        <Card className="bg-white border border-gray-200 hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-3 w-[256px]">
+        <Card className="bg-white border border-gray-200 hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-3">
           <CardContent className="p-4">
             <div className={`relative w-full ${aspectRatio}`}>
               <img
@@ -135,8 +135,8 @@ const CardItem: React.FC<{
         </Card>
       </div>
       
-      {/* Fixed height title container with 256px width */}
-      <div className="w-[256px]">
+      {/* Fixed height title container to prevent layout shift */}
+      <div>
         <p className="font-normal text-[#343434] text-sm leading-[16.8px] text-left transition-colors duration-200 line-clamp-2 overflow-hidden">
           {card.title}
         </p>
@@ -158,7 +158,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
   }
 
   return (
-    <div className="flex flex-wrap gap-5 justify-start">
+    <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-items-start">
       {loading ? (
         // Show loading skeletons
         Array(8).fill(null).map((_, index) => (
