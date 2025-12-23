@@ -64,7 +64,6 @@ const PLACEHOLDER_COURSES = [
       'Advanced certification requirements',
       'Complex case management'
     ]
-  }
 ];
 
 const PLACEHOLDER_RESOURCES = [
@@ -273,6 +272,7 @@ const PLACEHOLDER_RESOURCES = [
     title: 'Goal Setting Worksheet',
     type: 'resource' as const,
     description: 'Visual worksheet for setting and tracking goals',
+  }
     download_url: 'https://example.com/download/goal-setting.pdf',
     perfect_for: [
       'IEP goal tracking',
