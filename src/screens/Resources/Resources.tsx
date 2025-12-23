@@ -661,7 +661,7 @@ export const Resources = (): JSX.Element => {
       <div className="fixed top-[61px] left-0 right-0 bottom-0 flex flex-col lg:flex-row">
         {/* Sidebar */}
         <aside
-          className={`fixed top-[61px] left-0 w-[280px] sm:w-[320px] lg:w-72 h-[calc(100vh-61px)] bg-white border-r border-gray-200 z-40 lg:z-10 lg:relative lg:top-0 transition-transform duration-300 ease-in-out ${
+          className={`fixed top-[61px] left-0 w-[280px] sm:w-[320px] lg:w-72 h-[calc(100vh-61px)] bg-white z-40 lg:z-10 lg:relative lg:top-0 transition-transform duration-300 ease-in-out ${
             isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
           }`}
         >
