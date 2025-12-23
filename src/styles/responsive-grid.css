@@ -1,54 +1,44 @@
-/* Hybrid Responsive Grid System for Cards
- * Uses fixed column counts for small/medium screens (predictable layout)
- * Switches to auto-fit pattern for large screens (prevents tile scaling)
- */
-
-.hybrid-responsive-grid {
+/* Responsive Grid System for Cards */
+.auto-fit-cards {
   display: grid;
-  gap: 1.25rem;
-  justify-items: start;
-
-  /* Mobile: 1 column */
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
 }
 
-/* Small screens (640px+): 2 columns with flexible width */
+/* Mobile First Approach */
 @media (min-width: 640px) {
-  .hybrid-responsive-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* Medium screens (768px+): 3 columns with flexible width */
-@media (min-width: 768px) {
-  .hybrid-responsive-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-/* Large screens (1024px+): 4 columns with flexible width */
-@media (min-width: 1024px) {
-  .hybrid-responsive-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-/* Extra-large screens (1280px+): Switch to auto-fit pattern
- * Tiles stop scaling and additional columns are added instead
- * minmax(280px, 280px) maintains fixed tile size
- */
-@media (min-width: 1280px) {
-  .hybrid-responsive-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
-    justify-content: start;
+  .auto-fit-cards {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.25rem;
   }
 }
 
-/* 2XL screens (1536px+): Maintain auto-fit with slightly larger gap */
-@media (min-width: 1536px) {
-  .hybrid-responsive-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
+@media (min-width: 768px) {
+  .auto-fit-cards {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .auto-fit-cards {
+    grid-template-columns: repeat(auto-fit, minmax(246px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .auto-fit-cards {
+    grid-template-columns: repeat(auto-fit, minmax(246px, 280px));
+    gap: 1.5rem;
+  }
+}
+
+/* Ensure cards don't get too wide on very large screens */
+@media (min-width: 1536px) {
+  .auto-fit-cards {
+    grid-template-columns: repeat(auto-fill, 280px);
+    justify-content: center;
+    gap: 2rem;
   }
 }

@@ -13,7 +13,7 @@ interface CardGridProps {
 }
 
 const LoadingSkeleton: React.FC = () => (
-  <div className="w-full xl:max-w-[280px] cursor-pointer group animate-pulse">
+  <div className="w-full max-w-[280px] cursor-pointer group animate-pulse">
     <Card className="bg-white border border-gray-200 shadow-sm mb-3">
       <CardContent className="p-1">
         <div className="relative w-full aspect-[246/252] bg-gray-200 rounded-sm"></div>
@@ -96,12 +96,12 @@ const CardItem: React.FC<{
     }
   };
   return (
-    <div className="w-full xl:max-w-[280px] flex flex-col">
-      <div
+    <div className="w-full max-w-[560px] flex flex-col">
+      <div 
         className={`group scale-200 ${
-          ((activeTab === 'courses' && card.type === 'course') ||
+          ((activeTab === 'courses' && card.type === 'course') || 
            (activeTab === 'resources' && card.type === 'resource'))
-            ? 'cursor-pointer'
+            ? 'cursor-pointer' 
             : 'cursor-default'
         }`}
         onClick={handleCardClick}
@@ -158,7 +158,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
   }
 
   return (
-    <div className="hybrid-responsive-grid">
+    <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-items-start">
       {loading ? (
         // Show loading skeletons
         Array(8).fill(null).map((_, index) => (
@@ -167,9 +167,9 @@ export const CardGrid: React.FC<CardGridProps> = ({
       ) : (
         // Show actual cards
         cards.map((card) => (
-          <CardItem
-            key={card.id}
-            card={card}
+          <CardItem 
+            key={card.id} 
+            card={card} 
             onClick={onCardClick}
             activeTab={activeTab}
           />
