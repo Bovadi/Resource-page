@@ -123,7 +123,6 @@ const PLACEHOLDER_RESOURCES = [
       'Teacher training',
       'Building empathy skills'
     ]
-  }
   },
   {
     id: '7',
@@ -283,7 +282,7 @@ const PLACEHOLDER_RESOURCES = [
   },
   {
     id: '19',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjVGRkY1Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleXQtYW5jaG9yPSJtaWRkbGUiPkZyaWVuZHNoaXAgU2tpbGxzPC90ZXh0Pgo8c3ZnPg==',
+    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjVGRkY1Ii8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZyaWVuZHNoaXAgU2tpbGxzPC90ZXh0Pgo8c3ZnPg==',
     title: 'Friendship Skills Social Guide',
     type: 'resource' as const,
     description: 'Guide for developing friendship and social skills',
@@ -332,6 +331,7 @@ const PLACEHOLDER_RESOURCES = [
       'Predictability',
       'Independence building'
     ]
+  }
 ];
 
 export const Resources = (): JSX.Element => {
