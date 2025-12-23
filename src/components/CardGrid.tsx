@@ -13,13 +13,13 @@ interface CardGridProps {
 }
 
 const LoadingSkeleton: React.FC = () => (
-  <div className="w-full max-w-[280px] cursor-pointer group animate-pulse">
-    <Card className="bg-white border border-gray-200 shadow-sm mb-3">
-      <CardContent className="p-1">
+  <div className="w-full max-w-[560px] cursor-pointer group animate-pulse">
+    <Card className="bg-white border border-gray-200 shadow-sm mb-2 sm:mb-3">
+      <CardContent className="p-2 sm:p-3 md:p-4">
         <div className="relative w-full aspect-[246/252] bg-gray-200 rounded-sm"></div>
       </CardContent>
     </Card>
-    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+    <div className="h-3 sm:h-4 bg-gray-200 rounded w-3/4 mx-1"></div>
   </div>
 );
 
@@ -97,17 +97,17 @@ const CardItem: React.FC<{
   };
   return (
     <div className="w-full max-w-[560px] flex flex-col">
-      <div 
-        className={`group scale-200 ${
-          ((activeTab === 'courses' && card.type === 'course') || 
+      <div
+        className={`group ${
+          ((activeTab === 'courses' && card.type === 'course') ||
            (activeTab === 'resources' && card.type === 'resource'))
-            ? 'cursor-pointer' 
+            ? 'cursor-pointer'
             : 'cursor-default'
         }`}
         onClick={handleCardClick}
       >
-        <Card className="bg-white border border-gray-200 hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-3">
-          <CardContent className="p-4">
+        <Card className="bg-white border border-gray-200 hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-2 sm:mb-3">
+          <CardContent className="p-2 sm:p-3 md:p-4">
             <div className={`relative w-full ${aspectRatio}`}>
               <img
                 className="w-full h-full object-cover rounded-sm"
@@ -115,12 +115,12 @@ const CardItem: React.FC<{
                 src={card.image}
                 loading="lazy"
               />
-            
+
               {/* Download indicator for downloadable resources */}
               {activeTab === 'resources' && card.type === 'resource' && (
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-white rounded-full p-2 shadow-lg">
-                    <svg className="w-6 h-6 text-custom-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-custom-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       {card.download_url ? (
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       ) : (
@@ -134,10 +134,10 @@ const CardItem: React.FC<{
           </CardContent>
         </Card>
       </div>
-      
+
       {/* Fixed height title container to prevent layout shift */}
-      <div>
-        <p className="font-normal text-[#343434] text-sm leading-[16.8px] text-left transition-colors duration-200 line-clamp-2 overflow-hidden">
+      <div className="px-1">
+        <p className="font-normal text-[#343434] text-xs sm:text-sm leading-tight sm:leading-[16.8px] text-left transition-colors duration-200 line-clamp-2 overflow-hidden">
           {card.title}
         </p>
       </div>
@@ -158,7 +158,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
   }
 
   return (
-    <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-7 4xl:grid-cols-8 justify-items-start">
+    <div className="grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-7 4xl:grid-cols-8 justify-items-start">
       {loading ? (
         // Show loading skeletons
         Array(8).fill(null).map((_, index) => (
