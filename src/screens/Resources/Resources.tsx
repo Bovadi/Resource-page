@@ -342,6 +342,7 @@ export const Resources = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
   const [showContentManager, setShowContentManager] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [labels, setLabels] = useState(PLACEHOLDER_LABELS);
   const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
   const [contentCounts, setContentCounts] = useState<Record<string, number>>({
@@ -437,43 +438,44 @@ export const Resources = (): JSX.Element => {
   // Handle navigation label click
   const handleLabelClick = (labelSlug: string) => {
     setSelectedLabel(labelSlug);
-    // Don't show loading skeleton for navigation - keep existing cards visible
-    
+    setIsSidebarOpen(false); // Close sidebar on mobile after selection
+
     // Only show loading skeleton on initial load, not during navigation
     const isInitialLoad = cards.length === 0;
     if (isInitialLoad) {
       setLoading(true);
     }
-    
+
     const cardType = activeTab === 'courses' ? 'course' : 'resource';
-    
+
     // Load data with conditional loading state
     if (isInitialLoad) {
       setLoading(true);
     }
     setError(null);
-    
+
     loadData(cardType, labelSlug);
   };
 
   // Handle "Show All" button click
   const handleShowAll = () => {
     setSelectedLabel(null);
-    
+    setIsSidebarOpen(false); // Close sidebar on mobile after selection
+
     // Only show loading skeleton on initial load, not during navigation
     const isInitialLoad = cards.length === 0;
     if (isInitialLoad) {
       setLoading(true);
     }
-    
+
     const cardType = activeTab === 'courses' ? 'course' : 'resource';
-    
+
     // Load data with conditional loading state
     if (isInitialLoad) {
       setLoading(true);
     }
     setError(null);
-    
+
     loadData(cardType); // No labelSlug parameter = show all
   };
 
@@ -585,12 +587,34 @@ export const Resources = (): JSX.Element => {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 w-full h-[61px] bg-[#f8f5ef] z-20">
         <div className="flex items-center justify-between px-4 sm:px-5 h-full">
-          {/* Logo */}
-          <img
-            className="h-4 sm:h-6 w-auto object-contain"
-            alt="Logo"
-            src="/large-3.png"
-          />
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Hamburger Menu Button - Mobile Only */}
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="lg:hidden p-2 hover:bg-gray-200 rounded-lg transition-colors duration-200 -ml-2"
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-6 h-6 text-[#343434]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isSidebarOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+
+            {/* Logo */}
+            <img
+              className="h-4 sm:h-6 w-auto object-contain"
+              alt="Logo"
+              src="/large-3.png"
+            />
+          </div>
 
           {/* Main Navigation - Hidden on mobile, shown on tablet+ */}
           <div className="hidden md:flex items-center gap-4 lg:gap-6 h-full">
@@ -625,18 +649,30 @@ export const Resources = (): JSX.Element => {
         <Separator className="bg-[#d9d9d9]" />
       </header>
 
+      {/* Backdrop Overlay - Mobile Only */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       <div className="fixed top-[61px] left-0 right-0 bottom-0 flex flex-col lg:flex-row">
         {/* Sidebar */}
-        <aside className="fixed top-[61px] left-0 w-full lg:w-72 h-[calc(100vh-61px)] bg-white lg:bg-transparent border-b lg:border-b-0 border-gray-200 z-10 lg:relative lg:top-0">
-          <nav className="p-4 lg:p-6 lg:pt-[72px] h-full overflow-y-auto">
-            
-            <ul className="space-y-2 lg:space-y-4">
+        <aside
+          className={`fixed top-[61px] left-0 w-[280px] sm:w-[320px] lg:w-72 h-[calc(100vh-61px)] bg-white border-r border-gray-200 z-40 lg:z-10 lg:relative lg:top-0 transition-transform duration-300 ease-in-out ${
+            isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          }`}
+        >
+          <nav className="p-4 sm:p-5 lg:p-6 lg:pt-[72px] h-full overflow-y-auto">
+            <ul className="space-y-2 lg:space-y-3">
               <li>
                 <button
                   onClick={() => handleShowAll()}
-                  className={`w-full text-left py-3 px-4 text-sm rounded-lg transition-all duration-200 hover:bg-[#f0f0f1] hover:shadow-sm active:scale-[0.98] min-h-[48px] flex items-center box-border ${
+                  className={`w-full text-left py-3 px-4 text-sm sm:text-base rounded-lg transition-all duration-200 hover:bg-[#f0f0f1] hover:shadow-sm active:scale-[0.98] min-h-[48px] flex items-center box-border ${
                     selectedLabel === null
-                      ? "bg-[#f8f8f9] text-[#343434] shadow-sm border border-gray-100 font-medium" 
+                      ? "bg-[#f8f8f9] text-[#343434] shadow-sm border border-gray-100 font-medium"
                       : "text-gray-600 hover:text-[#343434] hover:bg-gray-50 border border-transparent"
                   }`}
                 >
@@ -647,9 +683,9 @@ export const Resources = (): JSX.Element => {
                 <li key={label.id}>
                   <button
                     onClick={() => handleLabelClick(label.slug)}
-                    className={`w-full text-left py-3 px-4 text-sm rounded-lg transition-all duration-200 hover:bg-[#f0f0f1] hover:shadow-sm active:scale-[0.98] min-h-[48px] flex items-center box-border ${
+                    className={`w-full text-left py-3 px-4 text-sm sm:text-base rounded-lg transition-all duration-200 hover:bg-[#f0f0f1] hover:shadow-sm active:scale-[0.98] min-h-[48px] flex items-center box-border ${
                       selectedLabel === label.slug
-                        ? "bg-[#f8f8f9] shadow-sm border border-gray-100 font-medium" 
+                        ? "bg-[#f8f8f9] shadow-sm border border-gray-100 font-medium"
                         : "border border-transparent hover:bg-opacity-80"
                     }`}
                   >
@@ -662,17 +698,17 @@ export const Resources = (): JSX.Element => {
         </aside>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col lg:ml-0 mt-[calc(100vh-61px)] lg:mt-0">
+        <div className="flex-1 flex flex-col w-full lg:ml-0">
           {/* Sub Navigation */}
-          <div className="fixed top-[61px] lg:top-[61px] left-0 lg:left-72 right-0 flex items-center py-4 bg-white lg:bg-transparent z-10 border-b lg:border-b-0 border-gray-200 flex gap-4">
+          <div className="w-full flex items-center px-4 py-3 sm:py-4 bg-white lg:bg-transparent z-10 border-b lg:border-b-0 border-gray-200 gap-3 sm:gap-4">
             {subTabs.map((tab, index) => (
               <button
                 key={index}
                 onClick={() => handleTabClick(tab.key)}
                 disabled={loading || isTabDisabled(tab.key)}
-                className={`px-4 py-2 text-sm rounded-lg transition-colors duration-200 min-h-[40px] flex items-center box-border ${
+                className={`px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg transition-colors duration-200 min-h-[44px] sm:min-h-[48px] flex items-center box-border ${
                   tab.active
-                    ? "bg-[#f8f8f9] text-[#343434] shadow-sm" 
+                    ? "bg-[#f8f8f9] text-[#343434] shadow-sm"
                     : isTabDisabled(tab.key)
                     ? "text-gray-400 bg-gray-50 cursor-not-allowed border border-transparent"
                     : "text-gray-600 hover:text-[#343434] hover:bg-gray-50 border border-transparent"
@@ -689,9 +725,9 @@ export const Resources = (): JSX.Element => {
           </div>
 
           {/* Card Grid Container */}
-          <main className="fixed top-[113px] lg:top-[113px] left-0 lg:left-72 right-0 bottom-0 overflow-y-auto p-4 lg:px-6 lg:pt-6 lg:pb-6 bg-[#F8F5EF] rounded-tl-[16px] mt-4">
+          <main className="flex-1 w-full overflow-y-auto p-4 sm:p-5 lg:px-6 lg:pt-6 lg:pb-6 bg-[#F8F5EF] lg:rounded-tl-[16px]">
             <div className="min-h-full">
-              <CardGrid 
+              <CardGrid
                 cards={cards}
                 loading={loading}
                 error={error}
