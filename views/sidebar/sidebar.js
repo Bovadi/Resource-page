@@ -73,21 +73,21 @@ export class Sidebar {
 
   toggle() {
     this.isOpen = !this.isOpen;
-    const container = document.getElementById('sidebar-container');
-    if (container) {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) {
       if (this.isOpen) {
-        container.classList.remove('-translate-x-full');
+        sidebar.classList.remove('-translate-x-full');
       } else {
-        container.classList.add('-translate-x-full');
+        sidebar.classList.add('-translate-x-full');
       }
     }
   }
 
   close() {
     this.isOpen = false;
-    const container = document.getElementById('sidebar-container');
-    if (container) {
-      container.classList.add('-translate-x-full');
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) {
+      sidebar.classList.add('-translate-x-full');
     }
   }
 }
