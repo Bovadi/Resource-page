@@ -3,8 +3,7 @@ import { Sidebar } from './views/sidebar/sidebar.js';
 import { Tabs } from './views/tabs/tabs.js';
 import { CardGrid } from './views/card-grid/card-grid.js';
 import { Modal } from './views/modal/modal.js';
-import { DEMO_CARDS } from './src/data/demoData.js';
-import { ContentService } from './src/services/contentService.js';
+import { SAMPLE_CARDS } from './src/data/demoData.js';
 
 class App {
   constructor() {
@@ -17,7 +16,7 @@ class App {
       }
     };
 
-    this.allCards = [];
+    this.allCards = SAMPLE_CARDS;
 
     this.header = new Header('header-container');
     this.sidebar = new Sidebar('sidebar-container');
@@ -30,33 +29,8 @@ class App {
 
   async init() {
     await this.loadComponents();
-    await this.loadData();
     this.setupEventHandlers();
     this.filterAndDisplayCards();
-  }
-
-  async loadData() {
-    try {
-      const contentData = await ContentService.getContent();
-
-      if (contentData && contentData.length > 0) {
-        this.allCards = contentData.map(item => ({
-          id: item.id,
-          image: item.images?.[0]?.image?.file_path || '',
-          title: item.title,
-          type: item.type,
-          description: item.description,
-          video_url: item.video_url,
-          download_url: item.download_url,
-          perfect_for: Array.isArray(item.perfect_for) ? item.perfect_for : []
-        }));
-      } else {
-        this.allCards = DEMO_CARDS;
-      }
-    } catch (error) {
-      console.warn('Failed to load from Supabase, using demo data:', error);
-      this.allCards = DEMO_CARDS;
-    }
   }
 
   async loadComponents() {

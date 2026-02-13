@@ -1,12 +1,33 @@
-export const DEMO_LABELS = [
-  { id: '1', name: 'Welcome Start here', slug: 'welcome-start-here' },
-  { id: '2', name: 'Developing FBA & BIPs', slug: 'developing-fba-bips' },
-  { id: '3', name: 'Stakeholder Support Guides', slug: 'stakeholder-support-guides' },
-  { id: '4', name: 'Visual Supports', slug: 'visual-supports' },
-  { id: '5', name: 'Resources for Stakeholders', slug: 'resources-for-stakeholders' }
-];
+/**
+ * SAMPLE DATA FOR RESOURCES PORTAL
+ *
+ * This file contains static sample data for the application.
+ * No database connection required - all data is defined here.
+ *
+ * Data Structure:
+ * ---------------
+ * Each card object has the following properties:
+ *
+ * @property {string} id - Unique identifier for the card
+ * @property {string} image - Image URL (can be base64 data URI or external URL)
+ * @property {string} title - Display title of the resource/course
+ * @property {string} type - Either 'resource' or 'course'
+ * @property {string} description - Brief description of the content
+ * @property {string} video_url - (Optional) URL for video content (for courses)
+ * @property {string} download_url - (Optional) URL for downloadable content (for resources)
+ * @property {Array<string>} perfect_for - Array of use case tags
+ *
+ * Usage:
+ * ------
+ * Import and use this data in your components:
+ *
+ *   import { SAMPLE_CARDS } from './src/data/demoData.js';
+ *
+ *   const resources = SAMPLE_CARDS.filter(card => card.type === 'resource');
+ *   const courses = SAMPLE_CARDS.filter(card => card.type === 'course');
+ */
 
-export const DEMO_CARDS = [
+export const SAMPLE_CARDS = [
   {
     id: '1',
     image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ2IiBoZWlnaHQ9IjI1MiIgdmlld0JveD0iMCAwIDI0NiAyNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNDYiIGhlaWdodD0iMjUyIiBmaWxsPSIjRjBGOUZGIi8+Cjx0ZXh0IHg9IjEyMyIgeT0iMTI2IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNvdXJzZSBJbWFnZTwvdGV4dD4KPHN2Zz4=',
