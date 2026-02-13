@@ -3,21 +3,24 @@ import { Sidebar } from './views/sidebar/sidebar.js';
 import { Tabs } from './views/tabs/tabs.js';
 import { CardGrid } from './views/card-grid/card-grid.js';
 import { Modal } from './views/modal/modal.js';
-import { DEMO_LABELS, DEMO_CARDS } from './src/data/demoData.js';
+import { DEMO_CARDS } from './src/data/demoData.js';
+import { ContentService } from './src/services/contentService.js';
 
 class App {
   constructor() {
     this.state = {
       activeTab: 'resources',
-      selectedLabel: null,
-      isSidebarOpen: false
+      isSidebarOpen: false,
+      filters: {
+        madeByYou: false,
+        sharedWithYou: false
+      }
     };
 
-    this.labels = DEMO_LABELS;
-    this.allCards = DEMO_CARDS;
+    this.allCards = [];
 
     this.header = new Header('header-container');
-    this.sidebar = new Sidebar('sidebar-container', this.labels);
+    this.sidebar = new Sidebar('sidebar-container');
     this.tabs = new Tabs('tabs-container');
     this.cardGrid = new CardGrid('main-container');
     this.modal = new Modal('modal-container');
@@ -27,8 +30,33 @@ class App {
 
   async init() {
     await this.loadComponents();
+    await this.loadData();
     this.setupEventHandlers();
     this.filterAndDisplayCards();
+  }
+
+  async loadData() {
+    try {
+      const contentData = await ContentService.getContent();
+
+      if (contentData && contentData.length > 0) {
+        this.allCards = contentData.map(item => ({
+          id: item.id,
+          image: item.images?.[0]?.image?.file_path || '',
+          title: item.title,
+          type: item.type,
+          description: item.description,
+          video_url: item.video_url,
+          download_url: item.download_url,
+          perfect_for: Array.isArray(item.perfect_for) ? item.perfect_for : []
+        }));
+      } else {
+        this.allCards = DEMO_CARDS;
+      }
+    } catch (error) {
+      console.warn('Failed to load from Supabase, using demo data:', error);
+      this.allCards = DEMO_CARDS;
+    }
   }
 
   async loadComponents() {
@@ -46,11 +74,13 @@ class App {
       this.toggleSidebar();
     };
 
-    this.sidebar.onLabelSelect = (labelSlug) => {
-      this.state.selectedLabel = labelSlug;
-      this.state.isSidebarOpen = false;
-      this.sidebar.close();
+    this.sidebar.onFilterChange = (filters) => {
+      this.state.filters = filters;
       this.filterAndDisplayCards();
+    };
+
+    this.sidebar.onActionClick = (action) => {
+      console.log('Action clicked:', action);
     };
 
     this.tabs.onTabSwitch = (tabKey) => {
@@ -102,13 +132,6 @@ class App {
 
     try {
       let filtered = this.allCards.filter(card => card.type === this.getCardType());
-
-      if (this.state.selectedLabel === 'visual-supports') {
-        filtered = filtered.filter(card =>
-          card.title.toLowerCase().includes('visual') ||
-          card.title.toLowerCase().includes('poster')
-        );
-      }
 
       setTimeout(() => {
         this.cardGrid.setLoading(false);
