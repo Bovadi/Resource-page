@@ -2,6 +2,7 @@ export class Header {
   constructor(containerId) {
     this.containerId = containerId;
     this.onHamburgerClick = null;
+    this.dropdownOpen = false;
   }
 
   async load() {
@@ -22,6 +23,59 @@ export class Header {
           this.onHamburgerClick();
         }
       });
+    }
+
+    const profileBtn = document.getElementById('profile-dropdown-btn');
+    const profileMenu = document.getElementById('profile-dropdown-menu');
+    const profileCaret = document.getElementById('profile-caret');
+
+    if (profileBtn && profileMenu) {
+      profileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.dropdownOpen = !this.dropdownOpen;
+        this.updateDropdownState(profileMenu, profileCaret);
+      });
+
+      document.addEventListener('click', () => {
+        if (this.dropdownOpen) {
+          this.dropdownOpen = false;
+          this.updateDropdownState(profileMenu, profileCaret);
+        }
+      });
+
+      profileMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    const navTabs = document.querySelectorAll('.nav-tab');
+    navTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        navTabs.forEach(t => {
+          t.classList.remove('bg-[#343434]', 'text-white', 'shadow-sm');
+          t.classList.add('text-gray-500', 'hover:text-gray-700');
+        });
+        tab.classList.remove('text-gray-500', 'hover:text-gray-700');
+        tab.classList.add('bg-[#343434]', 'text-white', 'shadow-sm');
+      });
+    });
+  }
+
+  updateDropdownState(menu, caret) {
+    if (this.dropdownOpen) {
+      menu.classList.remove('hidden');
+      setTimeout(() => {
+        menu.classList.remove('opacity-0', 'scale-95');
+        menu.classList.add('opacity-100', 'scale-100');
+      }, 10);
+      if (caret) caret.classList.add('rotate-180');
+    } else {
+      menu.classList.add('opacity-0', 'scale-95');
+      menu.classList.remove('opacity-100', 'scale-100');
+      if (caret) caret.classList.remove('rotate-180');
+      setTimeout(() => {
+        menu.classList.add('hidden');
+      }, 200);
     }
   }
 
