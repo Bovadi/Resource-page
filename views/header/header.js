@@ -53,9 +53,9 @@ export class Header {
       tab.addEventListener('click', () => {
         navTabs.forEach(t => {
           t.classList.remove('bg-white', 'text-gray-900', 'shadow-sm');
-          t.style.color = '#CBC4B6';
+          t.classList.add('text-gray-400', 'hover:text-gray-600');
         });
-        tab.style.color = '';
+        tab.classList.remove('text-gray-400', 'hover:text-gray-600');
         tab.classList.add('bg-white', 'text-gray-900', 'shadow-sm');
       });
     });
