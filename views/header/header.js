@@ -52,11 +52,11 @@ export class Header {
     navTabs.forEach(tab => {
       tab.addEventListener('click', () => {
         navTabs.forEach(t => {
-          t.classList.remove('bg-[#343434]', 'text-white', 'shadow-sm');
-          t.classList.add('text-gray-500', 'hover:text-gray-700');
+          t.classList.remove('bg-white', 'text-gray-900', 'shadow-sm');
+          t.classList.add('text-gray-400', 'hover:text-gray-600');
         });
-        tab.classList.remove('text-gray-500', 'hover:text-gray-700');
-        tab.classList.add('bg-[#343434]', 'text-white', 'shadow-sm');
+        tab.classList.remove('text-gray-400', 'hover:text-gray-600');
+        tab.classList.add('bg-white', 'text-gray-900', 'shadow-sm');
       });
     });
   }
