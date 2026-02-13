@@ -1,8 +1,9 @@
 export class Header {
-  constructor(containerId) {
+  constructor(containerId, defaultTab = 'resources') {
     this.containerId = containerId;
     this.onHamburgerClick = null;
     this.dropdownOpen = false;
+    this.activeTab = defaultTab;
   }
 
   async load() {
@@ -12,6 +13,7 @@ export class Header {
     if (container) {
       container.innerHTML = html;
       this.attachEventListeners();
+      this.setActiveTab(this.activeTab);
     }
   }
 
@@ -51,13 +53,23 @@ export class Header {
     const navTabs = document.querySelectorAll('.nav-tab');
     navTabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        navTabs.forEach(t => {
-          t.classList.remove('bg-white', 'text-gray-900', 'shadow-sm');
-          t.classList.add('text-gray-400', 'hover:text-gray-600');
-        });
-        tab.classList.remove('text-gray-400', 'hover:text-gray-600');
-        tab.classList.add('bg-white', 'text-gray-900', 'shadow-sm');
+        const tabName = tab.dataset.tab;
+        this.setActiveTab(tabName);
       });
+    });
+  }
+
+  setActiveTab(tabName) {
+    this.activeTab = tabName;
+    const navTabs = document.querySelectorAll('.nav-tab');
+    navTabs.forEach(tab => {
+      if (tab.dataset.tab === tabName) {
+        tab.classList.remove('text-[#918979]', 'hover:text-black');
+        tab.classList.add('bg-white', 'text-black', 'shadow-sm');
+      } else {
+        tab.classList.remove('bg-white', 'text-black', 'shadow-sm');
+        tab.classList.add('text-[#918979]', 'hover:text-black');
+      }
     });
   }
 
