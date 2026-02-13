@@ -1,6 +1,5 @@
 import { Header } from './views/header/header.js';
 import { Sidebar } from './views/sidebar/sidebar.js';
-import { Tabs } from './views/tabs/tabs.js';
 import { CardGrid } from './views/card-grid/card-grid.js';
 import { Modal } from './views/modal/modal.js';
 import { SAMPLE_CARDS } from './src/data/demoData.js';
@@ -20,7 +19,6 @@ class App {
 
     this.header = new Header('header-container');
     this.sidebar = new Sidebar('sidebar-container');
-    this.tabs = new Tabs('tabs-container');
     this.cardGrid = new CardGrid('main-container');
     this.modal = new Modal('modal-container');
 
@@ -37,7 +35,6 @@ class App {
     await Promise.all([
       this.header.load(),
       this.sidebar.load(),
-      this.tabs.load(),
       this.cardGrid.load(),
       this.modal.load()
     ]);
@@ -55,11 +52,6 @@ class App {
 
     this.sidebar.onActionClick = (action) => {
       console.log('Action clicked:', action);
-    };
-
-    this.tabs.onTabSwitch = (tabKey) => {
-      this.state.activeTab = tabKey;
-      this.filterAndDisplayCards();
     };
 
     this.cardGrid.onCardClick = (card) => {
