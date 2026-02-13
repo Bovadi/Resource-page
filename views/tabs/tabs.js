@@ -42,12 +42,13 @@ export class Tabs {
     const buttons = document.querySelectorAll('[data-action="switch-tab"]');
     const activeClass = "bg-[#f8f8f9] text-[#343434] shadow-sm";
     const inactiveClass = "text-gray-600 hover:text-[#343434] hover:bg-gray-50 border border-transparent";
+    const baseClass = "tab-button w-32 sm:w-40 px-4 sm:px-6 py-3 sm:py-3.5 text-base sm:text-lg rounded-lg transition-colors duration-200 min-h-[52px] sm:min-h-[56px] flex items-center justify-center box-border font-medium";
 
     buttons.forEach(button => {
       if (button.dataset.tab === this.activeTab) {
-        button.className = `tab-button active px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg transition-colors duration-200 min-h-[44px] sm:min-h-[48px] flex items-center box-border ${activeClass}`;
+        button.className = `${baseClass} active ${activeClass}`;
       } else {
-        button.className = `tab-button px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg transition-colors duration-200 min-h-[44px] sm:min-h-[48px] flex items-center box-border ${inactiveClass}`;
+        button.className = `${baseClass} ${inactiveClass}`;
       }
     });
   }
