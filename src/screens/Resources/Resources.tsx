@@ -544,11 +544,6 @@ export const Resources = (): JSX.Element => {
     { name: "Strategies", active: false },
   ];
 
-  // Sub navigation tabs
-  const subTabs = [
-    { name: "Courses", active: activeTab === 'courses', key: 'courses' as const },
-    { name: "Resources", active: activeTab === 'resources', key: 'resources' as const },
-  ];
 
   // Show content manager for admin purposes
   if (showContentManager) {
@@ -699,31 +694,6 @@ export const Resources = (): JSX.Element => {
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col w-full lg:ml-0">
-          {/* Sub Navigation */}
-          <div className="w-full flex items-center px-4 py-3 sm:py-4 bg-white lg:bg-transparent z-10 border-b lg:border-b-0 border-gray-200 gap-3 sm:gap-4">
-            {subTabs.map((tab, index) => (
-              <button
-                key={index}
-                onClick={() => handleTabClick(tab.key)}
-                disabled={loading || isTabDisabled(tab.key)}
-                className={`px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg transition-colors duration-200 min-h-[44px] sm:min-h-[48px] flex items-center box-border ${
-                  tab.active
-                    ? "bg-[#f8f8f9] text-[#343434] shadow-sm"
-                    : isTabDisabled(tab.key)
-                    ? "text-gray-400 bg-gray-50 cursor-not-allowed border border-transparent"
-                    : "text-gray-600 hover:text-[#343434] hover:bg-gray-50 border border-transparent"
-                } ${(loading || isTabDisabled(tab.key)) ? 'opacity-50 cursor-not-allowed' : ''}`}
-              >
-                {tab.name}
-                {selectedLabel && contentCountsByType[selectedLabel] && (
-                  <span className="ml-2 text-xs opacity-60">
-                    ({tab.key === 'courses' ? contentCountsByType[selectedLabel].courses : contentCountsByType[selectedLabel].resources})
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-
           {/* Card Grid Container */}
           <main className="flex-1 w-full overflow-y-auto p-4 sm:p-5 lg:px-6 lg:pt-6 lg:pb-6 bg-[#F8F5EF] lg:rounded-tl-[16px]">
             <div className="min-h-full">
