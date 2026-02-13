@@ -13,16 +13,16 @@
   </head>
   <body>
     <div id="app">
-      <div class="fixed inset-0 w-full h-screen bg-white border border-solid border-black overflow-hidden">
-        <div id="header-container"></div>
+      <div class="fixed inset-0 w-full h-screen bg-white border border-solid border-black overflow-hidden flex flex-col">
+        <div id="header-container" class="flex-shrink-0"></div>
 
         <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden hidden"></div>
 
-        <div class="fixed top-[80px] left-0 right-0 bottom-0 flex flex-col lg:flex-row">
+        <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
           <div id="sidebar-container"></div>
 
-          <div class="flex-1 flex flex-col w-full lg:ml-0">
-            <div id="main-container" class="flex-1 flex flex-col"></div>
+          <div class="flex-1 flex flex-col w-full lg:ml-0 overflow-hidden">
+            <div id="main-container" class="flex-1 flex flex-col overflow-hidden"></div>
           </div>
         </div>
 
