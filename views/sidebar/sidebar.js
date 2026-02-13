@@ -3,11 +3,6 @@ export class Sidebar {
     this.containerId = containerId;
     this.isOpen = false;
     this.onActionClick = null;
-    this.filters = {
-      madeByYou: false,
-      sharedWithYou: false
-    };
-    this.onFilterChange = null;
   }
 
   async load() {
@@ -17,7 +12,6 @@ export class Sidebar {
     if (container) {
       container.innerHTML = html;
       this.renderActions();
-      this.renderFilters();
       this.attachEventListeners();
     }
   }
@@ -65,43 +59,6 @@ export class Sidebar {
     actionsContainer.innerHTML = actionsHTML;
   }
 
-  renderFilters() {
-    const filtersContainer = document.getElementById('sidebar-filters');
-    if (!filtersContainer) return;
-
-    const checkboxBaseClass = "w-5 h-5 rounded border-2 border-gray-300 bg-white transition-all duration-200 flex items-center justify-center flex-shrink-0 cursor-pointer";
-    const checkboxCheckedClass = "bg-[#343434] border-[#343434]";
-    const labelClass = "flex items-center gap-3 w-full py-3 px-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-all duration-200 select-none";
-
-    const filtersHTML = `
-      <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-1">Filter BIPs</h3>
-      <div class="space-y-1">
-        <label class="${labelClass}">
-          <div class="${checkboxBaseClass} ${this.filters.madeByYou ? checkboxCheckedClass : ''}" data-filter="madeByYou">
-            ${this.filters.madeByYou ? `
-              <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-            ` : ''}
-          </div>
-          <span class="text-sm text-[#343434] font-medium">Made by You</span>
-        </label>
-        <label class="${labelClass}">
-          <div class="${checkboxBaseClass} ${this.filters.sharedWithYou ? checkboxCheckedClass : ''}" data-filter="sharedWithYou">
-            ${this.filters.sharedWithYou ? `
-              <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-            ` : ''}
-          </div>
-          <span class="text-sm text-[#343434] font-medium">Shared with You</span>
-        </label>
-      </div>
-    `;
-
-    filtersContainer.innerHTML = filtersHTML;
-  }
-
   attachEventListeners() {
     const actionsContainer = document.getElementById('sidebar-actions');
     if (actionsContainer) {
@@ -112,23 +69,6 @@ export class Sidebar {
         const action = button.dataset.action;
         if (action && this.onActionClick) {
           this.onActionClick(action);
-        }
-      });
-    }
-
-    const filtersContainer = document.getElementById('sidebar-filters');
-    if (filtersContainer) {
-      filtersContainer.addEventListener('click', (e) => {
-        const checkbox = e.target.closest('[data-filter]');
-        if (!checkbox) return;
-
-        const filterName = checkbox.dataset.filter;
-        if (filterName) {
-          this.filters[filterName] = !this.filters[filterName];
-          this.renderFilters();
-          if (this.onFilterChange) {
-            this.onFilterChange({ ...this.filters });
-          }
         }
       });
     }
