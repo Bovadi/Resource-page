@@ -1,42 +1,44 @@
-/* Responsive Grid System for Cards - 20% larger sizing */
+/* Responsive Grid System for Cards */
 .auto-fit-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
 }
 
+/* Mobile First Approach */
 @media (min-width: 640px) {
   .auto-fit-cards {
-    grid-template-columns: repeat(auto-fit, minmax(264px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
   }
 }
 
 @media (min-width: 768px) {
   .auto-fit-cards {
-    grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
-    gap: 1.8rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   .auto-fit-cards {
-    grid-template-columns: repeat(auto-fit, minmax(295px, 1fr));
-    gap: 1.8rem;
+    grid-template-columns: repeat(auto-fit, minmax(246px, 1fr));
+    gap: 1.5rem;
   }
 }
 
 @media (min-width: 1280px) {
   .auto-fit-cards {
-    grid-template-columns: repeat(auto-fit, minmax(295px, 336px));
-    gap: 1.8rem;
+    grid-template-columns: repeat(auto-fit, minmax(246px, 280px));
+    gap: 1.5rem;
   }
 }
 
+/* Ensure cards don't get too wide on very large screens */
 @media (min-width: 1536px) {
   .auto-fit-cards {
-    grid-template-columns: repeat(auto-fill, 336px);
+    grid-template-columns: repeat(auto-fill, 280px);
     justify-content: center;
-    gap: 2.4rem;
+    gap: 2rem;
   }
 }

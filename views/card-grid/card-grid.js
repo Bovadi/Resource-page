@@ -58,11 +58,11 @@ export class CardGrid {
 
     if (this.loading) {
       const skeletons = Array(8).fill(null).map(() => `
-        <div class="w-full max-w-[672px] cursor-pointer group animate-pulse">
-          <div class="bg-white border border-gray-200 rounded-lg shadow-sm mb-3 sm:mb-4 p-3 sm:p-4 md:p-5">
-            <div class="relative w-full aspect-[295/302] bg-gray-200 rounded-sm"></div>
+        <div class="w-full max-w-[560px] cursor-pointer group animate-pulse">
+          <div class="bg-white border border-gray-200 rounded-lg shadow-sm mb-2 sm:mb-3 p-2 sm:p-3 md:p-4">
+            <div class="relative w-full aspect-[246/252] bg-gray-200 rounded-sm"></div>
           </div>
-          <div class="h-4 sm:h-5 bg-gray-200 rounded w-3/4 mx-1"></div>
+          <div class="h-3 sm:h-4 bg-gray-200 rounded w-3/4 mx-1"></div>
         </div>
       `).join('');
       gridContainer.innerHTML = skeletons;
@@ -70,11 +70,11 @@ export class CardGrid {
     }
 
     const cardsHTML = this.cards.map(card => `
-      <div class="w-full max-w-[672px] flex flex-col">
+      <div class="w-full max-w-[560px] flex flex-col">
         <div class="group cursor-pointer" data-action="open-card" data-card-id="${card.id}">
-          <div class="bg-white border border-gray-200 rounded-lg hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-3 sm:mb-4">
-            <div class="p-3 sm:p-4 md:p-5">
-              <div class="relative w-full aspect-[295/302]">
+          <div class="bg-white border border-gray-200 rounded-lg hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-2 sm:mb-3">
+            <div class="p-2 sm:p-3 md:p-4">
+              <div class="relative w-full aspect-[246/252]">
                 <img class="w-full h-full object-cover rounded-sm" alt="${card.title}" src="${card.image}" loading="lazy" />
                 ${card.type === 'resource' ? `
                   <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
@@ -90,7 +90,7 @@ export class CardGrid {
           </div>
         </div>
         <div class="px-1">
-          <p class="font-normal text-[#343434] text-sm sm:text-base leading-snug sm:leading-[20px] text-left transition-colors duration-200 line-clamp-2 overflow-hidden">
+          <p class="font-normal text-[#343434] text-xs sm:text-sm leading-tight sm:leading-[16.8px] text-left transition-colors duration-200 line-clamp-2 overflow-hidden">
             ${card.title}
           </p>
         </div>
