@@ -10,4 +10,8 @@ export default defineConfig({
       plugins: [tailwind()],
     },
   },
+  build: {
+    copyPublicDir: false,
+  },
+  publicDir: false,
 });
