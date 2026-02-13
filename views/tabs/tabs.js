@@ -41,8 +41,8 @@ export class Tabs {
   updateActiveTab() {
     const buttons = document.querySelectorAll('[data-action="switch-tab"]');
     const activeClass = "bg-[#f8f8f9] text-[#343434] shadow-sm";
-    const inactiveClass = "text-gray-600 hover:text-[#343434] hover:bg-gray-50 border border-transparent";
-    const baseClass = "tab-button w-32 sm:w-40 px-4 sm:px-6 py-3 sm:py-3.5 text-base sm:text-lg rounded-lg transition-colors duration-200 min-h-[52px] sm:min-h-[56px] flex items-center justify-center box-border font-medium";
+    const inactiveClass = "text-[#CBC4B6] hover:text-[#343434] hover:bg-gray-50 border border-transparent";
+    const baseClass = "tab-button w-32 sm:w-40 px-[1.2rem] sm:px-[1.8rem] py-[0.9rem] sm:py-[1.05rem] text-[1.2rem] sm:text-[1.35rem] rounded-lg transition-colors duration-200 min-h-[62px] sm:min-h-[67px] flex items-center justify-center box-border font-medium";
 
     buttons.forEach(button => {
       if (button.dataset.tab === this.activeTab) {
