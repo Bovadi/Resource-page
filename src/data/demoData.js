@@ -30,7 +30,6 @@
  */
 
 export const SAMPLE_CARDS = [
-const items = [
   {
     id: '1',
     image: '/images/BIPs/thumbnail-1.png',

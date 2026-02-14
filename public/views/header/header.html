@@ -1,0 +1,53 @@
+<header class="relative w-full h-[104px] z-50">
+  <div class="flex items-center justify-between px-4 sm:px-6 h-full">
+    <div class="flex items-center gap-3 sm:gap-4">
+      <button id="hamburger-btn" class="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 -ml-2">
+        <svg class="w-6 h-6 text-[#343434]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <img class="h-4 sm:h-5 w-auto object-contain" alt="BIP Logo" src="/Large.png" />
+    </div>
+
+   <div class="hidden md:flex items-center rounded-lg px-0.5 py-0.5 gap-0.5 bg-[#F8F5EF]">
+  
+<div class="hidden md:flex items-center rounded-lg px-0.5 py-0.5 gap-0.5 bg-[#F8F5EF]">
+  
+  <button
+    class="nav-tab w-[110px] py-2 rounded-md text-[14px] font-medium text-[#918979] transition-all duration-150 flex items-center justify-center hover:text-black"
+    data-tab="bip">
+    BIPs
+  </button>
+
+  <button
+    class="nav-tab w-[110px] py-2 rounded-md text-[14px] font-medium text-[#918979] transition-all duration-150 flex items-center justify-center hover:text-black"
+    data-tab="resources">
+    Resources
+  </button>
+
+  <button
+    class="nav-tab w-[110px] py-2 rounded-md text-[14px] font-medium text-[#918979] transition-all duration-150 flex items-center justify-center hover:text-black"
+    data-tab="strategies">
+    Strategies
+  </button>
+
+</div>
+
+</div>
+
+    <div class="relative">
+      <button id="profile-dropdown-btn" class="flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full pl-4 pr-3 py-2 shadow-sm border border-gray-200/60 hover:shadow-md transition-all duration-200">
+        <span class="text-sm font-medium text-[#343434]">Bou van Diepen</span>
+        <svg class="w-4 h-4 text-gray-400 transition-transform duration-200" id="profile-caret" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <div id="profile-dropdown-menu" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200/60 py-1.5 hidden opacity-0 transform scale-95 transition-all duration-200">
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Profile</a>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Settings</a>
+        <div class="border-t border-gray-100 my-1"></div>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Sign out</a>
+      </div>
+    </div>
+  </div>
+</header>
