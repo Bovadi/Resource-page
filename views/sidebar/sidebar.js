@@ -71,21 +71,15 @@ export class Sidebar {
     if (!filtersContainer) return;
 
     const renderCheckbox = (filterName, label, isChecked) => `
-      <label class="flex items-center gap-3 w-full py-3 px-4 rounded-lg cursor-pointer hover:bg-gray-50 focus-within:ring-2 focus-within:ring-[#108C89]/20 transition-all duration-200 select-none" data-filter-row="${filterName}">
+      <label class="flex items-center gap-3 w-full py-3 px-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-all duration-200 select-none">
         <input
           type="checkbox"
           id="filter-${filterName}"
           ${isChecked ? 'checked' : ''}
-          class="sr-only"
+          class="w-4 h-4 rounded border-gray-300 text-[#108C89] focus:ring-2 focus:ring-[#108C89]/20 focus:ring-offset-0 cursor-pointer"
           data-filter="${filterName}"
+          style="accent-color: #108C89;"
         />
-        <div class="w-5 h-5 rounded border flex-shrink-0 flex items-center justify-center transition-all duration-200 ${isChecked ? 'bg-[#108C89] border-[#108C89]' : 'border-gray-300 bg-white'}">
-          ${isChecked ? `
-            <svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-          ` : ''}
-        </div>
         <span class="text-sm text-[#343434] font-medium">${label}</span>
       </label>
     `;
