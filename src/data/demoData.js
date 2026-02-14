@@ -32,7 +32,7 @@
 export const SAMPLE_CARDS = [
   {
     id: '1',
-    image: '/images/courses/thumbnail-1.png',
+    image: '/images/BIPs/thumbnail-1.png',
     title: 'Creating Visual BIPs for Confident Parent & Staff Support',
     type: 'course',
     description: 'Learn to create effective visual behavior intervention plans',
@@ -43,7 +43,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '2',
-    image: '/images/resources/thumbnail-1.png',
+    image: '/images/BIPs/thumbnail-1.png',
     title: '5-4-3-2-1 Calm Visual Poster',
     type: 'resource',
     description: 'Downloadable poster for calming strategies',
@@ -54,7 +54,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '3',
-    image: '/images/resources/thumbnail-2.png',
+    image: '/images/BIPs/thumbnail-2.png',
     title: 'Self-Advocacy Visual: I need help',
     type: 'resource',
     description: 'Visual communication tool for self-advocacy',
@@ -65,7 +65,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '4',
-    image: '/images/resources/thumbnail-2.png',
+    image: '/images/BIPs/thumbnail-2.png',
     title: 'Feeding with Care: A Practical Guide',
     type: 'resource',
     description: 'Comprehensive guide for supporting picky eaters',
@@ -76,7 +76,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '5',
-    image: '/images/resources/thumbnail-2.png',
+    image: '/images/BIPs/thumbnail-2.png',
     title: 'Supporting with Compassion & Understanding',
     type: 'resource',
     description: 'A guide for parents and teachers',
@@ -87,7 +87,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '6',
-    image: '/images/resources/thumbnail-1.png',
+    image: '/images/BIPs/thumbnail-1.png',
     title: 'Daily Behavior Tracking Chart',
     type: 'resource',
     description: 'Track daily behaviors with visual charts',
@@ -98,7 +98,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '7',
-    image: '/images/resources/thumbnail-2.png',
+    image: '/images/BIPs/thumbnail-2.png',
     title: 'Social Stories Template Collection',
     type: 'resource',
     description: 'Customizable social stories for various situations',
@@ -109,7 +109,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '8',
-    image: '/images/resources/thumbnail-2.png',
+    image: '/images/BIPs/thumbnail-2.png',
     title: 'Sensory Break Visual Cards',
     type: 'resource',
     description: 'Visual cards for sensory regulation activities',
@@ -120,7 +120,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '9',
-    image: '/images/resources/thumbnail-1.png',
+    image: '/images/BIPs/thumbnail-1.png',
     title: 'Communication Board Templates',
     type: 'resource',
     description: 'AAC communication boards for non-verbal students',
