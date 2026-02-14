@@ -99,6 +99,23 @@ class App {
     try {
       let filtered = this.allCards.filter(card => card.type === this.getCardType());
 
+      const { madeByYou, sharedWithYou } = this.state.filters;
+
+      if (madeByYou || sharedWithYou) {
+        filtered = filtered.filter(card => {
+          if (madeByYou && sharedWithYou) {
+            return card.madeByYou || card.sharedWithYou;
+          }
+          if (madeByYou) {
+            return card.madeByYou === true;
+          }
+          if (sharedWithYou) {
+            return card.sharedWithYou === true;
+          }
+          return true;
+        });
+      }
+
       setTimeout(() => {
         this.cardGrid.setLoading(false);
         this.cardGrid.setCards(filtered);

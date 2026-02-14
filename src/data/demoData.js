@@ -16,6 +16,8 @@
  * @property {string} video_url - (Optional) URL for video content (for courses)
  * @property {string} download_url - (Optional) URL for downloadable content (for resources)
  * @property {Array<string>} perfect_for - Array of use case tags
+ * @property {boolean} madeByYou - (Optional) Whether the user created this item
+ * @property {boolean} sharedWithYou - (Optional) Whether this item was shared with the user
  *
  * Usage:
  * ------
@@ -35,7 +37,9 @@ export const SAMPLE_CARDS = [
     type: 'course',
     description: 'Learn to create effective visual behavior intervention plans',
     video_url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-    perfect_for: ['Staff training', 'Parent coaching', 'BCBA supervision']
+    perfect_for: ['Staff training', 'Parent coaching', 'BCBA supervision'],
+    madeByYou: true,
+    sharedWithYou: false
   },
   {
     id: '2',
@@ -44,7 +48,9 @@ export const SAMPLE_CARDS = [
     type: 'resource',
     description: 'Downloadable poster for calming strategies',
     download_url: 'https://example.com/download/calm-poster.pdf',
-    perfect_for: ['Classroom display', 'Home use', 'Therapy sessions']
+    perfect_for: ['Classroom display', 'Home use', 'Therapy sessions'],
+    madeByYou: true,
+    sharedWithYou: false
   },
   {
     id: '3',
@@ -53,7 +59,9 @@ export const SAMPLE_CARDS = [
     type: 'resource',
     description: 'Visual communication tool for self-advocacy',
     download_url: 'https://example.com/download/self-advocacy.pdf',
-    perfect_for: ['Students with communication needs', 'Inclusive classrooms', 'Building independence']
+    perfect_for: ['Students with communication needs', 'Inclusive classrooms', 'Building independence'],
+    madeByYou: false,
+    sharedWithYou: true
   },
   {
     id: '4',
@@ -62,7 +70,9 @@ export const SAMPLE_CARDS = [
     type: 'resource',
     description: 'Comprehensive guide for supporting picky eaters',
     download_url: 'https://example.com/download/feeding-guide.pdf',
-    perfect_for: ['Parents of picky eaters', 'Feeding therapy support', 'Mealtime strategies']
+    perfect_for: ['Parents of picky eaters', 'Feeding therapy support', 'Mealtime strategies'],
+    madeByYou: false,
+    sharedWithYou: true
   },
   {
     id: '5',
@@ -71,7 +81,9 @@ export const SAMPLE_CARDS = [
     type: 'resource',
     description: 'A guide for parents and teachers',
     download_url: 'https://example.com/download/compassion-guide.pdf',
-    perfect_for: ['Parent education', 'Teacher training', 'Building empathy']
+    perfect_for: ['Parent education', 'Teacher training', 'Building empathy'],
+    madeByYou: true,
+    sharedWithYou: true
   },
   {
     id: '6',
@@ -80,7 +92,9 @@ export const SAMPLE_CARDS = [
     type: 'resource',
     description: 'Track daily behaviors with visual charts',
     download_url: 'https://example.com/download/behavior-chart.pdf',
-    perfect_for: ['Daily progress monitoring', 'Parent-teacher communication', 'Data collection']
+    perfect_for: ['Daily progress monitoring', 'Parent-teacher communication', 'Data collection'],
+    madeByYou: true,
+    sharedWithYou: false
   },
   {
     id: '7',
@@ -89,7 +103,9 @@ export const SAMPLE_CARDS = [
     type: 'resource',
     description: 'Customizable social stories for various situations',
     download_url: 'https://example.com/download/social-stories.pdf',
-    perfect_for: ['Social skill development', 'Transition preparation', 'Anxiety reduction']
+    perfect_for: ['Social skill development', 'Transition preparation', 'Anxiety reduction'],
+    madeByYou: false,
+    sharedWithYou: true
   },
   {
     id: '8',
@@ -98,7 +114,9 @@ export const SAMPLE_CARDS = [
     type: 'resource',
     description: 'Visual cards for sensory regulation activities',
     download_url: 'https://example.com/download/sensory-break.pdf',
-    perfect_for: ['Sensory regulation', 'Classroom breaks', 'Self-regulation skills']
+    perfect_for: ['Sensory regulation', 'Classroom breaks', 'Self-regulation skills'],
+    madeByYou: false,
+    sharedWithYou: false
   },
   {
     id: '9',
@@ -107,7 +125,9 @@ export const SAMPLE_CARDS = [
     type: 'resource',
     description: 'AAC communication boards for non-verbal students',
     download_url: 'https://example.com/download/communication-board.pdf',
-    perfect_for: ['Non-verbal communication', 'AAC implementation', 'Language development']
+    perfect_for: ['Non-verbal communication', 'AAC implementation', 'Language development'],
+    madeByYou: true,
+    sharedWithYou: false
   },
   {
     id: '10',
@@ -116,7 +136,9 @@ export const SAMPLE_CARDS = [
     type: 'resource',
     description: 'Visual timer for smooth transitions',
     download_url: 'https://example.com/download/transition-timer.pdf',
-    perfect_for: ['Activity transitions', 'Time management', 'Reducing anxiety']
+    perfect_for: ['Activity transitions', 'Time management', 'Reducing anxiety'],
+    madeByYou: false,
+    sharedWithYou: true
   },
   {
     id: '11',
