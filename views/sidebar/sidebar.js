@@ -48,7 +48,7 @@ export class Sidebar {
         </svg>
         <div class="flex flex-row items-center gap-2">
           <span class="text-left">Create BIP</span>
-          <span class="text-[10px] font-semibold uppercase tracking-wide bg-white/20 text-white px-2 py-0.5 rounded-full">New</span>
+          <span class="text-[8px] font-semibold uppercase tracking-wide bg-white/20 text-white px-1.5 py-0.5 rounded-full">New</span>
         </div>
       </button>
       <button data-action="create-bip-legacy" class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] bg-white text-[#108C89] border-2 border-[#108C89] hover:bg-[#108C89]/5">
@@ -58,7 +58,7 @@ export class Sidebar {
         </svg>
         <div class="flex flex-row items-center gap-2">
           <span class="text-left">Create BIP</span>
-          <span class="text-[10px] font-semibold uppercase tracking-wide text-[#108C89] border border-[#108C89] px-2 py-0.5 rounded-full">Legacy</span>
+          <span class="text-[8px] font-semibold uppercase tracking-wide text-[#108C89] border border-[#108C89] px-1.5 py-0.5 rounded-full">Legacy</span>
         </div>
       </button>
     `;
