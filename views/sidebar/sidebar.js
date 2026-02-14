@@ -86,7 +86,7 @@ export class Sidebar {
 
     const filtersHTML = `
       <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 px-4">Filters</h3>
-      <div class="space-y-2">
+      <div class="space-y-1">
         ${renderCheckbox('madeByYou', 'Made by You', this.filters.madeByYou)}
         ${renderCheckbox('sharedWithYou', 'Shared with You', this.filters.sharedWithYou)}
       </div>
