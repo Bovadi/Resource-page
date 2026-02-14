@@ -71,7 +71,7 @@ export class Sidebar {
     if (!filtersContainer) return;
 
     const renderCheckbox = (filterName, label, isChecked) => `
-      <label class="flex items-center gap-0 w-full py-3 px-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-all duration-200 select-none">
+      <label class="flex items-center gap-3 w-full py-3 px-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-all duration-200 select-none">
         <input
           type="checkbox"
           id="filter-${filterName}"
@@ -86,7 +86,7 @@ export class Sidebar {
 
     const filtersHTML = `
       <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 px-4">Filters</h3>
-      <div class="space-y-2">
+      <div class="space-y-1">
         ${renderCheckbox('madeByYou', 'Made by You', this.filters.madeByYou)}
         ${renderCheckbox('sharedWithYou', 'Shared with You', this.filters.sharedWithYou)}
       </div>
