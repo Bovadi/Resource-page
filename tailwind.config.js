@@ -17,6 +17,7 @@ module.exports = {
       colors: {
         "neutral-black": "var(--neutral-black)",
         "custom-teal": "#108C89",
+        "filter-hover": "#F2F3F3",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
