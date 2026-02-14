@@ -32,7 +32,7 @@
 export const SAMPLE_CARDS = [
   {
     id: '1',
-    image: '/images/courses/bip-course.png',
+    image: '/images/courses/thumbnail-1.png',
     title: 'Creating Visual BIPs for Confident Parent & Staff Support',
     type: 'course',
     description: 'Learn to create effective visual behavior intervention plans',
@@ -43,7 +43,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '2',
-    image: '/images/resources/calm-poster.png',
+    image: '/images/resources/thumbnail-1.png',
     title: '5-4-3-2-1 Calm Visual Poster',
     type: 'resource',
     description: 'Downloadable poster for calming strategies',
@@ -54,7 +54,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '3',
-    image: '/images/resources/self-advocacy.png',
+    image: '/images/resources/thumbnail-2.png',
     title: 'Self-Advocacy Visual: I need help',
     type: 'resource',
     description: 'Visual communication tool for self-advocacy',
@@ -65,7 +65,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '4',
-    image: 'https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: '/images/resources/thumbnail-2.png',
     title: 'Feeding with Care: A Practical Guide',
     type: 'resource',
     description: 'Comprehensive guide for supporting picky eaters',
@@ -76,7 +76,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '5',
-    image: 'https://images.pexels.com/photos/1153213/pexels-photo-1153213.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: '/images/resources/thumbnail-2.png',
     title: 'Supporting with Compassion & Understanding',
     type: 'resource',
     description: 'A guide for parents and teachers',
@@ -87,7 +87,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '6',
-    image: 'https://images.pexels.com/photos/7092614/pexels-photo-7092614.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: '/images/resources/thumbnail-1.png',
     title: 'Daily Behavior Tracking Chart',
     type: 'resource',
     description: 'Track daily behaviors with visual charts',
@@ -98,7 +98,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '7',
-    image: 'https://images.pexels.com/photos/256468/pexels-photo-256468.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: '/images/resources/thumbnail-2.png',
     title: 'Social Stories Template Collection',
     type: 'resource',
     description: 'Customizable social stories for various situations',
@@ -109,7 +109,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '8',
-    image: 'https://images.pexels.com/photos/3771074/pexels-photo-3771074.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: '/images/resources/thumbnail-2.png',
     title: 'Sensory Break Visual Cards',
     type: 'resource',
     description: 'Visual cards for sensory regulation activities',
@@ -120,7 +120,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '9',
-    image: 'https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: '/images/resources/thumbnail-1.png',
     title: 'Communication Board Templates',
     type: 'resource',
     description: 'AAC communication boards for non-verbal students',
