@@ -128,5 +128,16 @@ export const SAMPLE_CARDS = [
     perfect_for: ['Non-verbal communication', 'AAC implementation', 'Language development'],
     madeByYou: true,
     sharedWithYou: false
+  },
+    {
+    id: '10',
+    image: '/images/BIPs/thumbnail-1.png',
+    title: 'Communication Board Templates',
+    type: 'resource',
+    description: 'AAC communication boards for non-verbal students',
+    download_url: 'https://example.com/download/communication-board.pdf',
+    perfect_for: ['Non-verbal communication', 'AAC implementation', 'Language development'],
+    madeByYou: true,
+    sharedWithYou: false
   }
 ]; 
