@@ -76,15 +76,6 @@ export class CardGrid {
             <div class="p-2 sm:p-3 md:p-4">
               <div class="relative w-full aspect-[246/252]">
                 <img class="w-full h-full object-cover rounded-sm" alt="${card.title}" src="${card.image}" loading="lazy" />
-                ${card.type === 'resource' ? `
-                  <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
-                    <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-white rounded-full p-2 shadow-lg">
-                      <svg class="w-5 h-5 sm:w-6 sm:h-6 text-[#108C89]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </div>
-                  </div>
-                ` : ''}
               </div>
             </div>
           </div>
