@@ -41,22 +41,22 @@ export class Sidebar {
         </svg>
         <span class="text-left">Generate BIP</span>
       </button>
-      <button data-action="create-bip-new" class="w-full flex items-start gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] bg-[#343434] text-white hover:bg-[#4a4a4a] shadow-sm">
-        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button data-action="create-bip-new" class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] bg-[#343434] text-white hover:bg-[#4a4a4a] shadow-sm">
+        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="5" x2="12" y2="19"/>
           <line x1="5" y1="12" x2="19" y2="12"/>
         </svg>
-        <div class="flex flex-col items-start gap-1">
+        <div class="flex flex-row items-center gap-2">
           <span class="text-left">Create BIP</span>
           <span class="text-[10px] font-semibold uppercase tracking-wide bg-white/20 text-white px-2 py-0.5 rounded-full">New</span>
         </div>
       </button>
-      <button data-action="create-bip-legacy" class="w-full flex items-start gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] bg-white text-[#108C89] border-2 border-[#108C89] hover:bg-[#108C89]/5">
-        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button data-action="create-bip-legacy" class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] bg-white text-[#108C89] border-2 border-[#108C89] hover:bg-[#108C89]/5">
+        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="5" x2="12" y2="19"/>
           <line x1="5" y1="12" x2="19" y2="12"/>
         </svg>
-        <div class="flex flex-col items-start gap-1">
+        <div class="flex flex-row items-center gap-2">
           <span class="text-left">Create BIP</span>
           <span class="text-[10px] font-semibold uppercase tracking-wide text-[#108C89] border border-[#108C89] px-2 py-0.5 rounded-full">Legacy</span>
         </div>
