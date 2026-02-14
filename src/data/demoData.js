@@ -30,7 +30,7 @@
  */
 
 export const SAMPLE_CARDS = [
-  {
+{
   id: '1',
   image: '/images/BIPs/thumbnail-1.png',
   title: 'EmJo Elopement Plan',
@@ -43,7 +43,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '2',
-  image: '/images/BIPs/thumbnail-2.png',
+  image: '/images/BIPs/thumbnail-1.png',
   title: 'LiHa Aggression Plan',
   type: 'resource',
   description: 'Downloadable poster for calming strategies',
@@ -54,7 +54,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '3',
-  image: '/images/BIPs/thumbnail-1.png',
+  image: 'public/images/BIPs/thumbnail-2.png',
   title: 'NoMa Task Refusal Plan',
   type: 'resource',
   description: 'Visual communication tool for self-advocacy',
@@ -76,7 +76,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '5',
-  image: '/images/BIPs/thumbnail-1.png',
+  image: '/images/BIPs/thumbnail-2.png',
   title: 'JaRe Property Destruction Plan',
   type: 'resource',
   description: 'A guide for parents and teachers',
@@ -87,7 +87,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '6',
-  image: '/images/BIPs/thumbnail-2.png',
+  image: '/images/BIPs/thumbnail-1.png',
   title: 'MiLo Noncompliance Plan',
   type: 'resource',
   description: 'Track daily behaviors with visual charts',
@@ -98,7 +98,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '7',
-  image: '/images/BIPs/thumbnail-1.png',
+  image: '/images/BIPs/thumbnail-2.png',
   title: 'AlKi Tantrum Plan',
   type: 'resource',
   description: 'Customizable social stories for various situations',
@@ -131,7 +131,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '10',
-  image: '/images/BIPs/thumbnail-2.png',
+  image: 'https://images.pexels.com/photos/1037993/pexels-photo-1037993.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'ElMo Avoidance Plan',
   type: 'resource',
   description: 'Visual timer for smooth transitions',
@@ -142,7 +142,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '11',
-  image: '/images/BIPs/thumbnail-1.png',
+  image: 'https://images.pexels.com/photos/6224442/pexels-photo-6224442.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'HaBr Screaming Plan',
   type: 'resource',
   description: 'Visual cards for identifying emotions',
@@ -151,7 +151,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '12',
-  image: '/images/BIPs/thumbnail-2.png',
+  image: 'https://images.pexels.com/photos/4144179/pexels-photo-4144179.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'LuDa Running Away Plan',
   type: 'resource',
   description: 'Customizable reward system charts',
@@ -160,7 +160,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '13',
-  image: '/images/BIPs/thumbnail-1.png',
+  image: 'https://images.pexels.com/photos/6147276/pexels-photo-6147276.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'BeSa Hitting Plan',
   type: 'resource',
   description: 'Visual choice boards for decision making',
@@ -169,7 +169,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '14',
-  image: '/images/BIPs/thumbnail-2.png',
+  image: 'https://images.pexels.com/photos/6936461/pexels-photo-6936461.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'RiTh Refusal Plan',
   type: 'resource',
   description: 'Simple first-then sequence cards',
@@ -178,7 +178,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '15',
-  image: '/images/BIPs/thumbnail-1.png',
+  image: 'https://images.pexels.com/photos/3822621/pexels-photo-3822621.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'NoLi Crying Plan',
   type: 'resource',
   description: 'Visual guide for calming breathing exercises',
@@ -187,7 +187,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '16',
-  image: '/images/BIPs/thumbnail-2.png',
+  image: 'https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'JaCo Throwing Objects Plan',
   type: 'resource',
   description: 'Menu of coping strategies for difficult moments',
@@ -196,7 +196,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '17',
-  image: '/images/BIPs/thumbnail-1.png',
+  image: 'https://images.pexels.com/photos/6929018/pexels-photo-6929018.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'MaRo Off-Task Behavior Plan',
   type: 'resource',
   description: 'Visual worksheet for setting and tracking goals',
@@ -205,7 +205,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '18',
-  image: '/images/BIPs/thumbnail-2.png',
+  image: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'SaEv Defiance Plan',
   type: 'resource',
   description: 'Guide for developing friendship and social skills',
@@ -214,7 +214,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '19',
-  image: '/images/BIPs/thumbnail-1.png',
+  image: 'https://images.pexels.com/photos/8500301/pexels-photo-8500301.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'DaMi Classroom Disruption Plan',
   type: 'resource',
   description: 'Visual poster displaying classroom expectations',
@@ -223,7 +223,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '20',
-  image: '/images/BIPs/thumbnail-2.png',
+  image: 'https://images.pexels.com/photos/7176325/pexels-photo-7176325.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'KeLu Aggressive Behavior Plan',
   type: 'resource',
   description: 'Comprehensive toolkit for managing anger and frustration',
@@ -232,7 +232,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '21',
-  image: '/images/BIPs/thumbnail-1.png',
+  image: 'https://images.pexels.com/photos/6932293/pexels-photo-6932293.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'JoEl Avoidance Behavior Plan',
   type: 'resource',
   description: 'Customizable daily schedule with visual supports',
@@ -241,7 +241,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '22',
-  image: '/images/BIPs/thumbnail-2.png',
+  image: 'https://images.pexels.com/photos/1416530/pexels-photo-1416530.jpeg?auto=compress&cs=tinysrgb&w=400',
   title: 'LiNo Yelling Plan',
   type: 'resource',
   description: 'Positive affirmation cards for daily motivation',
