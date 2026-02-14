@@ -54,7 +54,7 @@ export const SAMPLE_CARDS = [
   },
   {
     id: '3',
-    image: '/images/BIPs/thumbnail-2.png',
+    image: 'public/images/BIPs/thumbnail-2.png',
     title: 'Self-Advocacy Visual: I need help',
     type: 'resource',
     description: 'Visual communication tool for self-advocacy',
