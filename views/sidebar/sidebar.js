@@ -71,7 +71,7 @@ export class Sidebar {
     if (!filtersContainer) return;
 
     const renderCheckbox = (filterName, label, isChecked) => `
-      <label class="flex items-center gap-3 w-full py-3 px-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-all duration-200 select-none">
+      <label class="flex items-center gap-3 w-full py-3 px-4 rounded-lg cursor-pointer hover:bg-gray-500 transition-all duration-200 select-none">
         <input
           type="checkbox"
           id="filter-${filterName}"
