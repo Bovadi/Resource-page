@@ -2,6 +2,7 @@ export class Header {
   constructor(containerId, defaultTab = 'resources') {
     this.containerId = containerId;
     this.onHamburgerClick = null;
+    this.onTabSwitch = null;
     this.dropdownOpen = false;
     this.activeTab = defaultTab;
   }
@@ -55,6 +56,9 @@ export class Header {
       tab.addEventListener('click', () => {
         const tabName = tab.dataset.tab;
         this.setActiveTab(tabName);
+        if (this.onTabSwitch) {
+          this.onTabSwitch(tabName);
+        }
       });
     });
   }

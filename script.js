@@ -9,10 +9,6 @@ class App {
     this.state = {
       activeTab: 'resources',
       isSidebarOpen: false,
-      filters: {
-        madeByYou: false,
-        sharedWithYou: false
-      }
     };
 
     this.allCards = SAMPLE_CARDS;
@@ -45,8 +41,11 @@ class App {
       this.toggleSidebar();
     };
 
-    this.sidebar.onFilterChange = (filters) => {
-      this.state.filters = filters;
+    this.header.onTabSwitch = (tabKey) => {
+      this.switchTab(tabKey);
+    };
+
+    this.sidebar.onFilterChange = () => {
       this.filterAndDisplayCards();
     };
 
@@ -68,6 +67,12 @@ class App {
         this.toggleSidebar();
       });
     }
+  }
+
+  switchTab(tabKey) {
+    this.state.activeTab = tabKey;
+    this.sidebar.switchTab(tabKey);
+    this.filterAndDisplayCards();
   }
 
   toggleSidebar() {
@@ -97,23 +102,15 @@ class App {
     this.cardGrid.setError(null);
 
     try {
+      const filters = this.sidebar.getFilters();
       let filtered = this.allCards.filter(card => card.type === this.getCardType());
 
-      const { madeByYou, sharedWithYou } = this.state.filters;
+      const activeFilters = Object.entries(filters).filter(([, val]) => val).map(([key]) => key);
 
-      if (madeByYou || sharedWithYou) {
-        filtered = filtered.filter(card => {
-          if (madeByYou && sharedWithYou) {
-            return card.madeByYou || card.sharedWithYou;
-          }
-          if (madeByYou) {
-            return card.madeByYou === true;
-          }
-          if (sharedWithYou) {
-            return card.sharedWithYou === true;
-          }
-          return true;
-        });
+      if (activeFilters.length > 0) {
+        filtered = filtered.filter(card =>
+          activeFilters.some(key => card[key] === true)
+        );
       }
 
       setTimeout(() => {
