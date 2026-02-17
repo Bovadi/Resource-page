@@ -79,16 +79,16 @@ export class Sidebar {
     const checkboxesHTML = filters.map(filter => {
       const isChecked = tabFilterStates[filter.id] || false;
       return `
-        <label class="flex items-center gap-3 w-full py-3 px-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-all duration-200 select-none">
+        <label class="cb-row">
           <input
             type="checkbox"
             id="filter-${filter.id}"
             ${isChecked ? 'checked' : ''}
-            class="w-4 h-4 rounded border-gray-300 text-[#108C89] focus:ring-2 focus:ring-[#108C89]/20 focus:ring-offset-0 cursor-pointer"
+            class="cb-input"
             data-filter="${filter.id}"
-            style="accent-color: #108C89;"
           />
-          <span class="text-sm text-[#343434] font-medium">${filter.label}</span>
+          <span class="cb-box"></span>
+          <span class="cb-label">${filter.label}</span>
         </label>
       `;
     }).join('');
