@@ -40,7 +40,19 @@ export class Sidebar {
   renderForTab(tabKey) {
     const config = SIDEBAR_CONFIG[tabKey];
     if (!config) return;
-    this._renderActions(config.actions);
+
+    const hideActions = ['resources', 'courses', 'strategies'].includes(tabKey);
+    const actionsEl = document.getElementById('sidebar-actions');
+    const dividerEl = actionsEl && actionsEl.nextElementSibling;
+
+    if (actionsEl) actionsEl.style.display = hideActions ? 'none' : '';
+    if (dividerEl && dividerEl.classList.contains('my-5')) {
+      dividerEl.style.display = hideActions ? 'none' : '';
+    }
+
+    if (!hideActions) {
+      this._renderActions(config.actions);
+    }
     this._renderFilters(config.filters, config.filtersTitle, tabKey);
   }
 
