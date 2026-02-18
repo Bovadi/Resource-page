@@ -1,3 +1,13 @@
+function escapeHtml(value) {
+  if (value == null) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export class CardGrid {
   constructor(containerId) {
     this.containerId = containerId;
@@ -46,7 +56,7 @@ export class CardGrid {
               </svg>
             </div>
             <h3 class="text-lg font-semibold text-gray-900 mb-2">Something went wrong</h3>
-            <p class="text-gray-600 mb-4">${this.error}</p>
+            <p class="text-gray-600 mb-4">${escapeHtml(this.error)}</p>
             <button data-action="retry" class="px-4 py-2 bg-[#108C89] text-white rounded-lg hover:bg-[#0e7a77] transition-colors duration-200">
               Try Again
             </button>
@@ -71,18 +81,18 @@ export class CardGrid {
 
     const cardsHTML = this.cards.map(card => `
       <div class="w-full max-w-[560px] flex flex-col">
-        <div class="group cursor-pointer" data-action="open-card" data-card-id="${card.id}">
+        <div class="group cursor-pointer" data-action="open-card" data-card-id="${escapeHtml(card.id)}">
           <div class="bg-white border border-gray-200 rounded-lg hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-2 sm:mb-3">
             <div class="p-2 sm:p-3 md:p-4">
               <div class="relative w-full aspect-[246/252]">
-                <img class="w-full h-full object-cover rounded-sm" alt="${card.title}" src="${card.image}" loading="lazy" />
+                <img class="w-full h-full object-cover rounded-sm" alt="${escapeHtml(card.title)}" src="${escapeHtml(card.image)}" loading="lazy" />
               </div>
             </div>
           </div>
         </div>
         <div class="px-1">
           <p class="font-normal text-[#343434] text-xs sm:text-sm leading-tight sm:leading-[16.8px] text-left transition-colors duration-200 line-clamp-2 overflow-hidden">
-            ${card.title}
+            ${escapeHtml(card.title)}
           </p>
         </div>
       </div>

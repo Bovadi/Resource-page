@@ -35,9 +35,21 @@ export function mount(element, container) {
   }
 }
 
+export function escapeHtml(value) {
+  if (value == null) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export function html(strings, ...values) {
   const htmlString = strings.reduce((acc, str, i) => {
-    return acc + str + (values[i] || '');
+    const value = values[i];
+    const safe = value instanceof Node ? '' : escapeHtml(value);
+    return acc + str + (value != null ? safe : '');
   }, '');
 
   const template = document.createElement('template');

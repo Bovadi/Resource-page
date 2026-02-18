@@ -1,5 +1,15 @@
 import { SIDEBAR_CONFIG } from '../../src/config/sidebarConfig.js';
 
+function escapeHtml(value) {
+  if (value == null) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export class Sidebar {
   constructor(containerId) {
     this.containerId = containerId;
@@ -64,12 +74,12 @@ export class Sidebar {
 
     actionsContainer.innerHTML = actions.map(action => {
       const badgeHTML = action.badge
-        ? `<span class="text-[8px] font-semibold uppercase tracking-wide text-[#108C89] bg-[#E7F3F3] px-1.5 py-0.5 rounded-full">${action.badge.text}</span>`
+        ? `<span class="text-[8px] font-semibold uppercase tracking-wide text-[#108C89] bg-[#E7F3F3] px-1.5 py-0.5 rounded-full">${escapeHtml(action.badge.text)}</span>`
         : '';
 
       const labelHTML = action.badge
-        ? `<div class="flex flex-row items-center gap-2"><span class="text-left">${action.label}</span>${badgeHTML}</div>`
-        : `<span class="text-left">${action.label}</span>`;
+        ? `<div class="flex flex-row items-center gap-2"><span class="text-left">${escapeHtml(action.label)}</span>${badgeHTML}</div>`
+        : `<span class="text-left">${escapeHtml(action.label)}</span>`;
 
       const variantClasses = action.variant === 'primary'
         ? 'bg-[#108C89] text-white hover:bg-[#0d7673] shadow-sm'
@@ -106,7 +116,7 @@ export class Sidebar {
           data-cb-parent
         />
         <span class="cb-box"></span>
-        <span class="cb-label cb-label--show-all">${showAllFilter.label}</span>
+        <span class="cb-label cb-label--show-all">${escapeHtml(showAllFilter.label)}</span>
       </label>
       <div class="cb-show-all-divider"></div>
     ` : '';
@@ -120,7 +130,7 @@ export class Sidebar {
 
     const childCheckboxesHTML = Object.entries(grouped).map(([groupName, groupFilters]) => {
       const headerHTML = groupName
-        ? `<div class="cb-group-header">${groupName}</div>`
+        ? `<div class="cb-group-header">${escapeHtml(groupName)}</div>`
         : '';
       const checkboxes = groupFilters.map(filter => {
         const isChecked = tabFilterStates[filter.id] || false;
@@ -135,7 +145,7 @@ export class Sidebar {
               ${hasShowAll ? 'data-cb-child' : ''}
             />
             <span class="cb-box"></span>
-            <span class="cb-label">${filter.label}</span>
+            <span class="cb-label">${escapeHtml(filter.label)}</span>
           </label>
         `;
       }).join('');
@@ -145,7 +155,7 @@ export class Sidebar {
     const groupAttr = hasShowAll ? 'data-cb-group' : '';
 
     filtersContainer.innerHTML = `
-      <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 px-4">${title}</h3>
+      <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 px-4">${escapeHtml(title)}</h3>
       <div class="space-y-1" ${groupAttr}>
         ${showAllHTML}
         ${childCheckboxesHTML}

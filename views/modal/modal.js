@@ -76,15 +76,23 @@ export class Modal {
 
     const perfectForList = document.getElementById('modal-perfect-for');
     if (perfectForList) {
+      perfectForList.innerHTML = '';
       if (this.currentCard.perfect_for && this.currentCard.perfect_for.length > 0) {
-        perfectForList.innerHTML = this.currentCard.perfect_for.map(item => `
-          <li class="flex items-start">
-            <span class="w-2 h-2 bg-[#108C89] rounded-full mt-2 mr-3 flex-shrink-0"></span>
-            ${item}
-          </li>
-        `).join('');
+        this.currentCard.perfect_for.forEach(item => {
+          const li = document.createElement('li');
+          li.className = 'flex items-start';
+          const dot = document.createElement('span');
+          dot.className = 'w-2 h-2 bg-[#108C89] rounded-full mt-2 mr-3 flex-shrink-0';
+          const text = document.createTextNode(item);
+          li.appendChild(dot);
+          li.appendChild(text);
+          perfectForList.appendChild(li);
+        });
       } else {
-        perfectForList.innerHTML = '<p class="text-sm text-gray-500 italic">No specific use cases defined.</p>';
+        const p = document.createElement('p');
+        p.className = 'text-sm text-gray-500 italic';
+        p.textContent = 'No specific use cases defined.';
+        perfectForList.appendChild(p);
       }
     }
 
