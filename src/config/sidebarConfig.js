@@ -39,6 +39,7 @@ export const SIDEBAR_CONFIG = {
   },
 
   resources: {
+    showAll: { id: 'showAll', label: 'Show All' },
     actions: [
       {
         id: 'upload-resource',
@@ -68,6 +69,7 @@ export const SIDEBAR_CONFIG = {
   },
 
   courses: {
+    showAll: { id: 'showAll', label: 'Show All' },
     actions: [
       {
         id: 'enroll-course',
@@ -99,6 +101,7 @@ export const SIDEBAR_CONFIG = {
   },
 
   strategies: {
+    showAll: { id: 'showAll', label: 'Show All' },
     actions: [
       {
         id: 'create-strategy',
