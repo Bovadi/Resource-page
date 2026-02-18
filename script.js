@@ -125,8 +125,11 @@ class App {
       let filtered = this.allCards.filter(card => card.type === this.getCardType());
 
       const activeFilters = Object.entries(filters).filter(([, val]) => val).map(([key]) => key);
+      const hasFilterSystem = Object.keys(filters).length > 0;
 
-      if (activeFilters.length > 0) {
+      if (hasFilterSystem && activeFilters.length === 0) {
+        filtered = [];
+      } else if (activeFilters.length > 0) {
         filtered = filtered.filter(card =>
           activeFilters.some(key => card[key] === true)
         );
