@@ -26,7 +26,9 @@ export class Sidebar {
     Object.keys(SIDEBAR_CONFIG).forEach(tab => {
       this.filterStates[tab] = {};
       SIDEBAR_CONFIG[tab].filters.forEach(f => {
-        this.filterStates[tab][f.id] = false;
+        if (!f.isShowAll) {
+          this.filterStates[tab][f.id] = false;
+        }
       });
     });
   }
@@ -87,8 +89,29 @@ export class Sidebar {
     if (!filtersContainer) return;
 
     const tabFilterStates = this.filterStates[tabKey] || {};
+    const showAllFilter = filters.find(f => f.isShowAll);
+    const childFilters = filters.filter(f => !f.isShowAll);
+    const hasShowAll = !!showAllFilter;
 
-    const checkboxesHTML = filters.map(filter => {
+    const allChildrenChecked = childFilters.length > 0 && childFilters.every(f => tabFilterStates[f.id]);
+
+    const showAllHTML = hasShowAll ? `
+      <label class="cb-row cb-row--show-all">
+        <input
+          type="checkbox"
+          id="filter-${showAllFilter.id}"
+          ${allChildrenChecked ? 'checked' : ''}
+          class="cb-input"
+          data-filter="${showAllFilter.id}"
+          data-cb-parent
+        />
+        <span class="cb-box"></span>
+        <span class="cb-label cb-label--show-all">${showAllFilter.label}</span>
+      </label>
+      <div class="cb-show-all-divider"></div>
+    ` : '';
+
+    const childCheckboxesHTML = childFilters.map(filter => {
       const isChecked = tabFilterStates[filter.id] || false;
       return `
         <label class="cb-row">
@@ -98,6 +121,7 @@ export class Sidebar {
             ${isChecked ? 'checked' : ''}
             class="cb-input"
             data-filter="${filter.id}"
+            ${hasShowAll ? 'data-cb-child' : ''}
           />
           <span class="cb-box"></span>
           <span class="cb-label">${filter.label}</span>
@@ -105,9 +129,14 @@ export class Sidebar {
       `;
     }).join('');
 
+    const groupAttr = hasShowAll ? 'data-cb-group' : '';
+
     filtersContainer.innerHTML = `
       <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 px-4">${title}</h3>
-      <div class="space-y-1">${checkboxesHTML}</div>
+      <div class="space-y-1" ${groupAttr}>
+        ${showAllHTML}
+        ${childCheckboxesHTML}
+      </div>
     `;
   }
 
@@ -130,14 +159,26 @@ export class Sidebar {
         const checkbox = e.target.closest('input[data-filter]');
         if (!checkbox) return;
         const filterId = checkbox.dataset.filter;
-        if (filterId) {
-          if (!this.filterStates[this.activeTab]) {
-            this.filterStates[this.activeTab] = {};
-          }
+        if (!filterId) return;
+
+        if (!this.filterStates[this.activeTab]) {
+          this.filterStates[this.activeTab] = {};
+        }
+
+        const config = SIDEBAR_CONFIG[this.activeTab];
+        const isShowAll = config && config.filters.find(f => f.id === filterId && f.isShowAll);
+
+        if (isShowAll) {
+          const childFilters = config.filters.filter(f => !f.isShowAll);
+          childFilters.forEach(f => {
+            this.filterStates[this.activeTab][f.id] = checkbox.checked;
+          });
+        } else {
           this.filterStates[this.activeTab][filterId] = checkbox.checked;
-          if (this.onFilterChange) {
-            this.onFilterChange({ ...this.filterStates[this.activeTab] });
-          }
+        }
+
+        if (this.onFilterChange) {
+          this.onFilterChange({ ...this.filterStates[this.activeTab] });
         }
       });
     }

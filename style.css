@@ -123,6 +123,21 @@
 .cb-input:disabled ~ .cb-label {
   color: #9ca3af;
 }
+.cb-row--show-all {
+  margin-bottom: 2px;
+}
+
+.cb-label--show-all {
+  font-weight: 600;
+  color: #161616;
+}
+
+.cb-show-all-divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 6px 16px 8px;
+}
+
 /* ── end Checkbox component ─────────────────────────────── */
 
 body {

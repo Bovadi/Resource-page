@@ -61,6 +61,7 @@ export const SIDEBAR_CONFIG = {
       }
     ],
     filters: [
+      { id: 'showAll', label: 'Show all', isShowAll: true },
       { id: 'madeByYou', label: 'Made by You' },
       { id: 'sharedWithYou', label: 'Shared with You' }
     ],
@@ -91,6 +92,7 @@ export const SIDEBAR_CONFIG = {
       }
     ],
     filters: [
+      { id: 'showAll', label: 'Show all', isShowAll: true },
       { id: 'inProgress', label: 'In Progress' },
       { id: 'completed', label: 'Completed' },
       { id: 'notStarted', label: 'Not Started' }
@@ -123,6 +125,7 @@ export const SIDEBAR_CONFIG = {
       }
     ],
     filters: [
+      { id: 'showAll', label: 'Show all', isShowAll: true },
       { id: 'madeByYou', label: 'Made by You' },
       { id: 'sharedWithYou', label: 'Shared with You' },
       { id: 'evidenceBased', label: 'Evidence-Based' }
