@@ -1,5 +1,11 @@
 import { SIDEBAR_CONFIG } from '../../src/config/sidebarConfig.js';
 
+const ACTION_TOOLTIPS = {
+  'generate-bip': 'Auto-generate a behavior plan',
+  'create-bip-new': 'Start a new behavior plan',
+  'create-bip-legacy': 'Use the classic BIP editor',
+};
+
 function escapeHtml(value) {
   if (value == null) return '';
   return String(value)
@@ -112,13 +118,79 @@ export class Sidebar {
         ? 'bg-[#108C89] text-white hover:bg-[#0d7673] shadow-sm'
         : 'bg-white text-[#108C89] shadow-[inset_0_0_0_1px_#108C89] hover:bg-[#108C89]/5';
 
-      return `
-        <button data-action="${action.id}" class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
+      const tooltipText = ACTION_TOOLTIPS[action.id];
+      const ariaLabel = tooltipText ? ` aria-label="${escapeHtml(tooltipText)}"` : '';
+
+      const buttonHTML = `
+        <button data-action="${action.id}"${ariaLabel} class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
           ${action.icon}
           ${labelHTML}
         </button>
       `;
+
+      if (!tooltipText) return buttonHTML;
+
+      return `
+        <div class="sidebar-action-wrap" data-tooltip-wrap>
+          ${buttonHTML}
+          <div class="sidebar-tooltip" role="tooltip" aria-hidden="true">
+            <div class="sidebar-tooltip-arrow"></div>
+            <div class="sidebar-tooltip-inner">${escapeHtml(tooltipText)}</div>
+          </div>
+        </div>
+      `;
     }).join('');
+
+    this._attachTooltipListeners(actionsContainer);
+  }
+
+  _attachTooltipListeners(container) {
+    const wraps = container.querySelectorAll('[data-tooltip-wrap]');
+    wraps.forEach(wrap => {
+      const btn = wrap.querySelector('button');
+      const tip = wrap.querySelector('.sidebar-tooltip');
+      if (!btn || !tip) return;
+
+      let longPressTimer = null;
+
+      const show = () => {
+        tip.classList.add('is-visible');
+        tip.setAttribute('aria-hidden', 'false');
+      };
+
+      const hide = () => {
+        tip.classList.remove('is-visible');
+        tip.setAttribute('aria-hidden', 'true');
+      };
+
+      btn.addEventListener('mouseenter', show);
+      btn.addEventListener('mouseleave', hide);
+      btn.addEventListener('focus', show);
+      btn.addEventListener('blur', hide);
+
+      btn.addEventListener('touchstart', (e) => {
+        longPressTimer = setTimeout(() => {
+          e.preventDefault();
+          show();
+          setTimeout(hide, 2000);
+        }, 500);
+      }, { passive: false });
+
+      btn.addEventListener('touchend', () => {
+        if (longPressTimer) {
+          clearTimeout(longPressTimer);
+          longPressTimer = null;
+        }
+      });
+
+      btn.addEventListener('touchcancel', () => {
+        if (longPressTimer) {
+          clearTimeout(longPressTimer);
+          longPressTimer = null;
+        }
+        hide();
+      });
+    });
   }
 
   _renderFilters(filters, title, tabKey) {
