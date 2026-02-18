@@ -17,7 +17,7 @@ export class Sidebar {
     this.onActionClick = null;
     this.onFilterChange = null;
     this.onTabSwitch = null;
-    this.activeTab = 'resources';
+    this.activeTab = 'bip';
     this.filterStates = {};
     this._focusTrapHandler = null;
     this._escapeHandler = null;

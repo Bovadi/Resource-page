@@ -7,7 +7,7 @@ import { SAMPLE_CARDS } from './src/data/demoData.js';
 class App {
   constructor() {
     this.state = {
-      activeTab: 'resources',
+      activeTab: 'bip',
       isSidebarOpen: false,
     };
 
@@ -16,7 +16,7 @@ class App {
     this._retryCount = 0;
     this._maxRetries = 3;
 
-    this.header = new Header('header-container');
+    this.header = new Header('header-container', 'bip');
     this.sidebar = new Sidebar('sidebar-container');
     this.cardGrid = new CardGrid('main-container');
     this.modal = new Modal('modal-container');
@@ -122,7 +122,8 @@ class App {
   }
 
   getCardType() {
-    return this.state.activeTab === 'courses' ? 'course' : 'resource';
+    const typeMap = { courses: 'course', bip: 'bip' };
+    return typeMap[this.state.activeTab] || 'resource';
   }
 
   filterAndDisplayCards(showSpinner = false) {
