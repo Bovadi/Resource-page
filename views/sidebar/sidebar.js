@@ -112,56 +112,13 @@ export class Sidebar {
         ? 'bg-[#108C89] text-white hover:bg-[#0d7673] shadow-sm'
         : 'bg-white text-[#108C89] shadow-[inset_0_0_0_1px_#108C89] hover:bg-[#108C89]/5';
 
-      const tooltipId = `tooltip-${action.id}`;
-      const tooltipHTML = action.tooltip
-        ? `<span id="${tooltipId}" role="tooltip" class="sidebar-tooltip">${escapeHtml(action.tooltip)}</span>`
-        : '';
-
       return `
-        <div class="sidebar-tooltip-wrap">
-          <button data-action="${escapeHtml(action.id)}" ${action.tooltip ? `aria-describedby="${tooltipId}"` : ''} class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
-            ${action.icon}
-            ${labelHTML}
-          </button>
-          ${tooltipHTML}
-        </div>
+        <button data-action="${action.id}" class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
+          ${action.icon}
+          ${labelHTML}
+        </button>
       `;
     }).join('');
-
-    this._attachTooltipTouchListeners(actionsContainer);
-  }
-
-  _attachTooltipTouchListeners(container) {
-    let pressTimer = null;
-    let activeWrap = null;
-
-    const clearActive = () => {
-      if (activeWrap) {
-        activeWrap.classList.remove('tooltip-active');
-        activeWrap = null;
-      }
-    };
-
-    container.addEventListener('touchstart', (e) => {
-      const wrap = e.target.closest('.sidebar-tooltip-wrap');
-      if (!wrap || !wrap.querySelector('.sidebar-tooltip')) return;
-
-      clearActive();
-      pressTimer = setTimeout(() => {
-        wrap.classList.add('tooltip-active');
-        activeWrap = wrap;
-      }, 500);
-    }, { passive: true });
-
-    container.addEventListener('touchend', () => {
-      clearTimeout(pressTimer);
-      setTimeout(clearActive, 1500);
-    }, { passive: true });
-
-    container.addEventListener('touchcancel', () => {
-      clearTimeout(pressTimer);
-      clearActive();
-    }, { passive: true });
   }
 
   _renderFilters(filters, title, tabKey) {
