@@ -10,7 +10,7 @@
 
 :root {
   --neutral-black: rgba(9, 16, 29, 1);
-  --paragraph-xsmall-regular-font-family: "Source Sans Pro", Helvetica;
+  --paragraph-xsmall-regular-font-family: "Inter", sans-serif;
   --paragraph-xsmall-regular-font-size: 11px;
   --paragraph-xsmall-regular-font-style: normal;
   --paragraph-xsmall-regular-font-weight: 400;
