@@ -40,7 +40,7 @@ export class Tabs {
 
   updateActiveTab() {
     const buttons = document.querySelectorAll('[data-action="switch-tab"]');
-    const activeClass = "bg-[#f8f8f9] text-[#343434] shadow-sm";
+    const activeClass = "bg-[#F8F3E8] text-[#343434] shadow-sm";
     const inactiveClass = "text-[#CBC4B6] hover:text-[#343434] hover:bg-gray-50 border border-transparent";
     const baseClass = "tab-button w-32 sm:w-40 px-[1.32rem] sm:px-[2.0rem] py-[1.0rem] sm:py-[1.15rem] text-[1.32rem] sm:text-[1.48rem] rounded-lg transition-colors duration-200 min-h-[68px] sm:min-h-[74px] flex items-center justify-center box-border font-medium";
 
