@@ -4,6 +4,7 @@ export const SIDEBAR_CONFIG = {
       {
         id: 'generate-bip',
         label: 'Generate BIP',
+        tooltip: 'Auto-generate a behavior intervention plan using AI',
         variant: 'primary',
         badge: null,
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -15,6 +16,7 @@ export const SIDEBAR_CONFIG = {
       {
         id: 'create-bip-new',
         label: 'Create BIP',
+        tooltip: 'Start a new BIP from scratch using the updated editor',
         variant: 'outline',
         badge: { text: 'New', color: 'teal' },
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -24,6 +26,7 @@ export const SIDEBAR_CONFIG = {
       {
         id: 'create-bip-legacy',
         label: 'Create BIP',
+        tooltip: 'Start a new BIP using the original editor',
         variant: 'outline',
         badge: { text: 'Legacy', color: 'teal' },
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -43,6 +46,7 @@ export const SIDEBAR_CONFIG = {
       {
         id: 'upload-resource',
         label: 'Upload Resource',
+        tooltip: 'Upload a PDF, video, or worksheet to your library',
         variant: 'primary',
         badge: null,
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -53,6 +57,7 @@ export const SIDEBAR_CONFIG = {
       {
         id: 'browse-resources',
         label: 'Browse All',
+        tooltip: 'Explore the full resource library',
         variant: 'outline',
         badge: null,
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -79,6 +84,7 @@ export const SIDEBAR_CONFIG = {
       {
         id: 'enroll-course',
         label: 'Enroll in Course',
+        tooltip: 'Browse and enroll in available training courses',
         variant: 'primary',
         badge: null,
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -89,6 +95,7 @@ export const SIDEBAR_CONFIG = {
       {
         id: 'my-courses',
         label: 'My Courses',
+        tooltip: 'View courses you are enrolled in',
         variant: 'outline',
         badge: null,
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -116,6 +123,7 @@ export const SIDEBAR_CONFIG = {
       {
         id: 'create-strategy',
         label: 'Create Strategy',
+        tooltip: 'Build a new behavior strategy from scratch',
         variant: 'primary',
         badge: null,
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -125,6 +133,7 @@ export const SIDEBAR_CONFIG = {
       {
         id: 'strategy-library',
         label: 'Strategy Library',
+        tooltip: 'Browse pre-built strategies and templates',
         variant: 'outline',
         badge: null,
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
