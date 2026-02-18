@@ -105,6 +105,8 @@ export class Sidebar {
     const actionsContainer = document.getElementById('sidebar-actions');
     if (!actionsContainer) return;
 
+    this._cleanupTooltips();
+
     actionsContainer.innerHTML = actions.map(action => {
       const badgeHTML = action.badge
         ? `<span class="text-[8px] font-semibold uppercase tracking-wide text-[#108C89] bg-[#E7F3F3] px-1.5 py-0.5 rounded-full">${escapeHtml(action.badge.text)}</span>`
@@ -121,39 +123,58 @@ export class Sidebar {
       const tooltipText = ACTION_TOOLTIPS[action.id];
       const ariaLabel = tooltipText ? ` aria-label="${escapeHtml(tooltipText)}"` : '';
 
-      const buttonHTML = `
+      return `
         <button data-action="${action.id}"${ariaLabel} class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
           ${action.icon}
           ${labelHTML}
         </button>
       `;
-
-      if (!tooltipText) return buttonHTML;
-
-      return `
-        <div class="sidebar-action-wrap" data-tooltip-wrap>
-          ${buttonHTML}
-          <div class="sidebar-tooltip" role="tooltip" aria-hidden="true">
-            <div class="sidebar-tooltip-arrow"></div>
-            <div class="sidebar-tooltip-inner">${escapeHtml(tooltipText)}</div>
-          </div>
-        </div>
-      `;
     }).join('');
 
-    this._attachTooltipListeners(actionsContainer);
+    this._attachTooltipListeners(actionsContainer, actions);
   }
 
-  _attachTooltipListeners(container) {
-    const wraps = container.querySelectorAll('[data-tooltip-wrap]');
-    wraps.forEach(wrap => {
-      const btn = wrap.querySelector('button');
-      const tip = wrap.querySelector('.sidebar-tooltip');
-      if (!btn || !tip) return;
+  _cleanupTooltips() {
+    if (this._activeTooltips) {
+      this._activeTooltips.forEach(({ tip, cleanup }) => {
+        cleanup();
+        if (tip.parentNode) tip.parentNode.removeChild(tip);
+      });
+    }
+    this._activeTooltips = [];
+  }
 
+  _createTooltipEl(text) {
+    const tip = document.createElement('div');
+    tip.className = 'sidebar-tooltip';
+    tip.setAttribute('role', 'tooltip');
+    tip.setAttribute('aria-hidden', 'true');
+    tip.innerHTML = `<div class="sidebar-tooltip-arrow"></div><div class="sidebar-tooltip-inner">${escapeHtml(text)}</div>`;
+    document.body.appendChild(tip);
+    return tip;
+  }
+
+  _positionTooltip(btn, tip) {
+    const rect = btn.getBoundingClientRect();
+    const tipRect = tip.getBoundingClientRect();
+    const gap = 12;
+    tip.style.left = `${rect.right + gap}px`;
+    tip.style.top = `${rect.top + rect.height / 2 - tipRect.height / 2}px`;
+  }
+
+  _attachTooltipListeners(container, actions) {
+    actions.forEach(action => {
+      const tooltipText = ACTION_TOOLTIPS[action.id];
+      if (!tooltipText) return;
+
+      const btn = container.querySelector(`[data-action="${action.id}"]`);
+      if (!btn) return;
+
+      const tip = this._createTooltipEl(tooltipText);
       let longPressTimer = null;
 
       const show = () => {
+        this._positionTooltip(btn, tip);
         tip.classList.add('is-visible');
         tip.setAttribute('aria-hidden', 'false');
       };
@@ -163,33 +184,47 @@ export class Sidebar {
         tip.setAttribute('aria-hidden', 'true');
       };
 
-      btn.addEventListener('mouseenter', show);
-      btn.addEventListener('mouseleave', hide);
-      btn.addEventListener('focus', show);
-      btn.addEventListener('blur', hide);
+      const onMouseEnter = () => show();
+      const onMouseLeave = () => hide();
+      const onFocus = () => show();
+      const onBlur = () => hide();
 
-      btn.addEventListener('touchstart', (e) => {
+      const onTouchStart = (e) => {
         longPressTimer = setTimeout(() => {
           e.preventDefault();
           show();
           setTimeout(hide, 2000);
         }, 500);
-      }, { passive: false });
+      };
 
-      btn.addEventListener('touchend', () => {
-        if (longPressTimer) {
-          clearTimeout(longPressTimer);
-          longPressTimer = null;
-        }
-      });
+      const onTouchEnd = () => {
+        if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
+      };
 
-      btn.addEventListener('touchcancel', () => {
-        if (longPressTimer) {
-          clearTimeout(longPressTimer);
-          longPressTimer = null;
-        }
+      const onTouchCancel = () => {
+        if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
         hide();
-      });
+      };
+
+      btn.addEventListener('mouseenter', onMouseEnter);
+      btn.addEventListener('mouseleave', onMouseLeave);
+      btn.addEventListener('focus', onFocus);
+      btn.addEventListener('blur', onBlur);
+      btn.addEventListener('touchstart', onTouchStart, { passive: false });
+      btn.addEventListener('touchend', onTouchEnd);
+      btn.addEventListener('touchcancel', onTouchCancel);
+
+      const cleanup = () => {
+        btn.removeEventListener('mouseenter', onMouseEnter);
+        btn.removeEventListener('mouseleave', onMouseLeave);
+        btn.removeEventListener('focus', onFocus);
+        btn.removeEventListener('blur', onBlur);
+        btn.removeEventListener('touchstart', onTouchStart);
+        btn.removeEventListener('touchend', onTouchEnd);
+        btn.removeEventListener('touchcancel', onTouchCancel);
+      };
+
+      this._activeTooltips.push({ tip, cleanup });
     });
   }
 

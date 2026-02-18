@@ -163,15 +163,8 @@
 /* ── end Checkbox component ─────────────────────────────── */
 
 /* ── Tooltip component ──────────────────────────────────── */
-.sidebar-action-wrap {
-  position: relative;
-}
-
 .sidebar-tooltip {
-  position: absolute;
-  left: calc(100% + 12px);
-  top: 50%;
-  transform: translateY(-50%);
+  position: fixed;
   z-index: 9999;
   pointer-events: none;
   opacity: 0;
