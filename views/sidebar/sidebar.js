@@ -50,7 +50,7 @@ export class Sidebar {
       if (!Array.isArray(filters)) return;
       filters.forEach(f => {
         if (!f.isShowAll) {
-          this.filterStates[tab][f.id] = false;
+          this.filterStates[tab][f.id] = true;
         }
       });
     });
