@@ -62,8 +62,14 @@ export const SIDEBAR_CONFIG = {
     ],
     filters: [
       { id: 'showAll', label: 'Show all', isShowAll: true },
-      { id: 'madeByYou', label: 'Made by You' },
-      { id: 'sharedWithYou', label: 'Shared with You' }
+      { id: 'madeByYou', label: 'Made by You', group: 'Ownership' },
+      { id: 'sharedWithYou', label: 'Shared with You', group: 'Ownership' },
+      { id: 'recentlyAdded', label: 'Recently Added', group: 'Recency' },
+      { id: 'lastWeek', label: 'Last 7 Days', group: 'Recency' },
+      { id: 'lastMonth', label: 'Last 30 Days', group: 'Recency' },
+      { id: 'pdf', label: 'PDF', group: 'Type' },
+      { id: 'video', label: 'Video', group: 'Type' },
+      { id: 'worksheet', label: 'Worksheet', group: 'Type' }
     ],
     filtersTitle: 'Filter'
   },
@@ -93,9 +99,14 @@ export const SIDEBAR_CONFIG = {
     ],
     filters: [
       { id: 'showAll', label: 'Show all', isShowAll: true },
-      { id: 'inProgress', label: 'In Progress' },
-      { id: 'completed', label: 'Completed' },
-      { id: 'notStarted', label: 'Not Started' }
+      { id: 'inProgress', label: 'In Progress', group: 'Status' },
+      { id: 'completed', label: 'Completed', group: 'Status' },
+      { id: 'notStarted', label: 'Not Started', group: 'Status' },
+      { id: 'bcba', label: 'BCBA', group: 'Track' },
+      { id: 'rbt', label: 'RBT', group: 'Track' },
+      { id: 'clinician', label: 'Clinician', group: 'Track' },
+      { id: 'freeOnly', label: 'Free Only', group: 'Access' },
+      { id: 'ceus', label: 'Includes CEUs', group: 'Access' }
     ],
     filtersTitle: 'Filter'
   },
@@ -126,9 +137,14 @@ export const SIDEBAR_CONFIG = {
     ],
     filters: [
       { id: 'showAll', label: 'Show all', isShowAll: true },
-      { id: 'madeByYou', label: 'Made by You' },
-      { id: 'sharedWithYou', label: 'Shared with You' },
-      { id: 'evidenceBased', label: 'Evidence-Based' }
+      { id: 'madeByYou', label: 'Made by You', group: 'Ownership' },
+      { id: 'sharedWithYou', label: 'Shared with You', group: 'Ownership' },
+      { id: 'evidenceBased', label: 'Evidence-Based', group: 'Quality' },
+      { id: 'peerReviewed', label: 'Peer Reviewed', group: 'Quality' },
+      { id: 'antecedent', label: 'Antecedent', group: 'Category' },
+      { id: 'consequence', label: 'Consequence', group: 'Category' },
+      { id: 'extinction', label: 'Extinction', group: 'Category' },
+      { id: 'dri', label: 'DRI', group: 'Category' }
     ],
     filtersTitle: 'Filter'
   }

@@ -111,22 +111,35 @@ export class Sidebar {
       <div class="cb-show-all-divider"></div>
     ` : '';
 
-    const childCheckboxesHTML = childFilters.map(filter => {
-      const isChecked = tabFilterStates[filter.id] || false;
-      return `
-        <label class="cb-row">
-          <input
-            type="checkbox"
-            id="filter-${filter.id}"
-            ${isChecked ? 'checked' : ''}
-            class="cb-input"
-            data-filter="${filter.id}"
-            ${hasShowAll ? 'data-cb-child' : ''}
-          />
-          <span class="cb-box"></span>
-          <span class="cb-label">${filter.label}</span>
-        </label>
-      `;
+    const grouped = childFilters.reduce((acc, filter) => {
+      const key = filter.group || '';
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(filter);
+      return acc;
+    }, {});
+
+    const childCheckboxesHTML = Object.entries(grouped).map(([groupName, groupFilters]) => {
+      const headerHTML = groupName
+        ? `<div class="cb-group-header">${groupName}</div>`
+        : '';
+      const checkboxes = groupFilters.map(filter => {
+        const isChecked = tabFilterStates[filter.id] || false;
+        return `
+          <label class="cb-row">
+            <input
+              type="checkbox"
+              id="filter-${filter.id}"
+              ${isChecked ? 'checked' : ''}
+              class="cb-input"
+              data-filter="${filter.id}"
+              ${hasShowAll ? 'data-cb-child' : ''}
+            />
+            <span class="cb-box"></span>
+            <span class="cb-label">${filter.label}</span>
+          </label>
+        `;
+      }).join('');
+      return `<div class="cb-group">${headerHTML}${checkboxes}</div>`;
     }).join('');
 
     const groupAttr = hasShowAll ? 'data-cb-group' : '';

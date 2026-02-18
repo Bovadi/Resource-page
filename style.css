@@ -138,6 +138,24 @@
   margin: 6px 16px 8px;
 }
 
+.cb-group {
+  margin-bottom: 20px;
+}
+
+.cb-group:last-child {
+  margin-bottom: 0;
+}
+
+.cb-group-header {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+  padding: 0 16px 4px;
+  margin-top: 2px;
+}
+
 /* ── end Checkbox component ─────────────────────────────── */
 
 body {
