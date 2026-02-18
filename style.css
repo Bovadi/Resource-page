@@ -240,22 +240,39 @@
   white-space: normal;
   word-wrap: break-word;
   opacity: 0;
-  transform: translateY(4px);
+  transform: translateX(-4px);
   transition: opacity 0.15s ease, transform 0.15s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+.app-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-right-color: #1f2937;
+}
+
 .app-tooltip--visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
-.app-tooltip--below {
-  transform: translateY(-4px);
+.app-tooltip--left {
+  transform: translateX(4px);
 }
 
-.app-tooltip--below.app-tooltip--visible {
-  transform: translateY(0);
+.app-tooltip--left::after {
+  right: auto;
+  left: 100%;
+  border-right-color: transparent;
+  border-left-color: #1f2937;
+}
+
+.app-tooltip--left.app-tooltip--visible {
+  transform: translateX(0);
 }
 /* ── end Tooltip ─────────────────────────────────────────── */
 

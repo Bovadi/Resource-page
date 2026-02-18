@@ -18,22 +18,20 @@ function positionTooltip(target) {
   const tip = getTooltipElement();
   const rect = target.getBoundingClientRect();
   const tipRect = tip.getBoundingClientRect();
-  const gap = 8;
+  const gap = 10;
   const viewportPadding = 12;
 
-  let top = rect.top - tipRect.height - gap;
-  let left = rect.left + rect.width / 2 - tipRect.width / 2;
+  let top = rect.top + rect.height / 2 - tipRect.height / 2;
+  let left = rect.right + gap;
 
-  if (top < viewportPadding) {
-    top = rect.bottom + gap;
-    tip.classList.add('app-tooltip--below');
-    tip.classList.remove('app-tooltip--above');
-  } else {
-    tip.classList.add('app-tooltip--above');
-    tip.classList.remove('app-tooltip--below');
+  tip.classList.remove('app-tooltip--left');
+
+  if (left + tipRect.width > window.innerWidth - viewportPadding) {
+    left = rect.left - tipRect.width - gap;
+    tip.classList.add('app-tooltip--left');
   }
 
-  left = Math.max(viewportPadding, Math.min(left, window.innerWidth - tipRect.width - viewportPadding));
+  top = Math.max(viewportPadding, Math.min(top, window.innerHeight - tipRect.height - viewportPadding));
 
   tip.style.top = `${top + window.scrollY}px`;
   tip.style.left = `${left + window.scrollX}px`;
@@ -48,6 +46,7 @@ function showTooltip(target) {
   const tip = getTooltipElement();
   tip.textContent = text;
   tip.style.visibility = 'hidden';
+  tip.classList.remove('app-tooltip--left');
   tip.classList.add('app-tooltip--visible');
 
   requestAnimationFrame(() => {
