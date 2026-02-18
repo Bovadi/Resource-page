@@ -65,7 +65,7 @@ export const SIDEBAR_CONFIG = {
       { id: 'madeByYou', label: 'Made by You' },
       { id: 'sharedWithYou', label: 'Shared with You' }
     ],
-    filtersTitle: 'Filters'
+    filtersTitle: 'Filter'
   },
 
   courses: {
@@ -97,7 +97,7 @@ export const SIDEBAR_CONFIG = {
       { id: 'completed', label: 'Completed' },
       { id: 'notStarted', label: 'Not Started' }
     ],
-    filtersTitle: 'Status'
+    filtersTitle: 'Filter'
   },
 
   strategies: {
@@ -130,6 +130,6 @@ export const SIDEBAR_CONFIG = {
       { id: 'sharedWithYou', label: 'Shared with You' },
       { id: 'evidenceBased', label: 'Evidence-Based' }
     ],
-    filtersTitle: 'Filters'
+    filtersTitle: 'Filter'
   }
 };
