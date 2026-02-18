@@ -184,22 +184,3 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.card-item {
-  animation: fadeInUp 250ms ease-out forwards;
-}
-
-#card-grid-container {
-  transition: opacity 200ms ease-in;
-}

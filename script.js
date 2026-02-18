@@ -59,13 +59,11 @@ class App {
     this.sidebar.onTabSwitch = (tabKey) => {
       this.state.activeTab = tabKey;
       this.header.setActiveTab(tabKey);
-      this.cardGrid.setLoading(true);
-      setTimeout(() => this.filterAndDisplayCards(), 100);
+      this.filterAndDisplayCards();
     };
 
     this.sidebar.onFilterChange = () => {
-      this.cardGrid.setLoading(true);
-      setTimeout(() => this.filterAndDisplayCards(), 80);
+      this.filterAndDisplayCards();
     };
 
     this.sidebar.onActionClick = (action) => {
@@ -102,8 +100,7 @@ class App {
   switchTab(tabKey) {
     this.state.activeTab = tabKey;
     this.sidebar.switchTab(tabKey);
-    this.cardGrid.setLoading(true);
-    setTimeout(() => this.filterAndDisplayCards(), 100);
+    this.filterAndDisplayCards();
   }
 
   toggleSidebar() {
@@ -128,7 +125,7 @@ class App {
     return this.state.activeTab === 'courses' ? 'course' : 'resource';
   }
 
-  async filterAndDisplayCards() {
+  filterAndDisplayCards() {
     this._filterGeneration++;
     const generation = this._filterGeneration;
 
@@ -138,17 +135,16 @@ class App {
       const filters = this.sidebar.getFilters();
       let filtered = this.allCards.filter(card => card.type === this.getCardType());
 
-      const activeFilters = Object.entries(filters)
-        .filter(([key, val]) => val && key !== 'showAll')
-        .map(([key]) => key);
+      const activeFilters = Object.entries(filters).filter(([, val]) => val).map(([key]) => key);
+      const hasFilterSystem = Object.keys(filters).length > 0;
 
-      if (activeFilters.length > 0) {
+      if (hasFilterSystem && activeFilters.length === 0) {
+        filtered = [];
+      } else if (activeFilters.length > 0) {
         filtered = filtered.filter(card =>
           activeFilters.some(key => card[key] === true)
         );
       }
-
-      await new Promise(resolve => setTimeout(resolve, 150));
 
       if (generation !== this._filterGeneration) return;
       this._retryCount = 0;
