@@ -19,17 +19,27 @@ export class Sidebar {
     this.onTabSwitch = null;
     this.activeTab = 'resources';
     this.filterStates = {};
+    this._focusTrapHandler = null;
+    this._escapeHandler = null;
   }
 
   async load() {
-    const response = await fetch('/views/sidebar/sidebar.html');
-    const html = await response.text();
     const container = document.getElementById(this.containerId);
-    if (container) {
+    if (!container) return;
+
+    try {
+      const response = await fetch('/views/sidebar/sidebar.html');
+      if (!response.ok) {
+        throw new Error(`Failed to load sidebar: ${response.status}`);
+      }
+      const html = await response.text();
       container.innerHTML = html;
       this._initFilterStates();
       this.renderForTab(this.activeTab);
       this.attachEventListeners();
+    } catch (err) {
+      console.error('Sidebar load error:', err);
+      container.innerHTML = '<p class="p-4 text-sm text-red-600">Failed to load sidebar.</p>';
     }
   }
 
@@ -290,8 +300,12 @@ export class Sidebar {
     if (sidebar) {
       if (this.isOpen) {
         sidebar.classList.remove('-translate-x-full');
+        this._enableFocusTrap();
+        this._lockBodyScroll(true);
       } else {
         sidebar.classList.add('-translate-x-full');
+        this._disableFocusTrap();
+        this._lockBodyScroll(false);
       }
     }
   }
@@ -301,6 +315,71 @@ export class Sidebar {
     const sidebar = document.getElementById('sidebar');
     if (sidebar) {
       sidebar.classList.add('-translate-x-full');
+    }
+    this._disableFocusTrap();
+    this._lockBodyScroll(false);
+  }
+
+  _lockBodyScroll(lock) {
+    if (window.innerWidth >= 1024) return;
+    if (lock) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  _enableFocusTrap() {
+    if (window.innerWidth >= 1024) return;
+
+    const sidebar = document.getElementById('sidebar');
+    if (!sidebar) return;
+
+    const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+    this._focusTrapHandler = (e) => {
+      if (e.key !== 'Tab') return;
+
+      const focusableElements = sidebar.querySelectorAll(focusableSelectors);
+      const focusable = Array.from(focusableElements).filter(el => !el.disabled && el.offsetParent !== null);
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    this._escapeHandler = (e) => {
+      if (e.key === 'Escape' && this.isOpen) {
+        this.close();
+        if (this.onClose) this.onClose();
+      }
+    };
+
+    document.addEventListener('keydown', this._focusTrapHandler);
+    document.addEventListener('keydown', this._escapeHandler);
+
+    const firstFocusable = sidebar.querySelector(focusableSelectors);
+    if (firstFocusable) {
+      setTimeout(() => firstFocusable.focus(), 100);
+    }
+  }
+
+  _disableFocusTrap() {
+    if (this._focusTrapHandler) {
+      document.removeEventListener('keydown', this._focusTrapHandler);
+      this._focusTrapHandler = null;
+    }
+    if (this._escapeHandler) {
+      document.removeEventListener('keydown', this._escapeHandler);
+      this._escapeHandler = null;
     }
   }
 }

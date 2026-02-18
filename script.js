@@ -70,6 +70,12 @@ class App {
       console.log('Action clicked:', action);
     };
 
+    this.sidebar.onClose = () => {
+      this.state.isSidebarOpen = false;
+      this.header.updateHamburgerIcon(false);
+      this.updateSidebarOverlay();
+    };
+
     this.cardGrid.onCardClick = (card) => {
       this.modal.open(card);
     };

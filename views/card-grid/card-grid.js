@@ -18,12 +18,20 @@ export class CardGrid {
   }
 
   async load() {
-    const response = await fetch('/views/card-grid/card-grid.html');
-    const html = await response.text();
     const container = document.getElementById(this.containerId);
-    if (container) {
+    if (!container) return;
+
+    try {
+      const response = await fetch('/views/card-grid/card-grid.html');
+      if (!response.ok) {
+        throw new Error(`Failed to load card grid: ${response.status}`);
+      }
+      const html = await response.text();
       container.innerHTML = html;
       this.attachEventListeners();
+    } catch (err) {
+      console.error('Card grid load error:', err);
+      container.innerHTML = '<p class="p-8 text-center text-red-600">Failed to load content area.</p>';
     }
   }
 

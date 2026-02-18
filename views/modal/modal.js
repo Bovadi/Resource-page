@@ -5,15 +5,31 @@ export class Modal {
     this.isOpen = false;
     this.onClose = null;
     this.onAction = null;
+    this._keydownHandler = null;
   }
 
   async load() {
-    const response = await fetch('/views/modal/modal.html');
-    const html = await response.text();
     const container = document.getElementById(this.containerId);
-    if (container) {
+    if (!container) return;
+
+    try {
+      const response = await fetch('/views/modal/modal.html');
+      if (!response.ok) {
+        throw new Error(`Failed to load modal: ${response.status}`);
+      }
+      const html = await response.text();
       container.innerHTML = html;
       this.attachEventListeners();
+    } catch (err) {
+      console.error('Modal load error:', err);
+      container.innerHTML = '';
+    }
+  }
+
+  destroy() {
+    if (this._keydownHandler) {
+      document.removeEventListener('keydown', this._keydownHandler);
+      this._keydownHandler = null;
     }
   }
 

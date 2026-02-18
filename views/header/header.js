@@ -5,16 +5,32 @@ export class Header {
     this.onTabSwitch = null;
     this.dropdownOpen = false;
     this.activeTab = defaultTab;
+    this._documentClickHandler = null;
   }
 
   async load() {
-    const response = await fetch('/views/header/header.html');
-    const html = await response.text();
     const container = document.getElementById(this.containerId);
-    if (container) {
+    if (!container) return;
+
+    try {
+      const response = await fetch('/views/header/header.html');
+      if (!response.ok) {
+        throw new Error(`Failed to load header: ${response.status}`);
+      }
+      const html = await response.text();
       container.innerHTML = html;
       this.attachEventListeners();
       this.setActiveTab(this.activeTab);
+    } catch (err) {
+      console.error('Header load error:', err);
+      container.innerHTML = '<p class="p-4 text-sm text-red-600">Failed to load header.</p>';
+    }
+  }
+
+  destroy() {
+    if (this._documentClickHandler) {
+      document.removeEventListener('click', this._documentClickHandler);
+      this._documentClickHandler = null;
     }
   }
 
@@ -39,12 +55,13 @@ export class Header {
         this.updateDropdownState(profileMenu, profileCaret);
       });
 
-      document.addEventListener('click', () => {
+      this._documentClickHandler = () => {
         if (this.dropdownOpen) {
           this.dropdownOpen = false;
           this.updateDropdownState(profileMenu, profileCaret);
         }
-      });
+      };
+      document.addEventListener('click', this._documentClickHandler);
 
       profileMenu.addEventListener('click', (e) => {
         e.stopPropagation();
