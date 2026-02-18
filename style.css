@@ -222,60 +222,6 @@
 
 /* ── end Interaction animations ───────────────────────────── */
 
-/* ── Tooltip ─────────────────────────────────────────────── */
-.app-tooltip {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  max-width: 240px;
-  padding: 6px 10px;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.4;
-  color: #fff;
-  background: #1f2937;
-  border-radius: 6px;
-  pointer-events: none;
-  white-space: normal;
-  word-wrap: break-word;
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.app-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  transform: translateY(-50%);
-  border: 5px solid transparent;
-  border-right-color: #1f2937;
-}
-
-.app-tooltip--visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.app-tooltip--left {
-  transform: translateX(4px);
-}
-
-.app-tooltip--left::after {
-  right: auto;
-  left: 100%;
-  border-right-color: transparent;
-  border-left-color: #1f2937;
-}
-
-.app-tooltip--left.app-tooltip--visible {
-  transform: translateX(0);
-}
-/* ── end Tooltip ─────────────────────────────────────────── */
-
 body {
   margin: 0;
   padding: 0;
