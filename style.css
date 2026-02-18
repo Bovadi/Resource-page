@@ -123,58 +123,6 @@
 .cb-input:disabled ~ .cb-label {
   color: #9ca3af;
 }
-/* ── Show All primary row ───────────────────────────────── */
-.cb-row--primary {
-  background: #f3f4f6;
-  border-radius: 8px;
-  padding: 12px 16px;
-}
-
-.cb-row--primary .cb-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.cb-row--primary:hover {
-  background: #e5e7eb;
-}
-
-.cb-row--primary:hover .cb-box::before {
-  border-color: #6b7280;
-}
-
-.cb-row--primary-checked {
-  background: #161616;
-}
-
-.cb-row--primary-checked .cb-label {
-  color: #fff;
-}
-
-.cb-row--primary-checked:hover {
-  background: #2d2d2d;
-}
-
-.cb-row--primary-checked:hover .cb-box::before {
-  border-color: #fff;
-}
-
-.cb-row--primary-checked .cb-input:checked + .cb-box::before {
-  background: #fff;
-  border-color: #fff;
-}
-
-.cb-row--primary-checked .cb-input:checked + .cb-box::after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 5l2.5 2.5 4.5-5' stroke='%23161616' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
-}
-
-.cb-row--primary:focus-within {
-  outline: 2.5px solid #161616;
-  outline-offset: 1px;
-}
-/* ── end Show All primary row ───────────────────────────── */
-
 /* ── end Checkbox component ─────────────────────────────── */
 
 body {

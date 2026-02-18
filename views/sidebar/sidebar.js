@@ -25,11 +25,7 @@ export class Sidebar {
   _initFilterStates() {
     Object.keys(SIDEBAR_CONFIG).forEach(tab => {
       this.filterStates[tab] = {};
-      const config = SIDEBAR_CONFIG[tab];
-      if (config.showAll) {
-        this.filterStates[tab][config.showAll.id] = false;
-      }
-      config.filters.forEach(f => {
+      SIDEBAR_CONFIG[tab].filters.forEach(f => {
         this.filterStates[tab][f.id] = false;
       });
     });
@@ -90,25 +86,7 @@ export class Sidebar {
     const filtersContainer = document.getElementById('sidebar-filters');
     if (!filtersContainer) return;
 
-    const config = SIDEBAR_CONFIG[tabKey];
     const tabFilterStates = this.filterStates[tabKey] || {};
-
-    const showAllHTML = config && config.showAll ? (() => {
-      const isChecked = tabFilterStates[config.showAll.id] || false;
-      return `
-        <label class="cb-row cb-row--primary${isChecked ? ' cb-row--primary-checked' : ''}">
-          <input
-            type="checkbox"
-            id="filter-${config.showAll.id}"
-            ${isChecked ? 'checked' : ''}
-            class="cb-input"
-            data-filter="${config.showAll.id}"
-          />
-          <span class="cb-box"></span>
-          <span class="cb-label">${config.showAll.label}</span>
-        </label>
-      `;
-    })() : '';
 
     const checkboxesHTML = filters.map(filter => {
       const isChecked = tabFilterStates[filter.id] || false;
@@ -127,15 +105,9 @@ export class Sidebar {
       `;
     }).join('');
 
-    const dividerHTML = showAllHTML ? `<div class="h-px bg-gray-100 my-2 mx-4"></div>` : '';
-
     filtersContainer.innerHTML = `
-      <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-4">${title}</h3>
-      <div class="space-y-1">
-        ${showAllHTML}
-        ${dividerHTML}
-        ${checkboxesHTML}
-      </div>
+      <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 px-4">${title}</h3>
+      <div class="space-y-1">${checkboxesHTML}</div>
     `;
   }
 
@@ -163,12 +135,6 @@ export class Sidebar {
             this.filterStates[this.activeTab] = {};
           }
           this.filterStates[this.activeTab][filterId] = checkbox.checked;
-
-          const row = checkbox.closest('.cb-row--primary');
-          if (row) {
-            row.classList.toggle('cb-row--primary-checked', checkbox.checked);
-          }
-
           if (this.onFilterChange) {
             this.onFilterChange({ ...this.filterStates[this.activeTab] });
           }
