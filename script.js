@@ -59,7 +59,7 @@ class App {
     this.sidebar.onTabSwitch = (tabKey) => {
       this.state.activeTab = tabKey;
       this.header.setActiveTab(tabKey);
-      this.filterAndDisplayCards();
+      this.filterAndDisplayCards(true);
     };
 
     this.sidebar.onFilterChange = () => {
@@ -100,7 +100,7 @@ class App {
   switchTab(tabKey) {
     this.state.activeTab = tabKey;
     this.sidebar.switchTab(tabKey);
-    this.filterAndDisplayCards();
+    this.filterAndDisplayCards(true);
   }
 
   toggleSidebar() {
@@ -125,34 +125,43 @@ class App {
     return this.state.activeTab === 'courses' ? 'course' : 'resource';
   }
 
-  filterAndDisplayCards() {
+  filterAndDisplayCards(showSpinner = false) {
     this._filterGeneration++;
     const generation = this._filterGeneration;
 
     this.cardGrid.setError(null);
 
-    try {
-      const filters = this.sidebar.getFilters();
-      let filtered = this.allCards.filter(card => card.type === this.getCardType());
+    const applyFilter = () => {
+      try {
+        const filters = this.sidebar.getFilters();
+        let filtered = this.allCards.filter(card => card.type === this.getCardType());
 
-      const activeFilters = Object.entries(filters).filter(([, val]) => val).map(([key]) => key);
-      const hasFilterSystem = Object.keys(filters).length > 0;
+        const activeFilters = Object.entries(filters).filter(([, val]) => val).map(([key]) => key);
+        const hasFilterSystem = Object.keys(filters).length > 0;
 
-      if (hasFilterSystem && activeFilters.length === 0) {
-        filtered = [];
-      } else if (activeFilters.length > 0) {
-        filtered = filtered.filter(card =>
-          activeFilters.some(key => card[key] === true)
-        );
+        if (hasFilterSystem && activeFilters.length === 0) {
+          filtered = [];
+        } else if (activeFilters.length > 0) {
+          filtered = filtered.filter(card =>
+            activeFilters.some(key => card[key] === true)
+          );
+        }
+
+        if (generation !== this._filterGeneration) return;
+        this._retryCount = 0;
+        this.cardGrid.setCards(filtered);
+
+      } catch (err) {
+        console.error('Filter error:', err);
+        this.cardGrid.setError('Failed to load content');
       }
+    };
 
-      if (generation !== this._filterGeneration) return;
-      this._retryCount = 0;
-      this.cardGrid.setCards(filtered);
-
-    } catch (err) {
-      console.error('Filter error:', err);
-      this.cardGrid.setError('Failed to load content');
+    if (showSpinner) {
+      this.cardGrid.setLoading(true);
+      setTimeout(applyFilter, 250);
+    } else {
+      applyFilter();
     }
   }
 }

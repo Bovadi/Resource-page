@@ -15,6 +15,7 @@ export class CardGrid {
     this.loading = false;
     this.error = null;
     this.onCardClick = null;
+    this._transitionTimer = null;
   }
 
   async load() {
@@ -37,17 +38,58 @@ export class CardGrid {
 
   setCards(cards) {
     this.cards = cards;
-    this.renderCards();
+    this.loading = false;
+    this.error = null;
+    this._transitionToContent();
   }
 
   setLoading(loading) {
     this.loading = loading;
-    this.renderCards();
+    if (loading) {
+      this._showSpinner();
+    }
   }
 
   setError(error) {
     this.error = error;
-    this.renderCards();
+    if (error) {
+      this.renderCards();
+    }
+  }
+
+  _showSpinner() {
+    const gridContainer = document.getElementById('card-grid-container');
+    if (!gridContainer) return;
+
+    gridContainer.classList.add('grid-content-exit');
+
+    clearTimeout(this._transitionTimer);
+    this._transitionTimer = setTimeout(() => {
+      gridContainer.innerHTML = `
+        <div class="grid-spinner">
+          <div class="grid-spinner-dot"></div>
+          <div class="grid-spinner-dot"></div>
+          <div class="grid-spinner-dot"></div>
+        </div>
+      `;
+      gridContainer.classList.remove('grid-content-exit');
+    }, 150);
+  }
+
+  _transitionToContent() {
+    clearTimeout(this._transitionTimer);
+
+    const gridContainer = document.getElementById('card-grid-container');
+    if (!gridContainer) return;
+
+    gridContainer.classList.add('grid-content-exit');
+
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        this.renderCards();
+        gridContainer.classList.remove('grid-content-exit');
+      }, 120);
+    });
   }
 
   renderCards() {
@@ -75,23 +117,21 @@ export class CardGrid {
     }
 
     if (this.loading) {
-      const skeletons = Array(8).fill(null).map(() => `
-        <div class="w-full max-w-[560px] cursor-pointer group animate-pulse">
-          <div class="bg-white border border-gray-200 rounded-lg shadow-sm mb-2 sm:mb-3 p-2 sm:p-3 md:p-4">
-            <div class="relative w-full aspect-[246/252] bg-gray-200 rounded-sm"></div>
-          </div>
-          <div class="h-3 sm:h-4 bg-gray-200 rounded w-3/4 mx-1"></div>
+      gridContainer.innerHTML = `
+        <div class="grid-spinner">
+          <div class="grid-spinner-dot"></div>
+          <div class="grid-spinner-dot"></div>
+          <div class="grid-spinner-dot"></div>
         </div>
-      `).join('');
-      gridContainer.innerHTML = skeletons;
+      `;
       return;
     }
 
     if (this.cards.length === 0) {
       gridContainer.innerHTML = `
-        <div class="col-span-full justify-self-stretch flex flex-col items-center justify-center py-20 px-4 w-full">
+        <div class="col-span-full justify-self-stretch flex flex-col items-center justify-center py-20 px-4 w-full card-fade-in">
           <div class="text-center max-w-sm">
-            <div class="text-5xl mb-4">🫥</div>
+            <div class="text-5xl mb-4">&#x1FAE5;</div>
             <h3 class="text-lg font-semibold text-gray-700 mb-2">Well, that's crickets.</h3>
             <p class="text-sm text-gray-400">Try checking a filter — your content is playing hard to get.</p>
           </div>
@@ -100,8 +140,13 @@ export class CardGrid {
       return;
     }
 
-    const cardsHTML = this.cards.map(card => `
-      <div class="w-full max-w-[560px] flex flex-col">
+    const staggerBase = 30;
+    const maxStagger = 300;
+
+    const cardsHTML = this.cards.map((card, i) => {
+      const delay = Math.min(i * staggerBase, maxStagger);
+      return `
+      <div class="w-full max-w-[560px] flex flex-col card-fade-in" style="animation-delay: ${delay}ms">
         <div class="group cursor-pointer" data-action="open-card" data-card-id="${escapeHtml(card.id)}">
           <div class="bg-white border border-gray-200 rounded-lg hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-2 sm:mb-3">
             <div class="p-2 sm:p-3 md:p-4">
@@ -117,7 +162,7 @@ export class CardGrid {
           </p>
         </div>
       </div>
-    `).join('');
+    `}).join('');
 
     gridContainer.innerHTML = cardsHTML;
   }

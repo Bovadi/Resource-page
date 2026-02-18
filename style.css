@@ -162,6 +162,66 @@
 
 /* ── end Checkbox component ─────────────────────────────── */
 
+/* ── Loading spinner ──────────────────────────────────────── */
+.grid-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+
+.grid-spinner-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #b0a892;
+  margin: 0 4px;
+  animation: spinnerBounce 1.2s ease-in-out infinite;
+}
+
+.grid-spinner-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.grid-spinner-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes spinnerBounce {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Card fade-in animation ───────────────────────────────── */
+.card-fade-in {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: cardAppear 0.3s ease-out forwards;
+}
+
+@keyframes cardAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Grid content transition ──────────────────────────────── */
+.grid-content-exit {
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+}
+
+/* ── end Interaction animations ───────────────────────────── */
+
 body {
   margin: 0;
   padding: 0;
