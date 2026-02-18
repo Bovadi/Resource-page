@@ -223,6 +223,22 @@
 /* ── end Interaction animations ───────────────────────────── */
 
 /* ── Tooltip ──────────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  #sidebar {
+    z-index: 20 !important;
+  }
+
+  #sidebar > nav {
+    overflow-x: visible;
+    overflow-y: auto;
+  }
+
+  #sidebar-actions {
+    overflow: visible;
+  }
+}
+
 .sidebar-tooltip-wrap {
   position: relative;
 }
@@ -231,7 +247,6 @@
   position: absolute;
   left: calc(100% + 10px);
   top: 50%;
-  transform: translateY(-50%);
   background: #1f2937;
   color: #fff;
   font-size: 12px;
@@ -244,8 +259,8 @@
   opacity: 0;
   transition: opacity 0.15s ease, transform 0.15s ease;
   transform: translateY(-50%) translateX(-4px);
-  z-index: 50;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-tooltip::before {
