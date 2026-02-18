@@ -117,7 +117,6 @@ class App {
     this._filterGeneration++;
     const generation = this._filterGeneration;
 
-    this.cardGrid.setLoading(true);
     this.cardGrid.setError(null);
 
     try {
@@ -135,17 +134,13 @@ class App {
         );
       }
 
-      setTimeout(() => {
-        if (generation !== this._filterGeneration) return;
-        this._retryCount = 0;
-        this.cardGrid.setLoading(false);
-        this.cardGrid.setCards(filtered);
-      }, 300);
+      if (generation !== this._filterGeneration) return;
+      this._retryCount = 0;
+      this.cardGrid.setCards(filtered);
 
     } catch (err) {
       console.error('Filter error:', err);
       this.cardGrid.setError('Failed to load content');
-      this.cardGrid.setLoading(false);
     }
   }
 }
