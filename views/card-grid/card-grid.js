@@ -79,6 +79,19 @@ export class CardGrid {
       return;
     }
 
+    if (this.cards.length === 0) {
+      gridContainer.innerHTML = `
+        <div class="col-span-full flex flex-col items-center justify-center py-20 px-4">
+          <div class="text-center max-w-sm">
+            <div class="text-5xl mb-4">🫥</div>
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Well, that's crickets.</h3>
+            <p class="text-sm text-gray-400">Try checking a filter — your content is playing hard to get.</p>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     const cardsHTML = this.cards.map(card => `
       <div class="w-full max-w-[560px] flex flex-col">
         <div class="group cursor-pointer" data-action="open-card" data-card-id="${escapeHtml(card.id)}">
