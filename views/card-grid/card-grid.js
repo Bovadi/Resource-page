@@ -115,9 +115,8 @@ export class CardGrid {
       return;
     }
 
-    gridContainer.style.opacity = '0';
     const cardsHTML = this.cards.map((card, index) => `
-      <div class="w-full max-w-[560px] flex flex-col card-item" style="animation-delay: ${Math.min(index * 30, 300)}ms">
+      <div class="w-full max-w-[560px] flex flex-col card-item" style="animation-delay: ${Math.min(index * 25, 200)}ms">
         <div class="group cursor-pointer" data-action="open-card" data-card-id="${escapeHtml(card.id)}">
           <div class="bg-white border border-gray-200 rounded-lg hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-2 sm:mb-3">
             <div class="p-2 sm:p-3 md:p-4">
@@ -135,10 +134,11 @@ export class CardGrid {
       </div>
     `).join('');
 
+    gridContainer.style.opacity = '0';
     gridContainer.innerHTML = cardsHTML;
 
     requestAnimationFrame(() => {
-      gridContainer.style.transition = 'opacity 250ms ease-in';
+      gridContainer.style.transition = 'opacity 200ms ease-in';
       gridContainer.style.opacity = '1';
     });
   }
