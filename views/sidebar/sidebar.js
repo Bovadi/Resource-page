@@ -112,8 +112,10 @@ export class Sidebar {
         ? 'bg-[#108C89] text-white hover:bg-[#0d7673] shadow-sm'
         : 'bg-white text-[#108C89] shadow-[inset_0_0_0_1px_#108C89] hover:bg-[#108C89]/5';
 
+      const tooltipAttr = action.tooltip ? ` data-tooltip="${escapeHtml(action.tooltip)}" aria-label="${escapeHtml(action.tooltip)}"` : '';
+
       return `
-        <button data-action="${action.id}" class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
+        <button data-action="${action.id}"${tooltipAttr} class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
           ${action.icon}
           ${labelHTML}
         </button>

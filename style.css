@@ -222,6 +222,43 @@
 
 /* ── end Interaction animations ───────────────────────────── */
 
+/* ── Tooltip ─────────────────────────────────────────────── */
+.app-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  max-width: 240px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #fff;
+  background: #1f2937;
+  border-radius: 6px;
+  pointer-events: none;
+  white-space: normal;
+  word-wrap: break-word;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.app-tooltip--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.app-tooltip--below {
+  transform: translateY(-4px);
+}
+
+.app-tooltip--below.app-tooltip--visible {
+  transform: translateY(0);
+}
+/* ── end Tooltip ─────────────────────────────────────────── */
+
 body {
   margin: 0;
   padding: 0;

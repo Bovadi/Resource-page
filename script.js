@@ -3,6 +3,7 @@ import { Sidebar } from './views/sidebar/sidebar.js';
 import { CardGrid } from './views/card-grid/card-grid.js';
 import { Modal } from './views/modal/modal.js';
 import { SAMPLE_CARDS } from './src/data/demoData.js';
+import { initTooltips } from './src/lib/tooltip.js';
 
 class App {
   constructor() {
@@ -29,6 +30,7 @@ class App {
       await this.loadComponents();
       this.setupEventHandlers();
       this.filterAndDisplayCards();
+      initTooltips();
     } catch (err) {
       console.error('App failed to initialize:', err);
       const root = document.getElementById('main-container');
