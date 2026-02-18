@@ -6,6 +6,7 @@ export const SIDEBAR_CONFIG = {
         label: 'Generate BIP',
         variant: 'primary',
         badge: null,
+        tooltip: 'Use AI to automatically generate a Behavior Intervention Plan based on your data',
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
           <path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/>
           <path d="M17.8 11.8L19 13"/><path d="M15 9h.01"/><path d="M17.8 6.2L19 5"/>
@@ -17,6 +18,7 @@ export const SIDEBAR_CONFIG = {
         label: 'Create BIP',
         variant: 'outline',
         badge: { text: 'New', color: 'teal' },
+        tooltip: 'Start a new BIP from scratch using the latest template',
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
         </svg>`
@@ -26,6 +28,7 @@ export const SIDEBAR_CONFIG = {
         label: 'Create BIP',
         variant: 'outline',
         badge: { text: 'Legacy', color: 'teal' },
+        tooltip: 'Create a BIP using the original legacy format',
         icon: `<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
         </svg>`

@@ -112,6 +112,24 @@ export class Sidebar {
         ? 'bg-[#108C89] text-white hover:bg-[#0d7673] shadow-sm'
         : 'bg-white text-[#108C89] shadow-[inset_0_0_0_1px_#108C89] hover:bg-[#108C89]/5';
 
+      const tooltipId = action.tooltip ? `tooltip-${action.id}` : '';
+      const ariaAttr = action.tooltip ? `aria-describedby="${tooltipId}"` : '';
+      const tooltipHTML = action.tooltip
+        ? `<div id="${tooltipId}" class="tooltip-content" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-bubble">${escapeHtml(action.tooltip)}</div></div>`
+        : '';
+
+      if (action.tooltip) {
+        return `
+          <div class="tooltip-wrapper">
+            <button data-action="${action.id}" ${ariaAttr} class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
+              ${action.icon}
+              ${labelHTML}
+            </button>
+            ${tooltipHTML}
+          </div>
+        `;
+      }
+
       return `
         <button data-action="${action.id}" class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
           ${action.icon}
@@ -119,6 +137,48 @@ export class Sidebar {
         </button>
       `;
     }).join('');
+
+    this._attachTooltipListeners(actionsContainer);
+  }
+
+  _attachTooltipListeners(container) {
+    const wrappers = container.querySelectorAll('.tooltip-wrapper');
+    wrappers.forEach(wrapper => {
+      const tooltip = wrapper.querySelector('.tooltip-content');
+      if (!tooltip) return;
+
+      const btn = wrapper.querySelector('button');
+
+      btn.addEventListener('mouseenter', () => {
+        tooltip.setAttribute('data-visible', 'true');
+      });
+      btn.addEventListener('mouseleave', () => {
+        tooltip.setAttribute('data-visible', 'false');
+      });
+      btn.addEventListener('focus', () => {
+        tooltip.setAttribute('data-visible', 'true');
+      });
+      btn.addEventListener('blur', () => {
+        tooltip.setAttribute('data-visible', 'false');
+      });
+
+      let touchTimer = null;
+      btn.addEventListener('touchstart', (e) => {
+        touchTimer = setTimeout(() => {
+          tooltip.setAttribute('data-visible', 'true');
+        }, 500);
+      }, { passive: true });
+      btn.addEventListener('touchend', () => {
+        clearTimeout(touchTimer);
+        setTimeout(() => {
+          tooltip.setAttribute('data-visible', 'false');
+        }, 1500);
+      });
+      btn.addEventListener('touchcancel', () => {
+        clearTimeout(touchTimer);
+        tooltip.setAttribute('data-visible', 'false');
+      });
+    });
   }
 
   _renderFilters(filters, title, tabKey) {
