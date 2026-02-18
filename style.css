@@ -139,7 +139,7 @@
 }
 
 .cb-group {
-  margin-bottom: 20px;
+  margin-bottom: 32px;
 }
 
 .cb-group:last-child {
@@ -151,7 +151,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #9ca3af;
+  color: #6b7280;
   padding: 0 16px 4px;
   margin-top: 2px;
 }
