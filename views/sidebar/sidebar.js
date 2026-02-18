@@ -35,7 +35,9 @@ export class Sidebar {
   _initFilterStates() {
     Object.keys(SIDEBAR_CONFIG).forEach(tab => {
       this.filterStates[tab] = {};
-      SIDEBAR_CONFIG[tab].filters.forEach(f => {
+      const filters = SIDEBAR_CONFIG[tab].filters;
+      if (!Array.isArray(filters)) return;
+      filters.forEach(f => {
         if (!f.isShowAll) {
           this.filterStates[tab][f.id] = false;
         }

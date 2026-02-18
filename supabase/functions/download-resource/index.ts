@@ -10,6 +10,7 @@
     - Domain whitelist checking
     - File type validation
     - User authentication required
+    - CORS restricted to APP_ORIGIN env var (no wildcard on authenticated endpoints)
 
   3. Features
     - Download statistics tracking
@@ -17,16 +18,20 @@
     - Content-Disposition headers for downloads
 */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'npm:@supabase/supabase-js@2'
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
+const ALLOWED_ORIGIN = Deno.env.get('APP_ORIGIN') ?? '';
 
-// Allowed domains for downloads (security whitelist)
+function getCorsHeaders(req: Request): Record<string, string> {
+  const origin = req.headers.get('origin') ?? '';
+  const allowedOrigin = ALLOWED_ORIGIN && origin === ALLOWED_ORIGIN ? origin : '';
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
+  };
+}
+
 const ALLOWED_DOMAINS = [
   'cdn.shopify.com',
   'drive.google.com',
@@ -37,7 +42,6 @@ const ALLOWED_DOMAINS = [
   'githubusercontent.com'
 ];
 
-// Allowed file extensions
 const ALLOWED_EXTENSIONS = [
   '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx',
   '.zip', '.rar', '.7z', '.tar', '.gz',
@@ -59,8 +63,9 @@ interface CreateResourceRequest {
   category_id?: string;
 }
 
-serve(async (req: Request) => {
-  // Handle CORS preflight requests
+Deno.serve(async (req: Request) => {
+  const corsHeaders = getCorsHeaders(req);
+
   if (req.method === "OPTIONS") {
     return new Response(null, {
       status: 200,
@@ -77,46 +82,36 @@ serve(async (req: Request) => {
     const url = new URL(req.url);
     const path = url.pathname;
 
-    // Route: POST /download-resource/create - Create downloadable resource
     if (req.method === 'POST' && path.endsWith('/create')) {
-      return await handleCreateResource(req, supabase);
+      return await handleCreateResource(req, supabase, corsHeaders);
     }
 
-    // Route: POST /download-resource/download - Handle download request
     if (req.method === 'POST' && path.endsWith('/download')) {
-      return await handleDownload(req, supabase);
+      return await handleDownload(req, supabase, corsHeaders);
     }
 
-    // Route: GET /download-resource/stats - Get download statistics
     if (req.method === 'GET' && path.endsWith('/stats')) {
-      return await handleGetStats(req, supabase);
+      return await handleGetStats(req, supabase, corsHeaders);
     }
 
     return new Response(
       JSON.stringify({ error: 'Route not found' }),
-      {
-        status: 404,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('Function error:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: 'Internal server error',
         message: error instanceof Error ? error.message : 'Unknown error'
       }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      { status: 500, headers: { ...getCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
   }
 });
 
-// Create downloadable resource
-async function handleCreateResource(req: Request, supabase: any) {
+async function handleCreateResource(req: Request, supabase: any, corsHeaders: Record<string, string>) {
   try {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
@@ -126,7 +121,6 @@ async function handleCreateResource(req: Request, supabase: any) {
       );
     }
 
-    // Verify user authentication
     const { data: { user }, error: authError } = await supabase.auth.getUser(
       authHeader.replace('Bearer ', '')
     );
@@ -139,8 +133,7 @@ async function handleCreateResource(req: Request, supabase: any) {
     }
 
     const body: CreateResourceRequest = await req.json();
-    
-    // Validate required fields
+
     if (!body.title || !body.download_url) {
       return new Response(
         JSON.stringify({ error: 'Title and download_url are required' }),
@@ -148,7 +141,6 @@ async function handleCreateResource(req: Request, supabase: any) {
       );
     }
 
-    // Validate and sanitize URL
     const validationResult = validateDownloadUrl(body.download_url);
     if (!validationResult.isValid) {
       return new Response(
@@ -157,8 +149,7 @@ async function handleCreateResource(req: Request, supabase: any) {
       );
     }
 
-    // Test URL accessibility
-    const accessibilityResult = await testUrlAccessibility(validationResult.sanitizedUrl);
+    const accessibilityResult = await testUrlAccessibility(validationResult.sanitizedUrl!);
     if (!accessibilityResult.isAccessible) {
       return new Response(
         JSON.stringify({ error: accessibilityResult.error }),
@@ -166,7 +157,6 @@ async function handleCreateResource(req: Request, supabase: any) {
       );
     }
 
-    // Create resource in database
     const { data: resource, error: dbError } = await supabase
       .from('content')
       .insert({
@@ -185,34 +175,23 @@ async function handleCreateResource(req: Request, supabase: any) {
     }
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        resource,
-        message: 'Downloadable resource created successfully'
-      }),
-      {
-        status: 201,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      JSON.stringify({ success: true, resource, message: 'Downloadable resource created successfully' }),
+      { status: 201, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('Create resource error:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: 'Failed to create resource',
         message: error instanceof Error ? error.message : 'Unknown error'
       }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 }
 
-// Handle download request
-async function handleDownload(req: Request, supabase: any) {
+async function handleDownload(req: Request, supabase: any, corsHeaders: Record<string, string>) {
   try {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
@@ -222,7 +201,6 @@ async function handleDownload(req: Request, supabase: any) {
       );
     }
 
-    // Verify user authentication
     const { data: { user }, error: authError } = await supabase.auth.getUser(
       authHeader.replace('Bearer ', '')
     );
@@ -235,7 +213,7 @@ async function handleDownload(req: Request, supabase: any) {
     }
 
     const body: DownloadRequest = await req.json();
-    
+
     if (!body.resource_id) {
       return new Response(
         JSON.stringify({ error: 'resource_id is required' }),
@@ -243,7 +221,6 @@ async function handleDownload(req: Request, supabase: any) {
       );
     }
 
-    // Get resource from database
     const { data: resource, error: resourceError } = await supabase
       .from('content')
       .select('*')
@@ -266,52 +243,40 @@ async function handleDownload(req: Request, supabase: any) {
       );
     }
 
-    // Log download attempt
     await logDownloadAttempt(supabase, {
       resource_id: body.resource_id,
       user_id: user.id,
       download_url: resource.download_url,
       user_agent: req.headers.get('User-Agent') || 'Unknown',
-      ip_address: req.headers.get('CF-Connecting-IP') || 
-                  req.headers.get('X-Forwarded-For') || 
+      ip_address: req.headers.get('CF-Connecting-IP') ||
+                  req.headers.get('X-Forwarded-For') ||
                   'Unknown'
     });
 
-    // Return download information
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: true,
         download_url: resource.download_url,
         filename: resource.title,
         resource_id: resource.id,
         message: 'Download authorized'
       }),
-      {
-        status: 200,
-        headers: { 
-          ...corsHeaders, 
-          'Content-Type': 'application/json'
-        }
-      }
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('Download error:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: 'Download failed',
         message: error instanceof Error ? error.message : 'Unknown error'
       }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 }
 
-// Get download statistics
-async function handleGetStats(req: Request, supabase: any) {
+async function handleGetStats(req: Request, supabase: any, corsHeaders: Record<string, string>) {
   try {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
@@ -326,10 +291,7 @@ async function handleGetStats(req: Request, supabase: any) {
 
     let query = supabase
       .from('download_logs')
-      .select(`
-        *,
-        content:resource_id(title, type)
-      `)
+      .select(`*, content:resource_id(title, type)`)
       .order('created_at', { ascending: false });
 
     if (resourceId) {
@@ -342,12 +304,11 @@ async function handleGetStats(req: Request, supabase: any) {
       throw new Error(`Database error: ${error.message}`);
     }
 
-    // Calculate statistics
     const stats = {
       total_downloads: logs.length,
-      unique_users: new Set(logs.map(log => log.user_id)).size,
+      unique_users: new Set(logs.map((log: any) => log.user_id)).size,
       recent_downloads: logs.slice(0, 10),
-      downloads_by_resource: logs.reduce((acc, log) => {
+      downloads_by_resource: logs.reduce((acc: Record<string, number>, log: any) => {
         const resourceTitle = log.content?.title || 'Unknown';
         acc[resourceTitle] = (acc[resourceTitle] || 0) + 1;
         return acc;
@@ -356,41 +317,31 @@ async function handleGetStats(req: Request, supabase: any) {
 
     return new Response(
       JSON.stringify({ success: true, stats }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('Stats error:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: 'Failed to get statistics',
         message: error instanceof Error ? error.message : 'Unknown error'
       }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 }
 
-// Validate and sanitize download URL
 function validateDownloadUrl(url: string): { isValid: boolean; sanitizedUrl?: string; error?: string } {
   try {
-    // Basic URL validation
     const urlObj = new URL(url);
-    
-    // Check protocol
+
     if (!['http:', 'https:'].includes(urlObj.protocol)) {
       return { isValid: false, error: 'Only HTTP and HTTPS URLs are allowed' };
     }
 
-    // Check domain whitelist
     const domain = urlObj.hostname.toLowerCase();
-    const isAllowedDomain = ALLOWED_DOMAINS.some(allowedDomain => 
+    const isAllowedDomain = ALLOWED_DOMAINS.some(allowedDomain =>
       domain === allowedDomain || domain.endsWith('.' + allowedDomain)
     );
 
@@ -398,50 +349,44 @@ function validateDownloadUrl(url: string): { isValid: boolean; sanitizedUrl?: st
       return { isValid: false, error: `Domain ${domain} is not in the allowed list` };
     }
 
-    // Check file extension
     const pathname = urlObj.pathname.toLowerCase();
     const hasAllowedExtension = ALLOWED_EXTENSIONS.some(ext => pathname.endsWith(ext));
-    
+
     if (!hasAllowedExtension && !pathname.includes('/download/') && !pathname.includes('/file/')) {
       return { isValid: false, error: 'File type not allowed or URL does not appear to be a download link' };
     }
 
-    // Sanitize URL (remove potential XSS)
-    const sanitizedUrl = urlObj.toString();
-    
-    return { isValid: true, sanitizedUrl };
+    return { isValid: true, sanitizedUrl: urlObj.toString() };
 
   } catch (error) {
     return { isValid: false, error: 'Invalid URL format' };
   }
 }
 
-// Test URL accessibility
 async function testUrlAccessibility(url: string): Promise<{ isAccessible: boolean; error?: string }> {
   try {
-    const response = await fetch(url, { 
+    const response = await fetch(url, {
       method: 'HEAD',
-      signal: AbortSignal.timeout(10000) // 10 second timeout
+      signal: AbortSignal.timeout(10000)
     });
 
     if (!response.ok) {
-      return { 
-        isAccessible: false, 
-        error: `URL returned status ${response.status}: ${response.statusText}` 
+      return {
+        isAccessible: false,
+        error: `URL returned status ${response.status}: ${response.statusText}`
       };
     }
 
     return { isAccessible: true };
 
   } catch (error) {
-    return { 
-      isAccessible: false, 
-      error: `URL is not accessible: ${error instanceof Error ? error.message : 'Unknown error'}` 
+    return {
+      isAccessible: false,
+      error: `URL is not accessible: ${error instanceof Error ? error.message : 'Unknown error'}`
     };
   }
 }
 
-// Log download attempt
 async function logDownloadAttempt(supabase: any, logData: {
   resource_id: string;
   user_id: string;
@@ -462,6 +407,5 @@ async function logDownloadAttempt(supabase: any, logData: {
       });
   } catch (error) {
     console.error('Failed to log download:', error);
-    // Don't throw error - logging failure shouldn't break download
   }
 }

@@ -12,6 +12,9 @@ class App {
     };
 
     this.allCards = SAMPLE_CARDS;
+    this._filterGeneration = 0;
+    this._retryCount = 0;
+    this._maxRetries = 3;
 
     this.header = new Header('header-container');
     this.sidebar = new Sidebar('sidebar-container');
@@ -22,9 +25,17 @@ class App {
   }
 
   async init() {
-    await this.loadComponents();
-    this.setupEventHandlers();
-    this.filterAndDisplayCards();
+    try {
+      await this.loadComponents();
+      this.setupEventHandlers();
+      this.filterAndDisplayCards();
+    } catch (err) {
+      console.error('App failed to initialize:', err);
+      const root = document.getElementById('main-container');
+      if (root) {
+        root.innerHTML = '<p class="text-center text-red-600 p-8">Failed to load the application. Please refresh the page.</p>';
+      }
+    }
   }
 
   async loadComponents() {
@@ -58,6 +69,11 @@ class App {
     };
 
     this.cardGrid.onRetry = () => {
+      if (this._retryCount >= this._maxRetries) {
+        this.cardGrid.setError('Unable to load content after several attempts. Please refresh the page.');
+        return;
+      }
+      this._retryCount++;
       this.filterAndDisplayCards();
     };
 
@@ -98,6 +114,9 @@ class App {
   }
 
   filterAndDisplayCards() {
+    this._filterGeneration++;
+    const generation = this._filterGeneration;
+
     this.cardGrid.setLoading(true);
     this.cardGrid.setError(null);
 
@@ -114,6 +133,8 @@ class App {
       }
 
       setTimeout(() => {
+        if (generation !== this._filterGeneration) return;
+        this._retryCount = 0;
         this.cardGrid.setLoading(false);
         this.cardGrid.setCards(filtered);
       }, 300);

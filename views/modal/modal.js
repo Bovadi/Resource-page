@@ -62,6 +62,10 @@ export class Modal {
     if (imageElement) {
       imageElement.src = this.currentCard.image;
       imageElement.alt = this.currentCard.title;
+      imageElement.onerror = () => {
+        imageElement.src = 'https://images.pexels.com/photos/261763/pexels-photo-261763.jpeg?auto=compress&cs=tinysrgb&w=600';
+        imageElement.onerror = null;
+      };
     }
 
     const cardTitleElement = document.getElementById('modal-card-title');
@@ -124,5 +128,12 @@ export class Modal {
         this.close();
       }
     });
+
+    this._keydownHandler = (e) => {
+      if (e.key === 'Escape' && this.isOpen) {
+        this.close();
+      }
+    };
+    document.addEventListener('keydown', this._keydownHandler);
   }
 }
