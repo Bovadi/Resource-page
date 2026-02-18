@@ -81,7 +81,7 @@ export class CardGrid {
 
     if (this.cards.length === 0) {
       gridContainer.innerHTML = `
-        <div class="col-span-full flex flex-col items-center justify-center py-20 px-4">
+        <div class="col-span-full justify-self-stretch flex flex-col items-center justify-center py-20 px-4 w-full">
           <div class="text-center max-w-sm">
             <div class="text-5xl mb-4">🫥</div>
             <h3 class="text-lg font-semibold text-gray-700 mb-2">Well, that's crickets.</h3>
