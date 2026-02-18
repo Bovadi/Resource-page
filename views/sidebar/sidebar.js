@@ -100,9 +100,10 @@ export class Sidebar {
     const filtersContainer = document.getElementById('sidebar-filters');
     if (!filtersContainer) return;
 
+    const safeFilters = Array.isArray(filters) ? filters : [];
     const tabFilterStates = this.filterStates[tabKey] || {};
-    const showAllFilter = filters.find(f => f.isShowAll);
-    const childFilters = filters.filter(f => !f.isShowAll);
+    const showAllFilter = safeFilters.find(f => f.isShowAll);
+    const childFilters = safeFilters.filter(f => !f.isShowAll);
     const hasShowAll = !!showAllFilter;
 
     const allChildrenChecked = childFilters.length > 0 && childFilters.every(f => tabFilterStates[f.id]);
@@ -191,10 +192,11 @@ export class Sidebar {
         }
 
         const config = SIDEBAR_CONFIG[this.activeTab];
-        const isShowAll = config && config.filters.find(f => f.id === filterId && f.isShowAll);
+        const configFilters = config && Array.isArray(config.filters) ? config.filters : [];
+        const isShowAll = configFilters.find(f => f.id === filterId && f.isShowAll);
 
         if (isShowAll) {
-          const childFilters = config.filters.filter(f => !f.isShowAll);
+          const childFilters = configFilters.filter(f => !f.isShowAll);
           childFilters.forEach(f => {
             this.filterStates[this.activeTab][f.id] = checkbox.checked;
           });
