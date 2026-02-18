@@ -32,22 +32,6 @@ function getCorsHeaders(req: Request): Record<string, string> {
   };
 }
 
-const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX = 10;
-const rateLimitMap = new Map<string, { count: number; windowStart: number }>();
-
-function isRateLimited(userId: string): boolean {
-  const now = Date.now();
-  const entry = rateLimitMap.get(userId);
-  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
-    rateLimitMap.set(userId, { count: 1, windowStart: now });
-    return false;
-  }
-  if (entry.count >= RATE_LIMIT_MAX) return true;
-  entry.count++;
-  return false;
-}
-
 const ALLOWED_DOMAINS = [
   'cdn.shopify.com',
   'drive.google.com',
@@ -228,13 +212,6 @@ async function handleDownload(req: Request, supabase: any, corsHeaders: Record<s
       );
     }
 
-    if (isRateLimited(user.id)) {
-      return new Response(
-        JSON.stringify({ error: 'Too many requests. Please try again later.' }),
-        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
     const body: DownloadRequest = await req.json();
 
     if (!body.resource_id) {
@@ -373,7 +350,7 @@ function validateDownloadUrl(url: string): { isValid: boolean; sanitizedUrl?: st
     }
 
     const pathname = urlObj.pathname.toLowerCase();
-    const hasAllowedExtension = ALLOWED_EXTENSIONS.some(ext => pathname.endsWith(ext.toLowerCase()));
+    const hasAllowedExtension = ALLOWED_EXTENSIONS.some(ext => pathname.endsWith(ext));
 
     if (!hasAllowedExtension && !pathname.includes('/download/') && !pathname.includes('/file/')) {
       return { isValid: false, error: 'File type not allowed or URL does not appear to be a download link' };
@@ -388,14 +365,10 @@ function validateDownloadUrl(url: string): { isValid: boolean; sanitizedUrl?: st
 
 async function testUrlAccessibility(url: string): Promise<{ isAccessible: boolean; error?: string }> {
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000);
-    let response: Response;
-    try {
-      response = await fetch(url, { method: 'HEAD', signal: controller.signal });
-    } finally {
-      clearTimeout(timer);
-    }
+    const response = await fetch(url, {
+      method: 'HEAD',
+      signal: AbortSignal.timeout(10000)
+    });
 
     if (!response.ok) {
       return {
