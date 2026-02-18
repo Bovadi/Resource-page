@@ -16,6 +16,7 @@ export class Sidebar {
     this.isOpen = false;
     this.onActionClick = null;
     this.onFilterChange = null;
+    this.onTabSwitch = null;
     this.activeTab = 'resources';
     this.filterStates = {};
   }
@@ -49,6 +50,7 @@ export class Sidebar {
     if (!SIDEBAR_CONFIG[tabKey]) return;
     this.activeTab = tabKey;
     this.renderForTab(tabKey);
+    this._updateSidebarTabNav(tabKey);
   }
 
   renderForTab(tabKey) {
@@ -68,6 +70,19 @@ export class Sidebar {
       this._renderActions(config.actions);
     }
     this._renderFilters(config.filters, config.filtersTitle, tabKey);
+  }
+
+  _updateSidebarTabNav(tabKey) {
+    const buttons = document.querySelectorAll('.sidebar-nav-tab');
+    buttons.forEach(btn => {
+      if (btn.dataset.tab === tabKey) {
+        btn.classList.add('bg-[#F1EDE5]', 'text-[#343434]');
+        btn.classList.remove('text-[#918979]', 'hover:bg-gray-100');
+      } else {
+        btn.classList.remove('bg-[#F1EDE5]', 'text-[#343434]');
+        btn.classList.add('text-[#918979]', 'hover:bg-gray-100');
+      }
+    });
   }
 
   _renderActions(actions) {
@@ -167,6 +182,22 @@ export class Sidebar {
   }
 
   attachEventListeners() {
+    const tabNav = document.getElementById('sidebar-tab-nav');
+    if (tabNav) {
+      tabNav.addEventListener('click', (e) => {
+        const btn = e.target.closest('.sidebar-nav-tab');
+        if (!btn) return;
+        const tabKey = btn.dataset.tab;
+        if (tabKey && tabKey !== this.activeTab) {
+          this.switchTab(tabKey);
+          if (this.onTabSwitch) {
+            this.onTabSwitch(tabKey);
+          }
+        }
+      });
+    }
+    this._updateSidebarTabNav(this.activeTab);
+
     const actionsContainer = document.getElementById('sidebar-actions');
     if (actionsContainer) {
       actionsContainer.addEventListener('click', (e) => {

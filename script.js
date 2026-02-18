@@ -56,6 +56,12 @@ class App {
       this.switchTab(tabKey);
     };
 
+    this.sidebar.onTabSwitch = (tabKey) => {
+      this.state.activeTab = tabKey;
+      this.header.setActiveTab(tabKey);
+      this.filterAndDisplayCards();
+    };
+
     this.sidebar.onFilterChange = () => {
       this.filterAndDisplayCards();
     };
