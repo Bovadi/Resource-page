@@ -55,6 +55,7 @@ export class CardGrid {
     if (!gridContainer) return;
 
     if (this.error) {
+      gridContainer.style.opacity = '0';
       gridContainer.innerHTML = `
         <div class="col-span-full flex flex-col items-center justify-center py-12 px-4">
           <div class="text-center max-w-md">
@@ -71,10 +72,15 @@ export class CardGrid {
           </div>
         </div>
       `;
+      requestAnimationFrame(() => {
+        gridContainer.style.transition = 'opacity 200ms ease-in';
+        gridContainer.style.opacity = '1';
+      });
       return;
     }
 
     if (this.loading) {
+      gridContainer.style.opacity = '0';
       const skeletons = Array(8).fill(null).map(() => `
         <div class="w-full max-w-[560px] cursor-pointer group animate-pulse">
           <div class="bg-white border border-gray-200 rounded-lg shadow-sm mb-2 sm:mb-3 p-2 sm:p-3 md:p-4">
@@ -84,10 +90,15 @@ export class CardGrid {
         </div>
       `).join('');
       gridContainer.innerHTML = skeletons;
+      requestAnimationFrame(() => {
+        gridContainer.style.transition = 'opacity 150ms ease-in';
+        gridContainer.style.opacity = '1';
+      });
       return;
     }
 
     if (this.cards.length === 0) {
+      gridContainer.style.opacity = '0';
       gridContainer.innerHTML = `
         <div class="col-span-full justify-self-stretch flex flex-col items-center justify-center py-20 px-4 w-full">
           <div class="text-center max-w-sm">
@@ -97,11 +108,16 @@ export class CardGrid {
           </div>
         </div>
       `;
+      requestAnimationFrame(() => {
+        gridContainer.style.transition = 'opacity 200ms ease-in';
+        gridContainer.style.opacity = '1';
+      });
       return;
     }
 
-    const cardsHTML = this.cards.map(card => `
-      <div class="w-full max-w-[560px] flex flex-col">
+    gridContainer.style.opacity = '0';
+    const cardsHTML = this.cards.map((card, index) => `
+      <div class="w-full max-w-[560px] flex flex-col card-item" style="animation-delay: ${Math.min(index * 30, 300)}ms">
         <div class="group cursor-pointer" data-action="open-card" data-card-id="${escapeHtml(card.id)}">
           <div class="bg-white border border-gray-200 rounded-lg hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-2 sm:mb-3">
             <div class="p-2 sm:p-3 md:p-4">
@@ -120,6 +136,11 @@ export class CardGrid {
     `).join('');
 
     gridContainer.innerHTML = cardsHTML;
+
+    requestAnimationFrame(() => {
+      gridContainer.style.transition = 'opacity 250ms ease-in';
+      gridContainer.style.opacity = '1';
+    });
   }
 
   attachEventListeners() {

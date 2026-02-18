@@ -59,11 +59,13 @@ class App {
     this.sidebar.onTabSwitch = (tabKey) => {
       this.state.activeTab = tabKey;
       this.header.setActiveTab(tabKey);
-      this.filterAndDisplayCards();
+      this.cardGrid.setLoading(true);
+      setTimeout(() => this.filterAndDisplayCards(), 100);
     };
 
     this.sidebar.onFilterChange = () => {
-      this.filterAndDisplayCards();
+      this.cardGrid.setLoading(true);
+      setTimeout(() => this.filterAndDisplayCards(), 80);
     };
 
     this.sidebar.onActionClick = (action) => {
@@ -100,7 +102,8 @@ class App {
   switchTab(tabKey) {
     this.state.activeTab = tabKey;
     this.sidebar.switchTab(tabKey);
-    this.filterAndDisplayCards();
+    this.cardGrid.setLoading(true);
+    setTimeout(() => this.filterAndDisplayCards(), 100);
   }
 
   toggleSidebar() {
@@ -125,7 +128,7 @@ class App {
     return this.state.activeTab === 'courses' ? 'course' : 'resource';
   }
 
-  filterAndDisplayCards() {
+  async filterAndDisplayCards() {
     this._filterGeneration++;
     const generation = this._filterGeneration;
 
@@ -145,6 +148,8 @@ class App {
           activeFilters.some(key => card[key] === true)
         );
       }
+
+      await new Promise(resolve => setTimeout(resolve, 150));
 
       if (generation !== this._filterGeneration) return;
       this._retryCount = 0;
