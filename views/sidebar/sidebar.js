@@ -112,115 +112,13 @@ export class Sidebar {
         ? 'bg-[#108C89] text-white hover:bg-[#0d7673] shadow-sm'
         : 'bg-white text-[#108C89] shadow-[inset_0_0_0_1px_#108C89] hover:bg-[#108C89]/5';
 
-      const tooltipId = `tooltip-${action.id}`;
-      const tooltipHTML = action.tooltip
-        ? `<span id="${tooltipId}" role="tooltip" class="bip-tooltip">${escapeHtml(action.tooltip)}<span class="bip-tooltip-arrow"></span></span>`
-        : '';
-
-      const ariaAttrs = action.tooltip
-        ? `aria-describedby="${tooltipId}"`
-        : '';
-
       return `
-        <div class="bip-tooltip-wrapper">
-          <button data-action="${action.id}" ${ariaAttrs} class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
-            ${action.icon}
-            ${labelHTML}
-          </button>
-          ${tooltipHTML}
-        </div>
+        <button data-action="${action.id}" class="w-full flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 active:scale-[0.98] min-h-[48px] ${variantClasses}">
+          ${action.icon}
+          ${labelHTML}
+        </button>
       `;
     }).join('');
-
-    this._attachTooltipListeners(actionsContainer);
-  }
-
-  _attachTooltipListeners(container) {
-    const wrappers = container.querySelectorAll('.bip-tooltip-wrapper');
-    wrappers.forEach(wrapper => {
-      const button = wrapper.querySelector('button');
-      const tooltip = wrapper.querySelector('.bip-tooltip');
-      if (!button || !tooltip) return;
-
-      let longPressTimer = null;
-      let isTooltipVisible = false;
-
-      const showTooltip = () => {
-        tooltip.classList.add('bip-tooltip--visible');
-        isTooltipVisible = true;
-        this._positionTooltip(button, tooltip);
-      };
-
-      const hideTooltip = () => {
-        tooltip.classList.remove('bip-tooltip--visible');
-        isTooltipVisible = false;
-      };
-
-      button.addEventListener('mouseenter', showTooltip);
-      button.addEventListener('mouseleave', hideTooltip);
-      button.addEventListener('focus', showTooltip);
-      button.addEventListener('blur', hideTooltip);
-
-      button.addEventListener('touchstart', (e) => {
-        longPressTimer = setTimeout(() => {
-          e.preventDefault();
-          showTooltip();
-        }, 500);
-      }, { passive: false });
-
-      button.addEventListener('touchend', () => {
-        clearTimeout(longPressTimer);
-        if (isTooltipVisible) {
-          setTimeout(hideTooltip, 1500);
-        }
-      });
-
-      button.addEventListener('touchcancel', () => {
-        clearTimeout(longPressTimer);
-        hideTooltip();
-      });
-    });
-  }
-
-  _positionTooltip(button, tooltip) {
-    const btnRect = button.getBoundingClientRect();
-    const tooltipRect = tooltip.getBoundingClientRect();
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-
-    tooltip.style.left = '';
-    tooltip.style.right = '';
-    tooltip.style.top = '';
-    tooltip.style.bottom = '';
-    tooltip.classList.remove('bip-tooltip--left', 'bip-tooltip--below');
-
-    const spaceRight = viewportWidth - btnRect.right;
-    const tooltipWidth = tooltipRect.width || 220;
-
-    if (spaceRight >= tooltipWidth + 16) {
-      tooltip.style.left = '100%';
-      tooltip.style.top = '50%';
-      tooltip.style.transform = 'translateY(-50%)';
-      tooltip.style.marginLeft = '10px';
-    } else {
-      tooltip.classList.add('bip-tooltip--left');
-      tooltip.style.right = '100%';
-      tooltip.style.top = '50%';
-      tooltip.style.transform = 'translateY(-50%)';
-      tooltip.style.marginRight = '10px';
-    }
-
-    requestAnimationFrame(() => {
-      const updatedRect = tooltip.getBoundingClientRect();
-      if (updatedRect.bottom > viewportHeight) {
-        const overflow = updatedRect.bottom - viewportHeight + 8;
-        tooltip.style.transform = `translateY(calc(-50% - ${overflow}px))`;
-      }
-      if (updatedRect.top < 0) {
-        const overflow = Math.abs(updatedRect.top) + 8;
-        tooltip.style.transform = `translateY(calc(-50% + ${overflow}px))`;
-      }
-    });
   }
 
   _renderFilters(filters, title, tabKey) {

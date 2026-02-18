@@ -162,56 +162,6 @@
 
 /* ── end Checkbox component ─────────────────────────────── */
 
-/* ── BIP Action Tooltips ─────────────────────────────────── */
-.bip-tooltip-wrapper {
-  position: relative;
-}
-
-.bip-tooltip {
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 10px;
-  z-index: 99999;
-  max-width: 220px;
-  padding: 8px 12px;
-  background: #1f2937;
-  color: #f9fafb;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.5;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
-  pointer-events: none;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.15s ease, visibility 0.15s ease;
-  white-space: normal;
-  word-wrap: break-word;
-}
-
-.bip-tooltip--visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-.bip-tooltip-arrow {
-  position: absolute;
-  top: 50%;
-  left: -4px;
-  transform: translateY(-50%) rotate(45deg);
-  width: 8px;
-  height: 8px;
-  background: #1f2937;
-}
-
-.bip-tooltip--left .bip-tooltip-arrow {
-  left: auto;
-  right: -4px;
-}
-/* ── end BIP Action Tooltips ─────────────────────────────── */
-
 /* ── Loading spinner ──────────────────────────────────────── */
 .grid-spinner {
   display: flex;
