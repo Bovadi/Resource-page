@@ -179,6 +179,34 @@ export class Sidebar {
         ${childCheckboxesHTML}
       </div>
     `;
+
+    this._syncParentCheckbox();
+  }
+
+  _syncParentCheckbox() {
+    const filtersContainer = document.getElementById('sidebar-filters');
+    if (!filtersContainer) return;
+
+    const group = filtersContainer.querySelector('[data-cb-group]');
+    if (!group) return;
+
+    const parent = group.querySelector('.cb-input[data-cb-parent]');
+    if (!parent) return;
+
+    const children = Array.from(group.querySelectorAll('.cb-input[data-cb-child]'));
+    if (children.length === 0) return;
+
+    const checkedCount = children.filter(c => c.checked).length;
+    if (checkedCount === 0) {
+      parent.checked = false;
+      parent.indeterminate = false;
+    } else if (checkedCount === children.length) {
+      parent.checked = true;
+      parent.indeterminate = false;
+    } else {
+      parent.checked = false;
+      parent.indeterminate = true;
+    }
   }
 
   attachEventListeners() {
@@ -231,8 +259,18 @@ export class Sidebar {
           childFilters.forEach(f => {
             this.filterStates[this.activeTab][f.id] = checkbox.checked;
           });
+
+          const group = filtersContainer.querySelector('[data-cb-group]');
+          if (group) {
+            group.querySelectorAll('.cb-input[data-cb-child]').forEach(c => {
+              c.checked = checkbox.checked;
+            });
+          }
+
+          checkbox.indeterminate = false;
         } else {
           this.filterStates[this.activeTab][filterId] = checkbox.checked;
+          this._syncParentCheckbox();
         }
 
         if (this.onFilterChange) {
