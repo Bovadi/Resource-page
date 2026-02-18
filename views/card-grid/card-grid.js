@@ -67,8 +67,16 @@ export class CardGrid {
     }
 
     if (this.loading) {
-      const skeletons = Array(8).fill(null).map(() => `
-        <div class="w-full max-w-[560px] cursor-pointer group animate-pulse">
+      const w = window.innerWidth;
+      let cols = 1;
+      if (w >= 1536) cols = 6;
+      else if (w >= 1280) cols = 5;
+      else if (w >= 1024) cols = 4;
+      else if (w >= 768) cols = 3;
+      else if (w >= 640) cols = 2;
+      const skeletonCount = cols * 2;
+      const skeletons = Array(skeletonCount).fill(null).map(() => `
+        <div role="listitem" class="w-full max-w-[560px] cursor-pointer group animate-pulse">
           <div class="bg-white border border-gray-200 rounded-lg shadow-sm mb-2 sm:mb-3 p-2 sm:p-3 md:p-4">
             <div class="relative w-full aspect-[246/252] bg-gray-200 rounded-sm"></div>
           </div>
@@ -80,7 +88,7 @@ export class CardGrid {
     }
 
     const cardsHTML = this.cards.map(card => `
-      <div class="w-full max-w-[560px] flex flex-col">
+      <div role="listitem" class="w-full max-w-[560px] flex flex-col">
         <div class="group cursor-pointer" data-action="open-card" data-card-id="${escapeHtml(card.id)}">
           <div class="bg-white border border-gray-200 rounded-lg hover:transform hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md mb-2 sm:mb-3">
             <div class="p-2 sm:p-3 md:p-4">

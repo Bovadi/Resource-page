@@ -33,21 +33,51 @@ export class Header {
     const profileCaret = document.getElementById('profile-caret');
 
     if (profileBtn && profileMenu) {
+      profileBtn.setAttribute('aria-haspopup', 'true');
+      profileBtn.setAttribute('aria-expanded', 'false');
+
       profileBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         this.dropdownOpen = !this.dropdownOpen;
+        profileBtn.setAttribute('aria-expanded', String(this.dropdownOpen));
         this.updateDropdownState(profileMenu, profileCaret);
+        if (this.dropdownOpen) {
+          const firstItem = profileMenu.querySelector('a, button');
+          if (firstItem) firstItem.focus();
+        }
       });
 
       document.addEventListener('click', () => {
         if (this.dropdownOpen) {
           this.dropdownOpen = false;
+          profileBtn.setAttribute('aria-expanded', 'false');
           this.updateDropdownState(profileMenu, profileCaret);
         }
       });
 
       profileMenu.addEventListener('click', (e) => {
         e.stopPropagation();
+      });
+
+      profileMenu.addEventListener('keydown', (e) => {
+        if (!this.dropdownOpen) return;
+        const focusable = Array.from(profileMenu.querySelectorAll('a, button'));
+        const idx = focusable.indexOf(document.activeElement);
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          const next = focusable[(idx + 1) % focusable.length];
+          if (next) next.focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prev = focusable[(idx - 1 + focusable.length) % focusable.length];
+          if (prev) prev.focus();
+        } else if (e.key === 'Escape' || e.key === 'Tab') {
+          this.dropdownOpen = false;
+          profileBtn.setAttribute('aria-expanded', 'false');
+          this.updateDropdownState(profileMenu, profileCaret);
+          profileBtn.focus();
+          if (e.key === 'Tab') e.preventDefault();
+        }
       });
     }
 
