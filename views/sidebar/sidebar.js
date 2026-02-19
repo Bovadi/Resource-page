@@ -42,7 +42,6 @@ export class Sidebar {
       container.innerHTML = html;
       this._initFilterStates();
       this.renderForTab(this.activeTab);
-      this._updateSidebarTabNav(this.activeTab);
       this.attachEventListeners();
     } catch (err) {
       console.error('Sidebar load error:', err);
