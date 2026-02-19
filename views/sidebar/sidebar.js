@@ -399,6 +399,11 @@ export class Sidebar {
     }
   }
 
+  destroy() {
+    this._disableFocusTrap();
+    this._cleanupTooltips();
+  }
+
   getFilters() {
     return { ...(this.filterStates[this.activeTab] || {}) };
   }

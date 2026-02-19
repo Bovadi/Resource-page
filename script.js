@@ -22,6 +22,13 @@ class App {
     this.modal = new Modal('modal-container');
 
     this.init();
+    window.addEventListener('beforeunload', () => this.destroy());
+  }
+
+  destroy() {
+    this.header.destroy();
+    this.sidebar.destroy();
+    this.cardGrid.destroy();
   }
 
   async init() {

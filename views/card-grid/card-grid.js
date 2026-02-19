@@ -85,11 +85,17 @@ export class CardGrid {
     gridContainer.classList.add('grid-content-exit');
 
     requestAnimationFrame(() => {
-      setTimeout(() => {
+      this._transitionTimer = setTimeout(() => {
+        this._transitionTimer = null;
         this.renderCards();
         gridContainer.classList.remove('grid-content-exit');
       }, 120);
     });
+  }
+
+  destroy() {
+    clearTimeout(this._transitionTimer);
+    this._transitionTimer = null;
   }
 
   renderCards() {
