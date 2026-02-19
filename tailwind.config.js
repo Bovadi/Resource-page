@@ -12,9 +12,6 @@ module.exports = {
         '3xl': '1920px',
         '4xl': '2560px',
       },
-      gridTemplateColumns: {
-        'auto-fit-cards': 'repeat(auto-fit, minmax(200px, 1fr))',
-      },
       colors: {
         "neutral-black": "var(--neutral-black)",
         "custom-teal": "#108C89",
