@@ -1,7 +1,5 @@
 import { Header } from './views/header/header.js';
-import { Sidebar } from './views/sidebar/sidebar.js';
 import { CardGrid } from './views/card-grid/card-grid.js';
-import { Modal } from './views/modal/modal.js';
 import { SAMPLE_CARDS } from './src/data/demoData.js';
 
 class App {
@@ -17,9 +15,13 @@ class App {
     this._maxRetries = 3;
 
     this.header = new Header('header-container', 'bip');
-    this.sidebar = new Sidebar('sidebar-container');
     this.cardGrid = new CardGrid('main-container');
-    this.modal = new Modal('modal-container');
+
+    this.sidebar = null;
+    this._sidebarReady = null;
+
+    this.modal = null;
+    this._modalReady = null;
 
     this.init();
     window.addEventListener('beforeunload', () => this.destroy());
@@ -27,13 +29,18 @@ class App {
 
   destroy() {
     this.header.destroy();
-    this.sidebar.destroy();
+    if (this.sidebar) this.sidebar.destroy();
     this.cardGrid.destroy();
+    if (this.modal) this.modal.destroy();
   }
 
   async init() {
     try {
-      await this.loadComponents();
+      await Promise.all([
+        this.header.load(),
+        this.cardGrid.load(),
+        this._loadSidebar(),
+      ]);
       this.setupEventHandlers();
       this.filterAndDisplayCards();
     } catch (err) {
@@ -45,23 +52,29 @@ class App {
     }
   }
 
-  async loadComponents() {
-    await Promise.all([
-      this.header.load(),
-      this.sidebar.load(),
-      this.cardGrid.load(),
-      this.modal.load()
-    ]);
+  async _loadSidebar() {
+    if (this._sidebarReady) return this._sidebarReady;
+    this._sidebarReady = (async () => {
+      const { Sidebar } = await import('./views/sidebar/sidebar.js');
+      this.sidebar = new Sidebar('sidebar-container');
+      await this.sidebar.load();
+      this._wireSidebarHandlers();
+    })();
+    return this._sidebarReady;
   }
 
-  setupEventHandlers() {
-    this.header.onHamburgerClick = () => {
-      this.toggleSidebar();
-    };
+  async _loadModal() {
+    if (this._modalReady) return this._modalReady;
+    this._modalReady = (async () => {
+      const { Modal } = await import('./views/modal/modal.js');
+      this.modal = new Modal('modal-container');
+      await this.modal.load();
+    })();
+    return this._modalReady;
+  }
 
-    this.header.onTabSwitch = (tabKey) => {
-      this.switchTab(tabKey);
-    };
+  _wireSidebarHandlers() {
+    if (!this.sidebar) return;
 
     this.sidebar.onTabSwitch = (tabKey) => {
       this.state.activeTab = tabKey;
@@ -82,8 +95,20 @@ class App {
       this.header.updateHamburgerIcon(false);
       this.updateSidebarOverlay();
     };
+  }
 
-    this.cardGrid.onCardClick = (card) => {
+  setupEventHandlers() {
+    this.header.onHamburgerClick = async () => {
+      await this._loadSidebar();
+      this.toggleSidebar();
+    };
+
+    this.header.onTabSwitch = (tabKey) => {
+      this.switchTab(tabKey);
+    };
+
+    this.cardGrid.onCardClick = async (card) => {
+      await this._loadModal();
       this.modal.open(card);
     };
 
@@ -106,13 +131,13 @@ class App {
 
   switchTab(tabKey) {
     this.state.activeTab = tabKey;
-    this.sidebar.switchTab(tabKey);
+    if (this.sidebar) this.sidebar.switchTab(tabKey);
     this.filterAndDisplayCards(true);
   }
 
   toggleSidebar() {
     this.state.isSidebarOpen = !this.state.isSidebarOpen;
-    this.sidebar.toggle();
+    if (this.sidebar) this.sidebar.toggle();
     this.header.updateHamburgerIcon(this.state.isSidebarOpen);
     this.updateSidebarOverlay();
   }
@@ -141,7 +166,7 @@ class App {
 
     const applyFilter = () => {
       try {
-        const filters = this.sidebar.getFilters();
+        const filters = this.sidebar ? this.sidebar.getFilters() : {};
         let filtered = this.allCards.filter(card => card.type === this.getCardType());
 
         const activeFilters = Object.entries(filters).filter(([, val]) => val).map(([key]) => key);
