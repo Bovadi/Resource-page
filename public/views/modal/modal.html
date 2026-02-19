@@ -1,11 +1,17 @@
 <div id="modal-container" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-  <div data-action="close-modal" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+  <div data-action="close-modal" aria-hidden="true" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
 
-  <div class="modal-panel relative bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+  <div
+    id="modal-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    class="modal-panel relative bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden"
+  >
     <div class="flex items-center justify-between p-6 border-b border-gray-200">
       <h2 id="modal-title" class="text-xl font-semibold text-gray-900"></h2>
-      <button data-action="close-modal" class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
-        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button data-action="close-modal" aria-label="Close dialog" class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>

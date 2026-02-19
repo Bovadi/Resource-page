@@ -1,3 +1,5 @@
+const FOCUSABLE_SELECTORS = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export class Modal {
   constructor(containerId) {
     this.containerId = containerId;
@@ -7,6 +9,7 @@ export class Modal {
     this.onAction = null;
     this._keydownHandler = null;
     this._hideTimer = null;
+    this._previousFocus = null;
   }
 
   async load() {
@@ -55,8 +58,14 @@ export class Modal {
     const modalContainer = document.getElementById('modal-container');
     if (!modalContainer) return;
     clearTimeout(this._hideTimer);
+    this._previousFocus = document.activeElement;
     requestAnimationFrame(() => {
       modalContainer.classList.add('modal-is-open');
+      const dialog = document.getElementById('modal-dialog');
+      if (dialog) {
+        const focusable = dialog.querySelectorAll(FOCUSABLE_SELECTORS);
+        if (focusable.length) focusable[0].focus();
+      }
     });
   }
 
@@ -67,6 +76,10 @@ export class Modal {
     this._hideTimer = setTimeout(() => {
       this._hideTimer = null;
     }, 220);
+    if (this._previousFocus && typeof this._previousFocus.focus === 'function') {
+      this._previousFocus.focus();
+      this._previousFocus = null;
+    }
   }
 
   updateContent() {
@@ -108,6 +121,7 @@ export class Modal {
           li.className = 'flex items-start';
           const dot = document.createElement('span');
           dot.className = 'w-2 h-2 bg-[#108C89] rounded-full mt-2 mr-3 flex-shrink-0';
+          dot.setAttribute('aria-hidden', 'true');
           const text = document.createTextNode(item);
           li.appendChild(dot);
           li.appendChild(text);
@@ -151,8 +165,27 @@ export class Modal {
     });
 
     this._keydownHandler = (e) => {
-      if (e.key === 'Escape' && this.isOpen) {
+      if (!this.isOpen) return;
+
+      if (e.key === 'Escape') {
         this.close();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const dialog = document.getElementById('modal-dialog');
+        if (!dialog) return;
+        const focusable = Array.from(dialog.querySelectorAll(FOCUSABLE_SELECTORS));
+        if (focusable.length === 0) { e.preventDefault(); return; }
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
     document.addEventListener('keydown', this._keydownHandler);
