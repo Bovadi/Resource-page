@@ -241,19 +241,21 @@ export class Sidebar {
     const allChildrenChecked = childFilters.length > 0 && childFilters.every(f => tabFilterStates[f.id]);
 
     const showAllHTML = hasShowAll ? `
-      <label class="cb-row cb-row--show-all">
-        <input
-          type="checkbox"
-          id="filter-${showAllFilter.id}"
-          ${allChildrenChecked ? 'checked' : ''}
-          class="cb-input"
-          data-filter="${showAllFilter.id}"
-          data-cb-parent
-        />
-        <span class="cb-box"></span>
-        <span class="cb-label cb-label--show-all">${escapeHtml(showAllFilter.label)}</span>
-      </label>
-      <div class="cb-show-all-divider"></div>
+      <div class="cb-show-all-sticky">
+        <label class="cb-row cb-row--show-all">
+          <input
+            type="checkbox"
+            id="filter-${showAllFilter.id}"
+            ${allChildrenChecked ? 'checked' : ''}
+            class="cb-input"
+            data-filter="${showAllFilter.id}"
+            data-cb-parent
+          />
+          <span class="cb-box"></span>
+          <span class="cb-label cb-label--show-all">${escapeHtml(showAllFilter.label)}</span>
+        </label>
+        <div class="cb-show-all-divider"></div>
+      </div>
     ` : '';
 
     const grouped = childFilters.reduce((acc, filter) => {

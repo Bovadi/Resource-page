@@ -123,6 +123,14 @@
 .cb-input:disabled ~ .cb-label {
   color: #9ca3af;
 }
+.cb-show-all-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #ffffff;
+  padding-top: 2px;
+}
+
 .cb-row--show-all {
   margin-bottom: 2px;
 }
