@@ -1,20 +1,11 @@
 import { SIDEBAR_CONFIG } from '../../src/config/sidebarConfig.js';
+import { escapeHtml } from '../../src/lib/dom.js';
 
 const ACTION_TOOLTIPS = {
   'generate-bip': 'Auto-generate a behavior plan',
   'create-bip-new': 'Start a new behavior plan',
   'create-bip-legacy': 'Use the classic BIP editor',
 };
-
-function escapeHtml(value) {
-  if (value == null) return '';
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
 
 export class Sidebar {
   constructor(containerId) {

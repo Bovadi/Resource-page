@@ -6,6 +6,7 @@ export class Modal {
     this.onClose = null;
     this.onAction = null;
     this._keydownHandler = null;
+    this._hideTimer = null;
   }
 
   async load() {
@@ -31,6 +32,8 @@ export class Modal {
       document.removeEventListener('keydown', this._keydownHandler);
       this._keydownHandler = null;
     }
+    clearTimeout(this._hideTimer);
+    this._hideTimer = null;
   }
 
   open(card) {
@@ -50,18 +53,20 @@ export class Modal {
 
   show() {
     const modalContainer = document.getElementById('modal-container');
-    if (modalContainer) {
-      modalContainer.classList.remove('hidden');
-      modalContainer.classList.add('flex');
-    }
+    if (!modalContainer) return;
+    clearTimeout(this._hideTimer);
+    requestAnimationFrame(() => {
+      modalContainer.classList.add('modal-is-open');
+    });
   }
 
   hide() {
     const modalContainer = document.getElementById('modal-container');
-    if (modalContainer) {
-      modalContainer.classList.add('hidden');
-      modalContainer.classList.remove('flex');
-    }
+    if (!modalContainer) return;
+    modalContainer.classList.remove('modal-is-open');
+    this._hideTimer = setTimeout(() => {
+      this._hideTimer = null;
+    }, 220);
   }
 
   updateContent() {
