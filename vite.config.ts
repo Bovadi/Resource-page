@@ -41,7 +41,7 @@ function copyPublicPlugin() {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [copyPublicPlugin()],
-  base: "./",
+  base: process.env.GITHUB_PAGES === 'true' ? '/Resource-page/' : '/',
   css: {
     postcss: {
       plugins: [tailwind()],

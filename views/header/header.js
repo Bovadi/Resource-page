@@ -31,7 +31,7 @@ export class Header {
     if (!container) return;
 
     try {
-      const response = await fetch('/views/header/header.html');
+      const response = await fetch(`${import.meta.env.BASE_URL}views/header/header.html`);
       if (!response.ok) {
         throw new Error(`Failed to load header: ${response.status}`);
       }

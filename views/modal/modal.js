@@ -17,7 +17,7 @@ export class Modal {
     if (!container) return;
 
     try {
-      const response = await fetch('/views/modal/modal.html');
+      const response = await fetch(`${import.meta.env.BASE_URL}views/modal/modal.html`);
       if (!response.ok) {
         throw new Error(`Failed to load modal: ${response.status}`);
       }

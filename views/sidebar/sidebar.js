@@ -25,7 +25,7 @@ export class Sidebar {
     if (!container) return;
 
     try {
-      const response = await fetch('/views/sidebar/sidebar.html');
+      const response = await fetch(`${import.meta.env.BASE_URL}views/sidebar/sidebar.html`);
       if (!response.ok) {
         throw new Error(`Failed to load sidebar: ${response.status}`);
       }

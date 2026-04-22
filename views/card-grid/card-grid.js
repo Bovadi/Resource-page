@@ -16,7 +16,7 @@ export class CardGrid {
     if (!container) return;
 
     try {
-      const response = await fetch('/views/card-grid/card-grid.html');
+      const response = await fetch(`${import.meta.env.BASE_URL}views/card-grid/card-grid.html`);
       if (!response.ok) {
         throw new Error(`Failed to load card grid: ${response.status}`);
       }

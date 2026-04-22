@@ -22,7 +22,7 @@ export class SortMenu {
     const container = document.getElementById(this.containerId);
     if (!container) return;
     try {
-      const response = await fetch('/views/sort-menu/sort-menu.html');
+      const response = await fetch(`${import.meta.env.BASE_URL}views/sort-menu/sort-menu.html`);
       if (!response.ok) {
         throw new Error(`Failed to load sort menu: ${response.status}`);
       }

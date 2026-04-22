@@ -58,7 +58,7 @@ export class NavRail {
     if (!container) return;
 
     try {
-      const response = await fetch('/views/nav-rail/nav-rail.html');
+      const response = await fetch(`${import.meta.env.BASE_URL}views/nav-rail/nav-rail.html`);
       if (!response.ok) throw new Error(`Failed to load nav rail: ${response.status}`);
       const html = await response.text();
       container.innerHTML = html;
