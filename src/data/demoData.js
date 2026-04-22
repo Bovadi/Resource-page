@@ -54,7 +54,7 @@ export const SAMPLE_CARDS = [
 },
 {
   id: '3',
-  image: 'public/images/BIPs/thumbnail-2.png',
+  image: '/images/BIPs/thumbnail-2.png',
   title: 'NoMa Task Refusal Plan',
   type: 'resource',
   description: 'Visual communication tool for self-advocacy',

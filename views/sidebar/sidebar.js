@@ -33,6 +33,7 @@ export class Sidebar {
       container.innerHTML = html;
       this._initFilterStates();
       this.renderForTab(this.activeTab);
+      this._updateSidebarTabNav(this.activeTab);
       this.attachEventListeners();
     } catch (err) {
       console.error('Sidebar load error:', err);
@@ -58,44 +59,38 @@ export class Sidebar {
     this.activeTab = tabKey;
     this.renderForTab(tabKey);
     this._updateSidebarTabNav(tabKey);
-    this._announce(`${tabKey.charAt(0).toUpperCase() + tabKey.slice(1)} tab selected`);
+    const label = SIDEBAR_CONFIG[tabKey]?.label || tabKey;
+    this._announce(`${label} tab selected`);
+  }
+
+  _updateSidebarTabNav(tabKey) {
+    const tabNav = document.getElementById('sidebar-tab-nav');
+    if (!tabNav) return;
+    tabNav.querySelectorAll('.sidebar-nav-tab').forEach(btn => {
+      const isActive = btn.dataset.tab === tabKey;
+      btn.classList.toggle('bg-[#F1EDE5]', isActive);
+      btn.classList.toggle('text-[#343434]', isActive);
+      btn.classList.toggle('text-[#8A857D]', !isActive);
+      btn.setAttribute('aria-selected', String(isActive));
+      btn.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
   }
 
   renderForTab(tabKey) {
     const config = SIDEBAR_CONFIG[tabKey];
     if (!config) return;
 
-    const hideActions = ['resources', 'courses', 'strategies'].includes(tabKey);
+    const showActions = tabKey === 'bip';
     const actionsEl = document.getElementById('sidebar-actions');
-    const dividerEl = actionsEl && actionsEl.nextElementSibling;
+    const dividerEl = document.getElementById('sidebar-divider');
 
-    if (actionsEl) actionsEl.style.display = hideActions ? 'none' : '';
-    if (dividerEl && dividerEl.classList.contains('my-5')) {
-      dividerEl.style.display = hideActions ? 'none' : '';
-    }
+    if (actionsEl) actionsEl.style.display = showActions ? '' : 'none';
+    if (dividerEl) dividerEl.style.display = showActions ? '' : 'none';
 
-    if (!hideActions) {
+    if (showActions) {
       this._renderActions(config.actions);
     }
     this._renderFilters(config.filters, config.filtersTitle, tabKey);
-  }
-
-  _updateSidebarTabNav(tabKey) {
-    const buttons = document.querySelectorAll('.sidebar-nav-tab');
-    buttons.forEach(btn => {
-      const isActive = btn.dataset.tab === tabKey;
-      if (isActive) {
-        btn.classList.add('bg-[#F1EDE5]', 'text-[#343434]');
-        btn.classList.remove('text-[#918979]', 'hover:bg-gray-100');
-        btn.setAttribute('aria-selected', 'true');
-        btn.setAttribute('tabindex', '0');
-      } else {
-        btn.classList.remove('bg-[#F1EDE5]', 'text-[#343434]');
-        btn.classList.add('text-[#918979]', 'hover:bg-gray-100');
-        btn.setAttribute('aria-selected', 'false');
-        btn.setAttribute('tabindex', '-1');
-      }
-    });
   }
 
   _announce(message) {
@@ -336,37 +331,14 @@ export class Sidebar {
     const tabNav = document.getElementById('sidebar-tab-nav');
     if (tabNav) {
       tabNav.addEventListener('click', (e) => {
-        const btn = e.target.closest('.sidebar-nav-tab');
-        if (!btn) return;
-        const tabKey = btn.dataset.tab;
-        if (tabKey && tabKey !== this.activeTab) {
-          this.switchTab(tabKey);
-          if (this.onTabSwitch) {
-            this.onTabSwitch(tabKey);
-          }
-        }
-      });
-
-      tabNav.addEventListener('keydown', (e) => {
-        const tabList = tabNav.querySelector('[role="tablist"]');
-        if (!tabList) return;
-        const tabs = Array.from(tabList.querySelectorAll('[role="tab"]'));
-        const idx = tabs.indexOf(document.activeElement);
-        if (idx === -1) return;
-        let next = -1;
-        if (e.key === 'ArrowDown')  { e.preventDefault(); next = (idx + 1) % tabs.length; }
-        if (e.key === 'ArrowUp')    { e.preventDefault(); next = (idx - 1 + tabs.length) % tabs.length; }
-        if (e.key === 'Home')       { e.preventDefault(); next = 0; }
-        if (e.key === 'End')        { e.preventDefault(); next = tabs.length - 1; }
-        if (next !== -1) {
-          const tabKey = tabs[next].dataset.tab;
-          this.switchTab(tabKey);
-          tabs[next].focus();
-          if (this.onTabSwitch) this.onTabSwitch(tabKey);
+        const button = e.target.closest('.sidebar-nav-tab');
+        if (!button) return;
+        const tabKey = button.dataset.tab;
+        if (tabKey && tabKey !== this.activeTab && this.onTabSwitch) {
+          this.onTabSwitch(tabKey);
         }
       });
     }
-    this._updateSidebarTabNav(this.activeTab);
 
     const actionsContainer = document.getElementById('sidebar-actions');
     if (actionsContainer) {
@@ -463,7 +435,7 @@ export class Sidebar {
   }
 
   _lockBodyScroll(lock) {
-    if (window.innerWidth >= 1024) return;
+    if (window.matchMedia('(min-width: 1024px)').matches) return;
     if (lock) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -472,7 +444,7 @@ export class Sidebar {
   }
 
   _enableFocusTrap() {
-    if (window.innerWidth >= 1024) return;
+    if (window.matchMedia('(min-width: 1024px)').matches) return;
 
     const sidebar = document.getElementById('sidebar');
     if (!sidebar) return;

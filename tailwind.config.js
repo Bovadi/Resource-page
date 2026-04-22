@@ -85,18 +85,6 @@ module.exports = {
     },
     container: { center: true, padding: "2rem", screens: { "2xl": "1400px" } },
   },
-  plugins: [
-    function({ addUtilities }) {
-      const newUtilities = {
-        '.line-clamp-2': {
-          display: '-webkit-box',
-          '-webkit-line-clamp': '2',
-          '-webkit-box-orient': 'vertical',
-          overflow: 'hidden',
-        },
-      }
-      addUtilities(newUtilities)
-    }
-  ],
+  plugins: [],
   darkMode: ["class"],
 };

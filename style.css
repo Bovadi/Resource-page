@@ -308,9 +308,101 @@ body {
   overflow: hidden;
 }
 
+/* ── Nav Rail ─────────────────────────────────────────────── */
+#nav-rail-container {
+  position: relative;
+  z-index: 20;
+}
+
+#nav-rail {
+  width: 56px;
+  transition: width 200ms ease;
+}
+
+#nav-rail.is-expanded {
+  width: 200px;
+}
+
+/* Collapsed: button auto-sizes to icon + padding, centred in the rail */
+.nav-rail-item {
+  gap: 0;
+  width: auto;
+  align-self: center;
+}
+
+/* Expanded: inset container so highlights don't touch rail edges */
+#nav-rail.is-expanded #nav-rail-items {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+/* Expanded: button fills full rail width, content left-aligned */
+#nav-rail.is-expanded .nav-rail-item {
+  gap: 12px;
+  width: 100%;
+  align-self: stretch;
+}
+
+/* Labels: take no space and are invisible when collapsed */
+#nav-rail .nav-label {
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 80ms ease, max-width 200ms ease;
+}
+
+#nav-rail.is-expanded .nav-label {
+  opacity: 1;
+  max-width: 160px;
+  transition: opacity 80ms ease 120ms, max-width 200ms ease;
+}
+/* Settings panel — anchored at bottom, expands upward */
+.settings-wrapper {
+  max-height: 57px; /* collapsed: just the Settings button row */
+  transition: max-height 220ms ease;
+}
+
+.settings-wrapper.settings-open {
+  max-height: 320px; /* expanded: room for all menu items */
+  min-width: 200px;
+}
+
+/* Toggle button: centred in collapsed rail, right-aligned when expanded */
+#nav-toggle-btn {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#nav-rail.is-expanded #nav-toggle-btn {
+  left: auto;
+  right: 8px;
+  transform: translateY(-50%);
+}
+/* ── end Nav Rail ─────────────────────────────────────────── */
+
+/* 2-line truncation used on card titles.
+   Kept here because tailwind.css wasn't generated with line-clamp support. */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* ── Sort menu ────────────────────────────────────────────── */
+.sort-menu-item .sort-menu-check {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+.sort-menu-item[aria-checked="true"] .sort-menu-check {
+  opacity: 1;
+}
+.sort-menu-item[aria-checked="true"] {
+  font-weight: 500;
+}
+.sort-menu-item:focus-visible {
+  outline: 2px solid #108C89;
+  outline-offset: -2px;
+}
+/* ── end Sort menu ────────────────────────────────────────── */

@@ -1,14 +1,32 @@
 export class Header {
-  constructor(containerId, defaultTab = 'resources') {
+  constructor(containerId) {
     this.containerId = containerId;
     this.onHamburgerClick = null;
-    this.onTabSwitch = null;
     this.dropdownOpen = false;
-    this.activeTab = defaultTab;
     this._documentClickHandler = null;
+    this._loaded = false;
+    this._mql = null;
+    this._mqlHandler = null;
   }
 
   async load() {
+    // The header only renders on mobile (parent container is lg:hidden).
+    // On desktop, skip the fetch entirely and defer until the viewport drops below lg.
+    this._mql = window.matchMedia('(min-width: 1024px)');
+    if (this._mql.matches) {
+      this._mqlHandler = (e) => {
+        if (!e.matches && !this._loaded) this._doLoad();
+      };
+      this._mql.addEventListener('change', this._mqlHandler);
+      return;
+    }
+    return this._doLoad();
+  }
+
+  async _doLoad() {
+    if (this._loaded) return;
+    this._loaded = true;
+
     const container = document.getElementById(this.containerId);
     if (!container) return;
 
@@ -20,9 +38,9 @@ export class Header {
       const html = await response.text();
       container.innerHTML = html;
       this.attachEventListeners();
-      this.setActiveTab(this.activeTab);
     } catch (err) {
       console.error('Header load error:', err);
+      this._loaded = false;
       container.innerHTML = '<p class="p-4 text-sm text-red-600">Failed to load header.</p>';
     }
   }
@@ -31,6 +49,11 @@ export class Header {
     if (this._documentClickHandler) {
       document.removeEventListener('click', this._documentClickHandler);
       this._documentClickHandler = null;
+    }
+    if (this._mql && this._mqlHandler) {
+      this._mql.removeEventListener('change', this._mqlHandler);
+      this._mqlHandler = null;
+      this._mql = null;
     }
   }
 
@@ -109,57 +132,6 @@ export class Header {
         e.stopPropagation();
       });
     }
-
-    const navTabList = document.querySelector('[role="tablist"]');
-    const navTabs = document.querySelectorAll('.nav-tab');
-
-    navTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const tabName = tab.dataset.tab;
-        this.setActiveTab(tabName);
-        if (this.onTabSwitch) {
-          this.onTabSwitch(tabName);
-        }
-      });
-    });
-
-    if (navTabList) {
-      navTabList.addEventListener('keydown', (e) => {
-        const tabs = Array.from(navTabList.querySelectorAll('[role="tab"]'));
-        const idx = tabs.indexOf(document.activeElement);
-        if (idx === -1) return;
-        let next = -1;
-        if (e.key === 'ArrowRight') { e.preventDefault(); next = (idx + 1) % tabs.length; }
-        if (e.key === 'ArrowLeft')  { e.preventDefault(); next = (idx - 1 + tabs.length) % tabs.length; }
-        if (e.key === 'Home')       { e.preventDefault(); next = 0; }
-        if (e.key === 'End')        { e.preventDefault(); next = tabs.length - 1; }
-        if (next !== -1) {
-          const tabName = tabs[next].dataset.tab;
-          this.setActiveTab(tabName);
-          tabs[next].focus();
-          if (this.onTabSwitch) this.onTabSwitch(tabName);
-        }
-      });
-    }
-  }
-
-  setActiveTab(tabName) {
-    this.activeTab = tabName;
-    const navTabs = document.querySelectorAll('.nav-tab');
-    navTabs.forEach(tab => {
-      const isActive = tab.dataset.tab === tabName;
-      if (isActive) {
-        tab.classList.remove('text-[#918979]', 'hover:text-black');
-        tab.classList.add('bg-white', 'text-black', 'shadow-sm');
-        tab.setAttribute('aria-selected', 'true');
-        tab.setAttribute('tabindex', '0');
-      } else {
-        tab.classList.remove('bg-white', 'text-black', 'shadow-sm');
-        tab.classList.add('text-[#918979]', 'hover:text-black');
-        tab.setAttribute('aria-selected', 'false');
-        tab.setAttribute('tabindex', '-1');
-      }
-    });
   }
 
   updateDropdownState(menu, caret) {

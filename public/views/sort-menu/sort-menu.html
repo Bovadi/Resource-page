@@ -1,0 +1,31 @@
+<div class="relative">
+  <button
+    id="sort-menu-btn"
+    type="button"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-controls="sort-menu-panel"
+    class="flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full pl-3 sm:pl-4 pr-2.5 sm:pr-3 py-2 shadow-sm border border-gray-200/60 hover:shadow-md transition-all duration-200"
+  >
+    <!-- Heroicons: arrows-up-down -->
+    <svg class="w-4 h-4 text-[#343434]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+    </svg>
+    <span class="text-sm font-medium text-[#343434] whitespace-nowrap">
+      <span class="hidden sm:inline">Sort: </span><span id="sort-menu-label">Newest</span>
+    </span>
+    <!-- Heroicons: chevron-down -->
+    <svg id="sort-menu-caret" class="w-4 h-4 text-gray-400 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+    </svg>
+  </button>
+
+  <div
+    id="sort-menu-panel"
+    role="menu"
+    aria-label="Sort options"
+    class="absolute right-0 top-full mt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-200/60 p-1.5 hidden opacity-0 transform scale-95 transition-all duration-200 z-40"
+  >
+    <div id="sort-menu-list" class="flex flex-col"></div>
+  </div>
+</div>

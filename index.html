@@ -12,20 +12,42 @@
   </head>
   <body>
     <div id="app">
-      <div class="fixed inset-0 w-full h-screen bg-white border border-solid border-black overflow-hidden flex flex-col">
-        <div id="header-container" class="flex-shrink-0"></div>
+      <div class="fixed inset-0 w-full h-screen bg-white overflow-hidden flex flex-col">
 
+        <!-- Mobile header (hidden on desktop) -->
+        <div id="header-container" class="flex-shrink-0 lg:hidden"></div>
+
+        <!-- Sidebar overlay for mobile -->
         <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden hidden"></div>
 
         <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
-          <div id="sidebar-container"></div>
 
-          <div class="flex-1 flex flex-col w-full lg:ml-0 overflow-hidden">
+          <!-- Nav Rail (desktop only) -->
+          <div id="nav-rail-container" class="relative z-20 hidden lg:flex flex-shrink-0 h-full"></div>
+
+          <!-- Sidebar content panel -->
+          <div id="sidebar-container" class="flex-shrink-0 lg:h-full"></div>
+
+          <!-- Main content -->
+          <div class="flex-1 flex flex-col overflow-hidden relative">
+            <!--
+              Toolbar hosts the sort menu.
+              Mobile: absolutely positioned so it floats in the top-right of the beige area
+              and the beige can still fill the full vertical space below the header.
+              Desktop (lg+): in-flow 72px strip above the beige (reverts via lg:static).
+            -->
+            <div id="toolbar-container"
+                 class="absolute top-3 right-4 z-10 flex items-center justify-end gap-2
+                        lg:static lg:top-auto lg:right-auto lg:z-auto
+                        lg:flex-shrink-0 lg:h-[72px] lg:px-6"></div>
             <div id="main-container" class="flex-1 flex flex-col overflow-hidden"></div>
           </div>
+
         </div>
 
+        <!-- Modal -->
         <div id="modal-container"></div>
+
       </div>
     </div>
     <script type="module" src="./script.js"></script>
