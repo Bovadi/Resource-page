@@ -320,7 +320,7 @@ body {
 }
 
 #nav-rail.is-expanded {
-  width: 200px;
+  width: 220px;
 }
 
 /* Collapsed: button auto-sizes to icon + padding, centred in the rail */
@@ -354,7 +354,7 @@ body {
 
 #nav-rail.is-expanded .nav-label {
   opacity: 1;
-  max-width: 160px;
+  max-width: 180px;
   transition: opacity 80ms ease 120ms, max-width 200ms ease;
 }
 /* Settings panel — anchored at bottom, expands upward */
@@ -365,7 +365,7 @@ body {
 
 .settings-wrapper.settings-open {
   max-height: 320px; /* expanded: room for all menu items */
-  min-width: 200px;
+  min-width: 220px;
 }
 
 /* Toggle button: centred in collapsed rail, right-aligned when expanded */
