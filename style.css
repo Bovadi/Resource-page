@@ -374,26 +374,27 @@ body {
    to a fixed left position. Only the "Visualized" suffix fades in/out as the
    rail expands/collapses. This avoids any visual jump of the BIP shape. */
 
-/* The mark is centred horizontally in the 56px collapsed rail
-   ((56 − 37.8) / 2 ≈ 9px). It stays put as the rail expands. */
+/* The mark is centred horizontally in the 56px collapsed rail.
+   Renders ~34px wide at h:21.6px → left = (56 − 34) / 2 ≈ 11px.
+   Stays put as the rail expands. */
 .nav-logo-mark {
   position: absolute;
-  left: 9px;
+  left: 11px;
   top: 50%;
-  height: 24px;
+  height: 21.6px;
   width: auto;
   transform: translateY(-50%);
   pointer-events: none;
 }
 
 /* The suffix sits immediately to the right of the mark when expanded.
-   Mark right edge ≈ 9 + 37.8 = 46.8px → suffix left ≈ 50px (gives a small gap).
+   Mark right edge ≈ 11 + 34 = 45px → suffix left = 48px (3px gap).
    Slides in from translateX(-6px) and fades up; reverses on collapse. */
 .nav-logo-suffix {
   position: absolute;
-  left: 50px;
+  left: 48px;
   top: 50%;
-  height: 24px;
+  height: 21.6px;
   width: auto;
   pointer-events: none;
   opacity: 0;
