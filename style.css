@@ -375,7 +375,7 @@ body {
    centre so they swap in place — no layout shift, no flicker. */
 .nav-logo {
   position: absolute;
-  left: 18px; /* aligns with the icon column below */
+  left: 18px; /* wordmark: aligns with the icon column below */
   top: 50%;
   height: 24px;
   width: auto;
@@ -386,7 +386,11 @@ body {
 }
 
 .nav-logo-compact {
-  /* Visible by default (collapsed state) */
+  /* Compact mark is centred horizontally in the 56px collapsed rail
+     (mark renders at ~37.8px wide → left = (56 − 37.8) / 2 ≈ 9px).
+     Stays at this fixed left during the expand transition so it
+     fades out in place without sliding sideways. */
+  left: 9px;
   opacity: 1;
   transform: translateY(-50%) scale(1);
 }
