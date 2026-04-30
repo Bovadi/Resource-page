@@ -387,14 +387,17 @@ body {
   pointer-events: none;
 }
 
-/* The suffix sits immediately to the right of the mark when expanded.
-   Mark right edge ≈ 11 + 34 = 45px → suffix left = 48px (3px gap).
+/* The suffix sits to the right of the mark when expanded. Sized so
+   the "Visualized" cap-height matches the BIP cap-height in the mark.
    Slides in from translateX(-6px) and fades up; reverses on collapse. */
 .nav-logo-suffix {
   position: absolute;
-  left: 48px;
+  left: 50px;
   top: 50%;
-  height: 21.6px;
+  /* PNG is 1037×315 with stars padding at top — display at h:26px so the
+     "Visualized" cap-height (~62% of the image) renders at ~16px, close to
+     the BIP cap-height in the mark. Tweak this single value to scale. */
+  height: 26px;
   width: auto;
   pointer-events: none;
   opacity: 0;
