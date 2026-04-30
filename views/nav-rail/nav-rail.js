@@ -44,7 +44,6 @@ export class NavRail {
     this.containerId = containerId;
     this.activeTab = defaultTab;
     this.onTabSwitch = null;
-    this._pinned = false;
     this._listeners = [];
   }
 
@@ -101,20 +100,11 @@ export class NavRail {
     if (!rail) return;
 
     this._addListener(rail, 'mouseenter', () => {
-      if (!this._pinned) rail.classList.add('is-expanded');
+      rail.classList.add('is-expanded');
     });
     this._addListener(rail, 'mouseleave', () => {
-      if (!this._pinned) rail.classList.remove('is-expanded');
+      rail.classList.remove('is-expanded');
     });
-
-    const toggleBtn = document.getElementById('nav-toggle-btn');
-    if (toggleBtn) {
-      this._addListener(toggleBtn, 'click', (e) => {
-        e.stopPropagation();
-        this._pinned = !this._pinned;
-        rail.classList.toggle('is-expanded', this._pinned);
-      });
-    }
 
     const itemsContainer = document.getElementById('nav-rail-items');
     if (itemsContainer) {

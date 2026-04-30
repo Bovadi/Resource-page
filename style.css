@@ -370,16 +370,45 @@ body {
   min-width: 220px;
 }
 
-/* Toggle button: centred in collapsed rail, right-aligned when expanded */
-#nav-toggle-btn {
-  left: 50%;
-  transform: translate(-50%, -50%);
+/* Logos crossfade between collapsed (compact mark) and expanded (wordmark)
+   states. Both are absolutely-positioned at the same left:16px / vertical
+   centre so they swap in place — no layout shift, no flicker. */
+.nav-logo {
+  position: absolute;
+  left: 18px; /* aligns with the icon column below */
+  top: 50%;
+  height: 24px;
+  width: auto;
+  pointer-events: none;
+  transition:
+    opacity 220ms ease-out,
+    transform 240ms ease-out;
 }
 
-#nav-rail.is-expanded #nav-toggle-btn {
-  left: auto;
-  right: 8px;
-  transform: translateY(-50%);
+.nav-logo-compact {
+  /* Visible by default (collapsed state) */
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.nav-logo-full {
+  /* Hidden by default; revealed when rail is expanded */
+  opacity: 0;
+  transform: translateY(-50%) scale(0.96);
+}
+
+#nav-rail.is-expanded .nav-logo-compact {
+  opacity: 0;
+  transform: translateY(-50%) scale(0.92);
+}
+
+#nav-rail.is-expanded .nav-logo-full {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  /* Slight delay on the wordmark so the compact mark fades out first */
+  transition:
+    opacity 220ms ease-out 80ms,
+    transform 240ms ease-out 60ms;
 }
 /* ── end Nav Rail ─────────────────────────────────────────── */
 
