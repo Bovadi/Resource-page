@@ -316,28 +316,22 @@ body {
 
 #nav-rail {
   width: 56px;
-  transition: width 200ms ease;
+  transition: width 240ms ease-out;
 }
 
 #nav-rail.is-expanded {
   width: 220px;
 }
 
-/* Collapsed: button auto-sizes to icon + padding, centred in the rail */
-.nav-rail-item {
-  gap: 0;
-  width: auto;
-  align-self: center;
-}
-
-/* Expanded: inset container so highlights don't touch rail edges */
-#nav-rail.is-expanded #nav-rail-items {
+/* Buttons fill the rail's inner width in both states; constant 8px
+   container padding keeps the icon's x-position locked, so collapsing
+   the rail doesn't make the icon jump horizontally. */
+#nav-rail-items {
   padding-left: 8px;
   padding-right: 8px;
 }
 
-/* Expanded: button fills full rail width, content left-aligned */
-#nav-rail.is-expanded .nav-rail-item {
+.nav-rail-item {
   gap: 12px;
   width: 100%;
   align-self: stretch;
@@ -349,18 +343,26 @@ body {
   max-width: 0;
   overflow: hidden;
   white-space: nowrap;
-  transition: opacity 80ms ease, max-width 200ms ease;
+  transform: translateX(-8px);
+  transition:
+    opacity 140ms ease-out,
+    transform 180ms ease-out,
+    max-width 240ms ease-out;
 }
 
 #nav-rail.is-expanded .nav-label {
   opacity: 1;
   max-width: 180px;
-  transition: opacity 80ms ease 120ms, max-width 200ms ease;
+  transform: translateX(0);
+  transition:
+    opacity 140ms ease-out 160ms,
+    transform 180ms ease-out 140ms,
+    max-width 240ms ease-out;
 }
 /* Settings panel — anchored at bottom, expands upward */
 .settings-wrapper {
   max-height: 57px; /* collapsed: just the Settings button row */
-  transition: max-height 220ms ease;
+  transition: max-height 280ms ease-in-out;
 }
 
 .settings-wrapper.settings-open {
