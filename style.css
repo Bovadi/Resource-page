@@ -394,14 +394,15 @@ body {
   position: absolute;
   left: 50px;
   top: 50%;
-  /* PNG is 1037×315 with stars padding at top — display at h:26px so the
-     "Visualized" cap-height (~62% of the image) renders at ~16px, close to
-     the BIP cap-height in the mark. Tweak this single value to scale. */
-  height: 26px;
+  /* h:24 → "V" cap-height ≈ 12.1px, matching the BIP letters in the mark.
+     The vertical lift (-2px) raises the suffix so the "V" baseline lines
+     up with the BIP baseline (the suffix PNG has tall stars padding the
+     top, which would otherwise drop the letters lower than expected). */
+  height: 24px;
   width: auto;
   pointer-events: none;
   opacity: 0;
-  transform: translate(-6px, -50%);
+  transform: translate(-6px, calc(-50% - 2px));
   transition:
     opacity 200ms ease-out,
     transform 240ms ease-out;
@@ -409,7 +410,7 @@ body {
 
 #nav-rail.is-expanded .nav-logo-suffix {
   opacity: 1;
-  transform: translate(0, -50%);
+  transform: translate(0, calc(-50% - 2px));
   /* Slight delay on enter so the suffix appears once the rail has
      started widening — avoids the suffix briefly poking out of the
      collapsed rail. */
