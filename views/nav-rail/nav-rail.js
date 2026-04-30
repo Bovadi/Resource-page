@@ -23,7 +23,7 @@ const NAV_ITEMS = [
     id: 'strategies',
     label: 'Strategy Library',
     // Custom: two boxes with arrows showing strategy flow/exchange
-    icon: `<svg ${SVG} aria-hidden="true"><path d="M8.5 4L11 6.49983M11 6.49983L8.5 8.99967M11 6.49983L6 6.49983L6 12.5"/><path d="M8.5 4L11 6.49983M11 6.49983L8.5 8.99967M11 6.49983L6 6.49983L6 12.5" stroke-opacity="0.2"/><path d="M15.5 19L13 16.5002M13 16.5002L15.5 14.0003M13 16.5002H18L18 12"/><path d="M15.5 19L13 16.5002M13 16.5002L15.5 14.0003M13 16.5002H18L18 12" stroke-opacity="0.2"/><rect x="2" y="13" width="8" height="8" rx="2"/><rect x="14" y="3" width="8" height="8" rx="2"/></svg>`,
+    icon: `<svg ${SVG} aria-hidden="true"><path d="M8.00017 3.5L11 6.49983M11 6.49983L8.00017 9.49967M11 6.49983L6 6.49983L6 12.5"/><path d="M8.00017 3.5L11 6.49983M11 6.49983L8.00017 9.49967M11 6.49983L6 6.49983L6 12.5" stroke-opacity="0.2"/><path d="M16 19.5002L13 16.5002M13 16.5002L16 13.5002M13 16.5002H18L18 12"/><path d="M16 19.5002L13 16.5002M13 16.5002L16 13.5002M13 16.5002H18L18 12" stroke-opacity="0.2"/><rect x="2" y="13" width="8" height="8" rx="2"/><rect x="14" y="3" width="8" height="8" rx="2"/></svg>`,
   },
   {
     id: 'rbt',
