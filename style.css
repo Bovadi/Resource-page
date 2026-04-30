@@ -370,49 +370,48 @@ body {
   min-width: 220px;
 }
 
-/* Logos crossfade between collapsed (compact mark) and expanded (wordmark)
-   states. Both are absolutely-positioned at the same left:16px / vertical
-   centre so they swap in place — no layout shift, no flicker. */
-.nav-logo {
+/* Logo strategy: the compact gradient BIP mark is always rendered, anchored
+   to a fixed left position. Only the "Visualized" suffix fades in/out as the
+   rail expands/collapses. This avoids any visual jump of the BIP shape. */
+
+/* The mark is centred horizontally in the 56px collapsed rail
+   ((56 − 37.8) / 2 ≈ 9px). It stays put as the rail expands. */
+.nav-logo-mark {
   position: absolute;
-  left: 18px; /* wordmark: aligns with the icon column below */
+  left: 9px;
+  top: 50%;
+  height: 24px;
+  width: auto;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* The suffix sits immediately to the right of the mark when expanded.
+   Mark right edge ≈ 9 + 37.8 = 46.8px → suffix left ≈ 50px (gives a small gap).
+   Slides in from translateX(-6px) and fades up; reverses on collapse. */
+.nav-logo-suffix {
+  position: absolute;
+  left: 50px;
   top: 50%;
   height: 24px;
   width: auto;
   pointer-events: none;
+  opacity: 0;
+  transform: translate(-6px, -50%);
   transition:
-    opacity 220ms ease-out,
+    opacity 200ms ease-out,
     transform 240ms ease-out;
 }
 
-.nav-logo-compact {
-  /* Compact mark is centred horizontally in the 56px collapsed rail
-     (mark renders at ~37.8px wide → left = (56 − 37.8) / 2 ≈ 9px).
-     Stays at this fixed left during the expand transition so it
-     fades out in place without sliding sideways. */
-  left: 9px;
+#nav-rail.is-expanded .nav-logo-suffix {
   opacity: 1;
-  transform: translateY(-50%) scale(1);
-}
-
-.nav-logo-full {
-  /* Hidden by default; revealed when rail is expanded */
-  opacity: 0;
-  transform: translateY(-50%) scale(0.96);
-}
-
-#nav-rail.is-expanded .nav-logo-compact {
-  opacity: 0;
-  transform: translateY(-50%) scale(0.92);
-}
-
-#nav-rail.is-expanded .nav-logo-full {
-  opacity: 1;
-  transform: translateY(-50%) scale(1);
-  /* Slight delay on the wordmark so the compact mark fades out first */
+  transform: translate(0, -50%);
+  /* Slight delay on enter so the suffix appears once the rail has
+     started widening — avoids the suffix briefly poking out of the
+     collapsed rail. */
   transition:
-    opacity 220ms ease-out 80ms,
-    transform 240ms ease-out 60ms;
+    opacity 200ms ease-out 100ms,
+    transform 240ms ease-out 80ms;
 }
 /* ── end Nav Rail ─────────────────────────────────────────── */
 
