@@ -16,8 +16,8 @@ const NAV_ITEMS = [
   {
     id: 'courses',
     label: 'Course Library',
-    // Heroicons: presentation-chart-line
-    icon: `<svg ${SVG} aria-hidden="true"><path d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"/></svg>`,
+    // Custom: presentation screen with chart line
+    icon: `<svg ${SVG} aria-hidden="true"><path d="M3.75 3V14.25C3.75 14.8467 3.98705 15.419 4.40901 15.841C4.83097 16.2629 5.40326 16.5 6 16.5H8.25M3.75 3H2.25M3.75 3H20.25M8.25 16.5H15.75M8.25 16.5L7.25 19.5M20.25 3H21.75M20.25 3V14.25C20.25 14.8467 20.0129 15.419 19.591 15.841C19.169 16.2629 18.5967 16.5 18 16.5H15.75M15.75 16.5L16.75 19.5M7.25 19.5H16.75M7.25 19.5L6.75 21M16.75 19.5L17.25 21"/><path d="M14 10L12 12"/><path d="M13 7L9 11"/></svg>`,
   },
   {
     id: 'strategies',
