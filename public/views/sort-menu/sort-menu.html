@@ -1,3 +1,21 @@
+<!-- Search: flex-1 pushes it to the left and stretches to fill remaining
+     horizontal space; max-w caps growth on wide screens. Hidden on mobile,
+     where the toolbar is an absolutely-positioned floating chip in the
+     top-right and a wide search would be cramped. -->
+<div class="relative flex-1 max-w-[640px] hidden lg:block lg:mr-auto">
+  <!-- Heroicons: magnifying-glass -->
+  <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+  </svg>
+  <input
+    id="search-input"
+    type="search"
+    aria-label="Search resources"
+    placeholder="Find resources, strategies or ask questions about the product."
+    class="w-full bg-white/80 backdrop-blur-sm rounded-full pl-10 pr-4 py-2 shadow-sm border border-gray-200/60 text-sm text-[#343434] placeholder:text-[#8A857D] focus:outline-none focus:ring-2 focus:ring-[#108C89]/40 hover:shadow-md transition-all duration-200"
+  />
+</div>
+
 <button
   id="upgrade-btn"
   type="button"
