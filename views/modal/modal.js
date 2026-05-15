@@ -120,7 +120,7 @@ export class Modal {
           const li = document.createElement('li');
           li.className = 'flex items-start';
           const dot = document.createElement('span');
-          dot.className = 'w-2 h-2 bg-[#108C89] rounded-full mt-2 mr-3 flex-shrink-0';
+          dot.className = 'w-2 h-2 bg-primary-500 rounded-full mt-2 mr-3 flex-shrink-0';
           dot.setAttribute('aria-hidden', 'true');
           const text = document.createTextNode(item);
           li.appendChild(dot);

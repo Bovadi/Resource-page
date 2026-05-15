@@ -37,7 +37,7 @@ export class Sidebar {
       this.attachEventListeners();
     } catch (err) {
       console.error('Sidebar load error:', err);
-      container.innerHTML = '<p class="p-4 text-sm text-red-600">Failed to load sidebar.</p>';
+      container.innerHTML = '<p class="p-4 text-sm text-bip-red-600">Failed to load sidebar.</p>';
     }
   }
 
@@ -68,9 +68,9 @@ export class Sidebar {
     if (!tabNav) return;
     tabNav.querySelectorAll('.sidebar-nav-tab').forEach(btn => {
       const isActive = btn.dataset.tab === tabKey;
-      btn.classList.toggle('bg-[#F1EDE5]', isActive);
-      btn.classList.toggle('text-[#343434]', isActive);
-      btn.classList.toggle('text-[#8A857D]', !isActive);
+      btn.classList.toggle('bg-beige-hover', isActive);
+      btn.classList.toggle('text-text-primary', isActive);
+      btn.classList.toggle('text-text-muted', !isActive);
       btn.setAttribute('aria-selected', String(isActive));
       btn.setAttribute('tabindex', isActive ? '0' : '-1');
     });
@@ -108,7 +108,7 @@ export class Sidebar {
 
     actionsContainer.innerHTML = actions.map(action => {
       const badgeHTML = action.badge
-        ? `<span class="text-[8px] font-semibold uppercase tracking-wide text-[#108C89] bg-[#E7F3F3] px-1.5 py-0.5 rounded-full">${escapeHtml(action.badge.text)}</span>`
+        ? `<span class="text-[8px] font-semibold uppercase tracking-wide text-primary-500 bg-bip-green-50 px-1.5 py-0.5 rounded-full">${escapeHtml(action.badge.text)}</span>`
         : '';
 
       const labelHTML = action.badge
@@ -116,8 +116,8 @@ export class Sidebar {
         : `<span class="text-left">${escapeHtml(action.label)}</span>`;
 
       const variantClasses = action.variant === 'primary'
-        ? 'bg-[#108C89] text-white hover:bg-[#0d7673] shadow-sm'
-        : 'bg-white text-[#108C89] shadow-[inset_0_0_0_1px_#108C89] hover:bg-[#108C89]/5';
+        ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-sm'
+        : 'bg-white text-primary-500 shadow-[inset_0_0_0_1px_theme(colors.primary.500)] hover:bg-primary-500/5';
 
       const tooltipText = ACTION_TOOLTIPS[action.id];
       const ariaLabel = tooltipText ? ` aria-label="${escapeHtml(tooltipText)}"` : '';
@@ -291,7 +291,7 @@ export class Sidebar {
     const groupAttr = hasShowAll ? 'data-cb-group' : '';
 
     filtersContainer.innerHTML = `
-      <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 px-4">${escapeHtml(title)}</h3>
+      <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 px-4">${escapeHtml(title)}</h3>
       <div class="space-y-1" ${groupAttr}>
         ${showAllHTML}
         ${childCheckboxesHTML}

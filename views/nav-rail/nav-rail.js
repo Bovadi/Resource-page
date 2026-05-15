@@ -75,7 +75,7 @@ export class NavRail {
 
     container.innerHTML = NAV_ITEMS.map(item => `
       <button
-        class="nav-rail-item flex items-center p-2.5 rounded-lg text-sm font-medium text-[#8A857D] hover:bg-[#F1EDE5] hover:text-[#343434] transition-colors"
+        class="nav-rail-item flex items-center p-2.5 rounded-lg text-sm font-medium text-text-muted hover:bg-beige-hover hover:text-text-primary transition-colors"
         data-tab="${item.id}"
         aria-label="${item.label}"
       >
@@ -89,9 +89,9 @@ export class NavRail {
     this.activeTab = tabId;
     document.querySelectorAll('#nav-rail-items .nav-rail-item').forEach(item => {
       const isActive = item.dataset.tab === tabId;
-      item.classList.toggle('bg-[#F1EDE5]', isActive);
-      item.classList.toggle('text-[#343434]', isActive);
-      item.classList.toggle('text-[#8A857D]', !isActive);
+      item.classList.toggle('bg-beige-hover', isActive);
+      item.classList.toggle('text-text-primary', isActive);
+      item.classList.toggle('text-text-muted', !isActive);
     });
   }
 

@@ -54,7 +54,7 @@ class App {
       console.error('App failed to initialize:', err);
       const root = document.getElementById('main-container');
       if (root) {
-        root.innerHTML = '<p class="text-center text-red-600 p-8">Failed to load the application. Please refresh the page.</p>';
+        root.innerHTML = '<p class="text-center text-bip-red-600 p-8">Failed to load the application. Please refresh the page.</p>';
       }
     }
   }

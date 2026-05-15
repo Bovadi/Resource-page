@@ -9,82 +9,79 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        '3xl': '1920px',
-        '4xl': '2560px',
+        xs: "475px",
+        "3xl": "1920px",
+        "4xl": "2560px",
       },
       colors: {
-        "neutral-black": "var(--neutral-black)",
-        "custom-teal": "#108C89",
-        "filter-hover": "#F2F3F3",
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        // Primary — teal scale (STYLE.md §3.1)
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          50:  "#f0fafa",
+          100: "#dff5f4",
+          200: "#b1e3e2",
+          300: "#86d1d0",
+          400: "#43b0ae",
+          500: "#108c89",
+          600: "#0d8078",
+          700: "#006360",
+          800: "#065443",
+          900: "#03402f",
+          950: "#01291a",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        // Coral / error (STYLE.md §3.1, §3.2)
+        "bip-red": {
+          50:  "#FCDDD4",
+          100: "#fecaca",
+          400: "#F0542A",
+          500: "#CC3F19",
+          600: "#dc2626",
+          700: "#922D11",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+        // Info — bip-blue (STYLE.md §3.2)
+        "bip-blue": {
+          50:  "#e6f4fb",
+          100: "#CCE9F7",
+          200: "#b3ddf2",
+          500: "#0093D8",
+          700: "#006a9e",
         },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+        // bip-green — alias scale used by canonical primary CTA pattern (STYLE.md §9.2)
+        "bip-green": {
+          50:  "#DBEEED",
+          100: "#108C89",
         },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
+        // Warm surface tokens (STYLE.md §3.1)
+        beige: "#F8F5EF",
+        "beige-hover": "#F1EDE5",
+        // Warm near-blacks (STYLE.md §3.1)
+        "text-primary": "#343434",
+        "text-muted": "#8A857D",
+        "brand-black": "#161616",
       },
       fontFamily: {
-        "paragraph-xsmall-regular":
-          "var(--paragraph-xsmall-regular-font-family)",
         sans: [
-          "ui-sans-serif",
-          "system-ui",
+          "Inter",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
+          "Roboto",
+          '"Helvetica Neue"',
           "sans-serif",
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-          '"Noto Color Emoji"',
         ],
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      fontSize: {
+        "3xs": ["0.5rem", { lineHeight: "0.75rem" }],
+        "2xs": ["0.625rem", { lineHeight: "0.75rem" }],
       },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
+      borderWidth: {
+        3: "3px",
       },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+      boxShadow: {
+        "hover-card": "0 2px 8px rgba(0, 0, 0, 0.07)",
+        "3xl": "0 24px 64px rgba(0, 0, 0, 0.25)",
       },
     },
     container: { center: true, padding: "2rem", screens: { "2xl": "1400px" } },
   },
   plugins: [],
-  darkMode: ["class"],
 };

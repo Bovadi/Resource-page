@@ -3,7 +3,7 @@ import { SORT_OPTIONS, DEFAULT_SORT } from '../../src/lib/sort.js';
 
 // Heroicons: check (inline so we don't have to round-trip the file system)
 const CHECK_ICON = `
-  <svg class="sort-menu-check w-4 h-4 text-[#108C89]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" aria-hidden="true">
+  <svg class="sort-menu-check w-4 h-4 text-primary-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
   </svg>
 `;
@@ -54,7 +54,7 @@ export class SortMenu {
         role="menuitemradio"
         aria-checked="${opt.key === this.activeSort}"
         data-sort="${escapeHtml(opt.key)}"
-        class="sort-menu-item flex items-center justify-between gap-3 w-full px-3 py-2 text-sm text-left rounded-md text-[#343434] hover:bg-[#F1EDE5] transition-colors"
+        class="sort-menu-item flex items-center justify-between gap-3 w-full px-3 py-2 text-sm text-left rounded-md text-text-primary hover:bg-beige-hover transition-colors"
       >
         <span>${escapeHtml(opt.label)}</span>
         ${CHECK_ICON}

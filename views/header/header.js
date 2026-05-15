@@ -41,7 +41,7 @@ export class Header {
     } catch (err) {
       console.error('Header load error:', err);
       this._loaded = false;
-      container.innerHTML = '<p class="p-4 text-sm text-red-600">Failed to load header.</p>';
+      container.innerHTML = '<p class="p-4 text-sm text-bip-red-600">Failed to load header.</p>';
     }
   }
 
