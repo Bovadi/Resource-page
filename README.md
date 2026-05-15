@@ -1,81 +1,65 @@
 # Resources Portal
 
-A vanilla JavaScript application with Supabase backend for managing educational resources and courses.
+A vanilla JavaScript prototype for the BIP Visualized resources portal. Static demo data, no backend.
 
 ## Tech Stack
 
-- **HTML5** - Structure
-- **Tailwind CSS** - Styling (utility-first)
-- **Vanilla JavaScript (ES6+)** - All interactivity
-- **Supabase** - Database and authentication
-- **Vite** - Development server and build tool
+- **HTML5** — structure
+- **Tailwind CSS 3.4** + custom design tokens (`tokens.css`)
+- **Vanilla JavaScript (ES6+)** — class-based component pattern
+- **Vite 6** — dev server and build
 
-## Architecture
-
-This project follows a component-based architecture without frameworks:
+## Project Layout
 
 ```
 /
-├── index.html              # App entry point
-├── script.js               # Application controller
-├── style.css               # Global CSS overrides
-├── views/                  # Component partials
-│   ├── header/
-│   │   ├── header.html     # Header template
-│   │   └── header.js       # Header logic
-│   ├── sidebar/
-│   ├── tabs/
-│   ├── card-grid/
-│   └── modal/
-├── src/
-│   ├── data/               # Sample data
-│   ├── lib/                # Utilities (Supabase client)
-│   └── services/           # Data services
-└── public/                 # Static assets
-
+├── index.html              # App entry
+├── script.js               # App controller — loads components, wires events
+├── tokens.css              # Design tokens + canonical component CSS (BIP Visualized §STYLE.md)
+├── tailwind.css            # Tailwind directives (compiled by Vite/PostCSS)
+├── tailwind.config.js      # Canonical palette (STYLE.md §13)
+├── STYLE.md                # Visual system reference
+├── HANDOFF.md              # Intentional design-system drifts
+├── views/                  # Component modules (one folder per component)
+│   ├── header/             # Mobile header + profile menu
+│   ├── nav-rail/           # Desktop nav rail
+│   ├── sidebar/            # Filter sidebar
+│   ├── card-grid/          # Resource grid
+│   ├── modal/              # Resource detail modal
+│   └── sort-menu/          # Toolbar: search + Upgrade + sort
+├── public/
+│   ├── images/             # App images (logo, card thumbnails)
+│   └── views/              # HTML templates loaded at runtime
+└── src/
+    ├── data/demoData.js    # Static SAMPLE_CARDS
+    ├── lib/sort.js         # Sort options + sortCards()
+    ├── lib/dom.js          # escapeHtml helper
+    └── config/sidebarConfig.js  # Per-tab sidebar layout
 ```
 
-Each component is self-contained with its own HTML template and JavaScript module.
+Each component is self-contained: HTML template in `public/views/<name>/<name>.html`, JS module in `views/<name>/<name>.js`.
 
 ## Getting Started
 
-### Prerequisites
+```bash
+npm install
+npm run dev
+```
 
-- [Node.js](https://nodejs.org/) (v16 or higher)
-- Supabase account and project
+Open [http://localhost:5173](http://localhost:5173).
 
-### Installation
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-2. Configure environment variables (see `.env` for Supabase credentials)
-
-3. Run development server:
-   ```bash
-   npm run dev
-   ```
-
-4. Open [http://localhost:5173](http://localhost:5173)
-
-### Build
+## Build
 
 ```bash
 npm run build
 ```
 
-## Component Structure
+Outputs to `dist/`. The repo also auto-deploys on push to `main` via GitHub Actions (`.github/workflows/deploy.yml`) — live at https://bovadi.github.io/Resource-page/.
 
-Each component follows this pattern:
+## Design system
 
-- **HTML file**: Tailwind utility classes inline
-- **JS file**: ES6 class with load(), event handlers, and state
-- **CSS file** (optional): Only for animations or complex pseudo-selectors
+- `STYLE.md` — canonical tokens, components, authoring rules
+- `tokens.css` — CSS implementation (CSS custom properties + canonical component styles). Linked **before** Tailwind so utility overrides still work.
+- `HANDOFF.md` — three intentional drifts preserved from the v1.1 restyle pass
 
-## Data Management
-
-- Supabase client for database operations
-- Each component loads its own data
-- No state management library needed
+When in doubt: reach for Tailwind utilities first, then `tokens.css` named utility classes, then ask before introducing a new color or value.

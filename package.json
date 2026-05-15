@@ -2,14 +2,11 @@
   "version": "1.0.0",
   "source": "./index.html",
   "type": "module",
-  "name": "anima-project",
-  "description": "A vanilla JavaScript project with Supabase backend",
+  "name": "resource-page",
+  "description": "BIP Visualized Resources Portal — vanilla JS prototype",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.51.0"
   },
   "devDependencies": {
     "esbuild": "0.24.0",
