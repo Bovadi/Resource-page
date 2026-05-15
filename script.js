@@ -143,6 +143,28 @@ class App {
       this._retryCount++;
       this.filterAndDisplayCards();
     };
+
+    // Search input → Gleap AI chatbar (Kai)
+    // Pre-populates Kai with the typed query via Gleap.askAI(question).
+    // Docs: https://docs.gleap.io/documentation/javascript/aichatbar
+    // Per project conventions, Gleap is assumed already initialized at app
+    // start — we only call into the existing SDK, never re-init it.
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        const query = searchInput.value.trim();
+        if (!query) return;
+        if (window.Gleap && typeof window.Gleap.askAI === 'function') {
+          window.Gleap.askAI(query);
+          // Clear so the next query starts fresh
+          searchInput.value = '';
+        } else {
+          console.warn('[search] Gleap SDK not detected on window. Query was:', query);
+        }
+      });
+    }
   }
 
   toggleSidebar() {
